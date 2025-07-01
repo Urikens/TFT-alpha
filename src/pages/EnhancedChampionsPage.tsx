@@ -11,7 +11,7 @@ import ItemCard from '../components/ItemCard';
 import SynergyCard from '../components/SynergyCard';
 import OptimizationCard from '../components/OptimizationCard';
 import TabNavigation from '../components/TabNavigation';
-import SelectionPanel from '../components/SelectionPanel';
+import ActiveSelectionPanel from '../components/ActiveSelectionPanel';
 import ResultsPage from './ResultsPage';
 
 // Types pour les optimisations
@@ -626,203 +626,210 @@ export default function EnhancedChampionsPage() {
         />
       </div>
 
-      {/* Panneau des sélections */}
-      <SelectionPanel
-        selectedChampions={selectedChampions}
-        selectedItems={selectedItems}
-        selectedSynergies={selectedSynergies}
-        selectedOptimizations={selectedOptimizations}
-        champions={champions}
-        items={items}
-        optimizations={optimizations}
-        onRemoveChampion={removeFromChampions}
-        onRemoveItem={removeFromItems}
-        onRemoveSynergy={removeFromSynergies}
-        onRemoveOptimization={removeFromOptimizations}
-        onClearAll={resetAllSelections}
-      />
-
-      {/* Affichage du contenu selon l'onglet */}
-      <div className="bg-slate-800/30 backdrop-blur rounded-xl border border-slate-700/30 overflow-hidden shadow-2xl">
-        {/* Contrôles de tri */}
-        <div className="p-4 border-b border-slate-700/30 bg-gradient-to-r from-slate-800/50 to-slate-700/30">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <ArrowUpDown className="w-4 h-4 text-slate-400" />
-                <span className="text-sm text-slate-300 font-medium">
-                  Trier par :
-                </span>
+      {/* Layout principal 2/3 - 1/3 */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        {/* Zone principale des résultats (2/3) */}
+        <div className="xl:col-span-2">
+          <div className="bg-slate-800/30 backdrop-blur rounded-xl border border-slate-700/30 overflow-hidden shadow-2xl">
+            {/* Contrôles de tri */}
+            <div className="p-4 border-b border-slate-700/30 bg-gradient-to-r from-slate-800/50 to-slate-700/30">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <ArrowUpDown className="w-4 h-4 text-slate-400" />
+                    <span className="text-sm text-slate-300 font-medium">
+                      Trier par :
+                    </span>
+                  </div>
+                  <select
+                    value={filters.sortBy}
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        sortBy: e.target.value as any,
+                      }))
+                    }
+                    className="bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-medium"
+                  >
+                    <option value="name">Nom</option>
+                    {activeTab === 'champions' && (
+                      <>
+                        <option value="cost">Coût</option>
+                        <option value="winrate">Winrate</option>
+                      </>
+                    )}
+                  </select>
+                </div>
+                <div className="text-xs text-slate-500 bg-slate-800/50 px-3 py-1.5 rounded-full font-medium">
+                  {sortedData.length} résultats
+                </div>
               </div>
-              <select
-                value={filters.sortBy}
-                onChange={(e) =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    sortBy: e.target.value as any,
-                  }))
-                }
-                className="bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-medium"
-              >
-                <option value="name">Nom</option>
-                {activeTab === 'champions' && (
-                  <>
-                    <option value="cost">Coût</option>
-                    <option value="winrate">Winrate</option>
-                  </>
-                )}
-              </select>
             </div>
-            <div className="text-xs text-slate-500 bg-slate-800/50 px-3 py-1.5 rounded-full font-medium">
-              {sortedData.length} résultats
+
+            <div className="p-6">
+              {loading ? (
+                <div className="flex flex-col items-center justify-center py-20 space-y-4">
+                  <div className="relative">
+                    <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
+                    <div
+                      className="absolute inset-0 w-16 h-16 border-4 border-purple-500/20 border-b-purple-500 rounded-full animate-spin"
+                      style={{
+                        animationDirection: 'reverse',
+                        animationDuration: '1.5s',
+                      }}
+                    ></div>
+                  </div>
+                  <p className="text-slate-400 text-lg font-medium">
+                    Chargement des données...
+                  </p>
+                </div>
+              ) : sortedData.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20 space-y-4">
+                  <div className="w-20 h-20 bg-slate-700/50 rounded-full flex items-center justify-center">
+                    <Search className="w-10 h-10 text-slate-500" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-slate-400 text-lg mb-2">
+                      Aucun résultat trouvé
+                    </p>
+                    <p className="text-slate-500 text-sm">
+                      Essayez d'ajuster votre recherche
+                    </p>
+                    <button
+                      onClick={clearAllFilters}
+                      className="mt-3 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg hover:bg-blue-600/30 transition-colors text-sm"
+                    >
+                      Effacer tous les filtres
+                    </button>
+                  </div>
+                </div>
+              ) : filters.viewMode === 'grid' ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {sortedData.map((item: any) => {
+                    if (activeTab === 'champions') {
+                      return (
+                        <ChampionCard
+                          key={item.key}
+                          champion={item}
+                          viewMode={filters.viewMode}
+                          isFavorite={favorites.includes(item.name)}
+                          onToggleFavorite={toggleFavorite}
+                          onAddAsTag={(name) => addToSelection(name, 'champion')}
+                          recommendedItems={getRecommendedItems(item)}
+                        />
+                      );
+                    } else if (activeTab === 'items') {
+                      return (
+                        <ItemCard
+                          key={item.key}
+                          item={item}
+                          viewMode={filters.viewMode}
+                          isSelected={selectedItems.includes(item.key)}
+                          onToggleSelect={(key) => addToSelection(item.name, 'item', key)}
+                          onAddAsTag={(name) => addToSelection(name, 'item', item.key)}
+                        />
+                      );
+                    } else if (activeTab === 'synergies') {
+                      return (
+                        <SynergyCard
+                          key={item.name}
+                          synergy={item}
+                          viewMode={filters.viewMode}
+                          isSelected={selectedSynergies.includes(item.name)}
+                          onToggleSelect={(name) => addToSelection(name, 'synergy')}
+                          onAddAsTag={(name) => addToSelection(name, 'synergy')}
+                          championCount={getSynergyChampionCount(item.name)}
+                        />
+                      );
+                    } else if (activeTab === 'optimizations') {
+                      return (
+                        <OptimizationCard
+                          key={item.id}
+                          optimization={item}
+                          viewMode={filters.viewMode}
+                          isSelected={selectedOptimizations.includes(item.id)}
+                          onToggleSelect={(id) => addToSelection(item.name, 'optimization', id)}
+                          onAddAsTag={(name) => addToSelection(name, 'optimization', item.id)}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {sortedData.map((item: any) => {
+                    if (activeTab === 'champions') {
+                      return (
+                        <ChampionCard
+                          key={item.key}
+                          champion={item}
+                          viewMode={filters.viewMode}
+                          isFavorite={favorites.includes(item.name)}
+                          onToggleFavorite={toggleFavorite}
+                          onAddAsTag={(name) => addToSelection(name, 'champion')}
+                          recommendedItems={getRecommendedItems(item)}
+                        />
+                      );
+                    } else if (activeTab === 'items') {
+                      return (
+                        <ItemCard
+                          key={item.key}
+                          item={item}
+                          viewMode={filters.viewMode}
+                          isSelected={selectedItems.includes(item.key)}
+                          onToggleSelect={(key) => addToSelection(item.name, 'item', key)}
+                          onAddAsTag={(name) => addToSelection(name, 'item', item.key)}
+                        />
+                      );
+                    } else if (activeTab === 'synergies') {
+                      return (
+                        <SynergyCard
+                          key={item.name}
+                          synergy={item}
+                          viewMode={filters.viewMode}
+                          isSelected={selectedSynergies.includes(item.name)}
+                          onToggleSelect={(name) => addToSelection(name, 'synergy')}
+                          onAddAsTag={(name) => addToSelection(name, 'synergy')}
+                          championCount={getSynergyChampionCount(item.name)}
+                        />
+                      );
+                    } else if (activeTab === 'optimizations') {
+                      return (
+                        <OptimizationCard
+                          key={item.id}
+                          optimization={item}
+                          viewMode={filters.viewMode}
+                          isSelected={selectedOptimizations.includes(item.id)}
+                          onToggleSelect={(id) => addToSelection(item.name, 'optimization', id)}
+                          onAddAsTag={(name) => addToSelection(name, 'optimization', item.id)}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        <div className="p-6">
-          {loading ? (
-            <div className="flex flex-col items-center justify-center py-20 space-y-4">
-              <div className="relative">
-                <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
-                <div
-                  className="absolute inset-0 w-16 h-16 border-4 border-purple-500/20 border-b-purple-500 rounded-full animate-spin"
-                  style={{
-                    animationDirection: 'reverse',
-                    animationDuration: '1.5s',
-                  }}
-                ></div>
-              </div>
-              <p className="text-slate-400 text-lg font-medium">
-                Chargement des données...
-              </p>
-            </div>
-          ) : sortedData.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 space-y-4">
-              <div className="w-20 h-20 bg-slate-700/50 rounded-full flex items-center justify-center">
-                <Search className="w-10 h-10 text-slate-500" />
-              </div>
-              <div className="text-center">
-                <p className="text-slate-400 text-lg mb-2">
-                  Aucun résultat trouvé
-                </p>
-                <p className="text-slate-500 text-sm">
-                  Essayez d'ajuster votre recherche
-                </p>
-                <button
-                  onClick={clearAllFilters}
-                  className="mt-3 px-4 py-2 bg-blue-600/20 text-blue-400 rounded-lg hover:bg-blue-600/30 transition-colors text-sm"
-                >
-                  Effacer tous les filtres
-                </button>
-              </div>
-            </div>
-          ) : filters.viewMode === 'grid' ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
-              {sortedData.map((item: any) => {
-                if (activeTab === 'champions') {
-                  return (
-                    <ChampionCard
-                      key={item.key}
-                      champion={item}
-                      viewMode={filters.viewMode}
-                      isFavorite={favorites.includes(item.name)}
-                      onToggleFavorite={toggleFavorite}
-                      onAddAsTag={(name) => addToSelection(name, 'champion')}
-                      recommendedItems={getRecommendedItems(item)}
-                    />
-                  );
-                } else if (activeTab === 'items') {
-                  return (
-                    <ItemCard
-                      key={item.key}
-                      item={item}
-                      viewMode={filters.viewMode}
-                      isSelected={selectedItems.includes(item.key)}
-                      onToggleSelect={(key) => addToSelection(item.name, 'item', key)}
-                      onAddAsTag={(name) => addToSelection(name, 'item', item.key)}
-                    />
-                  );
-                } else if (activeTab === 'synergies') {
-                  return (
-                    <SynergyCard
-                      key={item.name}
-                      synergy={item}
-                      viewMode={filters.viewMode}
-                      isSelected={selectedSynergies.includes(item.name)}
-                      onToggleSelect={(name) => addToSelection(name, 'synergy')}
-                      onAddAsTag={(name) => addToSelection(name, 'synergy')}
-                      championCount={getSynergyChampionCount(item.name)}
-                    />
-                  );
-                } else if (activeTab === 'optimizations') {
-                  return (
-                    <OptimizationCard
-                      key={item.id}
-                      optimization={item}
-                      viewMode={filters.viewMode}
-                      isSelected={selectedOptimizations.includes(item.id)}
-                      onToggleSelect={(id) => addToSelection(item.name, 'optimization', id)}
-                      onAddAsTag={(name) => addToSelection(name, 'optimization', item.id)}
-                    />
-                  );
-                }
-                return null;
-              })}
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {sortedData.map((item: any) => {
-                if (activeTab === 'champions') {
-                  return (
-                    <ChampionCard
-                      key={item.key}
-                      champion={item}
-                      viewMode={filters.viewMode}
-                      isFavorite={favorites.includes(item.name)}
-                      onToggleFavorite={toggleFavorite}
-                      onAddAsTag={(name) => addToSelection(name, 'champion')}
-                      recommendedItems={getRecommendedItems(item)}
-                    />
-                  );
-                } else if (activeTab === 'items') {
-                  return (
-                    <ItemCard
-                      key={item.key}
-                      item={item}
-                      viewMode={filters.viewMode}
-                      isSelected={selectedItems.includes(item.key)}
-                      onToggleSelect={(key) => addToSelection(item.name, 'item', key)}
-                      onAddAsTag={(name) => addToSelection(name, 'item', item.key)}
-                    />
-                  );
-                } else if (activeTab === 'synergies') {
-                  return (
-                    <SynergyCard
-                      key={item.name}
-                      synergy={item}
-                      viewMode={filters.viewMode}
-                      isSelected={selectedSynergies.includes(item.name)}
-                      onToggleSelect={(name) => addToSelection(name, 'synergy')}
-                      onAddAsTag={(name) => addToSelection(name, 'synergy')}
-                      championCount={getSynergyChampionCount(item.name)}
-                    />
-                  );
-                } else if (activeTab === 'optimizations') {
-                  return (
-                    <OptimizationCard
-                      key={item.id}
-                      optimization={item}
-                      viewMode={filters.viewMode}
-                      isSelected={selectedOptimizations.includes(item.id)}
-                      onToggleSelect={(id) => addToSelection(item.name, 'optimization', id)}
-                      onAddAsTag={(name) => addToSelection(name, 'optimization', item.id)}
-                    />
-                  );
-                }
-                return null;
-              })}
-            </div>
-          )}
+        {/* Panneau de sélection active (1/3) */}
+        <div className="xl:col-span-1">
+          <ActiveSelectionPanel
+            selectedChampions={selectedChampions}
+            selectedItems={selectedItems}
+            selectedSynergies={selectedSynergies}
+            selectedOptimizations={selectedOptimizations}
+            champions={champions}
+            items={items}
+            optimizations={optimizations}
+            onRemoveChampion={removeFromChampions}
+            onRemoveItem={removeFromItems}
+            onRemoveSynergy={removeFromSynergies}
+            onRemoveOptimization={removeFromOptimizations}
+            onClearAll={resetAllSelections}
+          />
         </div>
       </div>
 
