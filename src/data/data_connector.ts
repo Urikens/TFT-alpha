@@ -69,6 +69,59 @@ const championTraitsMapping: Record<string, string[]> = {
   "Zyra": ["Street Demon", "Techie"]
 };
 
+// Mapping des items recommandés pour chaque champion
+const recommendedItemsMapping: Record<string, string[]> = {
+  // Marksmen
+  "Aphelios": ["InfinityEdge", "LastWhisper", "GuinsoosRageblade"],
+  "Jinx": ["InfinityEdge", "LastWhisper", "RunaansHurricane"],
+  "Xayah": ["InfinityEdge", "LastWhisper", "GuinsoosRageblade"],
+  "Zeri": ["GuinsoosRageblade", "RunaansHurricane", "RapidFireCannon"],
+  
+  // AP Carries
+  "Aurora": ["BlueBuff", "RabadonsDeathcap", "JeweledGauntlet"],
+  "Brand": ["SpearOfShojin", "JeweledGauntlet", "Morellonomicon"],
+  "Fiddlesticks": ["RabadonsDeathcap", "JeweledGauntlet", "ArchangelsStaff"],
+  "Morgana": ["Morellonomicon", "RabadonsDeathcap", "ArchangelsStaff"],
+  "Vex": ["JeweledGauntlet", "SpearOfShojin", "RabadonsDeathcap"],
+  
+  // Tanks
+  "Braum": ["WarmogsArmor", "BrambleVest", "DragonsClaw"],
+  "Cho'Gath": ["WarmogsArmor", "GargoyleStoneplate", "Redemption"],
+  "Dr. Mundo": ["WarmogsArmor", "TitansResolve", "Redemption"],
+  "Leona": ["GargoyleStoneplate", "BrambleVest", "DragonsClaw"],
+  "Rhaast": ["WarmogsArmor", "BrambleVest", "DragonsClaw"],
+  
+  // Slayers
+  "Senna": ["Bloodthirster", "InfinityEdge", "LastWhisper"],
+  "Shaco": ["InfinityEdge", "Bloodthirster", "GuardianAngel"],
+  "Vayne": ["GuinsoosRageblade", "InfinityEdge", "Bloodthirster"],
+  "Zed": ["InfinityEdge", "Bloodthirster", "GuardianAngel"],
+  
+  // Bruisers
+  "Alistar": ["WarmogsArmor", "SteraksGage", "Redemption"],
+  "Darius": ["SteraksGage", "TitansResolve", "Bloodthirster"],
+  "Gragas": ["WarmogsArmor", "Redemption", "GargoyleStoneplate"],
+  "Kobuko": ["SteraksGage", "TitansResolve", "Bloodthirster"],
+  
+  // Techies
+  "Mordekaiser": ["RabadonsDeathcap", "JeweledGauntlet", "HextechGunblade"],
+  "Seraphine": ["BlueBuff", "Morellonomicon", "RabadonsDeathcap"],
+  "Veigar": ["BlueBuff", "JeweledGauntlet", "RabadonsDeathcap"],
+  "Zyra": ["Morellonomicon", "SpearOfShojin", "RabadonsDeathcap"],
+  
+  // Default items by class
+  "default_Marksman": ["InfinityEdge", "LastWhisper", "GuinsoosRageblade"],
+  "default_Dynamo": ["BlueBuff", "RabadonsDeathcap", "JeweledGauntlet"],
+  "default_Bruiser": ["WarmogsArmor", "SteraksGage", "TitansResolve"],
+  "default_Vanguard": ["WarmogsArmor", "BrambleVest", "GargoyleStoneplate"],
+  "default_Bastion": ["WarmogsArmor", "BrambleVest", "GargoyleStoneplate"],
+  "default_Techie": ["BlueBuff", "RabadonsDeathcap", "JeweledGauntlet"],
+  "default_Executioner": ["InfinityEdge", "LastWhisper", "Bloodthirster"],
+  "default_Slayer": ["InfinityEdge", "Bloodthirster", "GuardianAngel"],
+  "default_Rapidfire": ["GuinsoosRageblade", "RunaansHurricane", "RapidFireCannon"],
+  "default_A.M.P.": ["BlueBuff", "RabadonsDeathcap", "JeweledGauntlet"]
+};
+
 /**
  * Classe utilitaire pour lier les différentes sources de données TFT
  */
@@ -138,53 +191,41 @@ export class TFTDataConnector {
    * Génère des items recommandés pour chaque champion en fonction de ses traits
    */
   private generateRecommendedItems(): void {
-    // Mapping de classes à des items recommandés
-    const itemsByClass: Record<string, string[]> = {
-      'Marksman': ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade', 'RunaansHurricane', 'RapidFireCannon'],
-      'Controller': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
-      'Bruiser': ['WarmogsArmor', 'TitansResolve', 'SteraksGage', 'RedBuff', 'Bloodthirster'],
-      'Vanguard': ['BrambleVest', 'DragonsClaw', 'GargoyleStoneplate', 'WarmogsArmor', 'Redemption'],
-      'Swift': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper']
-    };
-
     this.champions.forEach(champion => {
-      let recommendedItemKeys: string[] = [];
+      // Vérifie d'abord si le champion a des items recommandés spécifiques
+      if (recommendedItemsMapping[champion.name]) {
+        const itemKeys = recommendedItemsMapping[champion.name];
+        const items = this.findItemsByKeys(itemKeys);
+        this.recommendedItemsMap.set(champion.name, items);
+        return;
+      }
       
+      // Sinon, utilise les items recommandés par classe
       if (champion.traits) {
-        // Priorise la classe principale pour les items
-        const classTraits = champion.traits.filter(trait => 
-          ['Marksman', 'Controller', 'Bruiser', 'Vanguard', 'Swift'].includes(trait)
-        );
-        
-        if (classTraits.length > 0) {
-          const mainClass = classTraits[0];
-          recommendedItemKeys = itemsByClass[mainClass] || [];
-        }
-        
-        // Si c'est un carry, priorise les items offensifs
-        if (champion.asCarry > 0) {
-          if (champion.traits.includes('Marksman')) {
-            recommendedItemKeys = ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade'];
-          } else if (champion.traits.includes('Controller')) {
-            recommendedItemKeys = ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet'];
-          } else {
-            recommendedItemKeys = ['Bloodthirster', 'InfinityEdge', 'GuinsoosRageblade'];
+        for (const trait of champion.traits) {
+          const defaultKey = `default_${trait}`;
+          if (recommendedItemsMapping[defaultKey]) {
+            const itemKeys = recommendedItemsMapping[defaultKey];
+            const items = this.findItemsByKeys(itemKeys);
+            this.recommendedItemsMap.set(champion.name, items);
+            return;
           }
         }
       }
       
-      // Trouve les objets correspondants
-      const items = recommendedItemKeys
-        .map(key => this.items.find(item => item.key.includes(key)))
-        .filter(Boolean) as Item[];
-      
-      // Si aucun item n'est trouvé, utilise des items par défaut
-      if (items.length === 0) {
-        this.recommendedItemsMap.set(champion.name, this.items.slice(0, 3));
-      } else {
-        this.recommendedItemsMap.set(champion.name, items.slice(0, 3));
-      }
+      // Si aucun item recommandé n'est trouvé, utilise des items par défaut
+      const defaultItems = this.findItemsByKeys(['WarmogsArmor', 'InfinityEdge', 'RabadonsDeathcap']);
+      this.recommendedItemsMap.set(champion.name, defaultItems);
     });
+  }
+
+  /**
+   * Trouve des items par leurs clés
+   */
+  private findItemsByKeys(keys: string[]): Item[] {
+    return keys
+      .map(key => this.items.find(item => item.key.includes(key)))
+      .filter(Boolean) as Item[];
   }
 
   /**

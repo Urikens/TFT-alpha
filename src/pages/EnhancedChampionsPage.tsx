@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, ArrowUpDown, Grid3X3, List } from 'lucide-react';
 import { Champion, Item, FilterState } from '../types';
 import { commonSynergies } from '../data/synergies';
-import { generatedChampions } from '../data/champions_generated';
-import { generatedItemsStats } from '../data/items_stats_generated';
+import { tftDataConnector } from '../data/data_connector';
 import SearchBar from '../components/SearchBar';
 import AnalyzeButton from '../components/AnalyzeButton';
 import AnalysisModal from '../components/AnalysisModal';
@@ -37,7 +36,6 @@ export default function EnhancedChampionsPage() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [activeTab, setActiveTab] = useState<'champions' | 'items' | 'synergies' | 'optimizations'>('champions');
-  const [recommendedItemsMap, setRecommendedItemsMap] = useState<Record<string, Item[]>>({});
 
   // États d'analyse
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -97,9 +95,9 @@ export default function EnhancedChampionsPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Utiliser les données générées directement
-        const championsWithStats = generatedChampions;
-        const itemsData = generatedItemsStats;
+        // Utiliser le connecteur de données
+        const championsData = tftDataConnector.getAllChampions();
+        const itemsData = tftDataConnector.getAllItems();
 
         // Générer des optimisations simulées
         const mockOptimizations: Optimization[] = [
@@ -154,15 +152,8 @@ export default function EnhancedChampionsPage() {
             tips: ['Vérifiez les assassins', 'Adaptez contre les AoE', 'Repositionnez entre les rounds']
           }
         ];
-
-        // Générer des items recommandés pour chaque champion
-        const itemsMap: Record<string, Item[]> = {};
-        championsWithStats.forEach(champion => {
-          itemsMap[champion.name] = getRecommendedItemsForChampion(champion);
-        });
         
-        setRecommendedItemsMap(itemsMap);
-        setChampions(championsWithStats);
+        setChampions(championsData);
         setItems(itemsData);
         setOptimizations(mockOptimizations);
       } catch (error) {
@@ -173,56 +164,6 @@ export default function EnhancedChampionsPage() {
     }
     fetchData();
   }, []);
-
-  // Fonction pour générer des items recommandés pour chaque champion
-  const getRecommendedItemsForChampion = (champion: Champion): Item[] => {
-    // Mapping de classes à des items recommandés
-    const itemsByClass: Record<string, string[]> = {
-      'Marksman': ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade', 'RunaansHurricane', 'RapidFireCannon'],
-      'Controller': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
-      'Bruiser': ['WarmogsArmor', 'TitansResolve', 'SteraksGage', 'RedBuff', 'Bloodthirster'],
-      'Vanguard': ['BrambleVest', 'DragonsClaw', 'GargoyleStoneplate', 'WarmogsArmor', 'Redemption'],
-      'Swift': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper']
-    };
-    
-    // Sélectionne des items basés sur les traits du champion
-    let recommendedItemKeys: string[] = [];
-    
-    if (champion.traits) {
-      // Priorise la classe principale pour les items
-      const classTraits = champion.traits.filter(trait => 
-        ['Marksman', 'Controller', 'Bruiser', 'Vanguard', 'Swift'].includes(trait)
-      );
-      
-      if (classTraits.length > 0) {
-        const mainClass = classTraits[0];
-        recommendedItemKeys = itemsByClass[mainClass] || [];
-      }
-      
-      // Si c'est un carry, priorise les items offensifs
-      if (champion.asCarry > 0) {
-        if (champion.traits.includes('Marksman')) {
-          recommendedItemKeys = ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade'];
-        } else if (champion.traits.includes('Controller')) {
-          recommendedItemKeys = ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet'];
-        } else {
-          recommendedItemKeys = ['Bloodthirster', 'InfinityEdge', 'GuinsoosRageblade'];
-        }
-      }
-    }
-    
-    // Trouve les objets correspondants dans generatedItemsStats
-    const items = recommendedItemKeys
-      .map(key => generatedItemsStats.find(item => item.key.includes(key)))
-      .filter(Boolean) as Item[];
-    
-    // Si aucun item n'est trouvé, retourne des items par défaut
-    if (items.length === 0) {
-      return generatedItemsStats.slice(0, 3);
-    }
-    
-    return items.slice(0, 3);
-  };
 
   // Gestion de la recherche SANS changement automatique d'onglet
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
@@ -731,7 +672,7 @@ export default function EnhancedChampionsPage() {
                           isFavorite={favorites.includes(item.name)}
                           onToggleFavorite={toggleFavorite}
                           onAddAsTag={(name) => addToSelection(name, 'champion')}
-                          recommendedItems={recommendedItemsMap[item.name] || []}
+                          recommendedItems={tftDataConnector.getRecommendedItems(item.name)}
                         />
                       );
                     } else if (activeTab === 'items') {
@@ -784,7 +725,7 @@ export default function EnhancedChampionsPage() {
                           isFavorite={favorites.includes(item.name)}
                           onToggleFavorite={toggleFavorite}
                           onAddAsTag={(name) => addToSelection(name, 'champion')}
-                          recommendedItems={recommendedItemsMap[item.name] || []}
+                          recommendedItems={tftDataConnector.getRecommendedItems(item.name)}
                         />
                       );
                     } else if (activeTab === 'items') {
