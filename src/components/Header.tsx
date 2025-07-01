@@ -15,9 +15,9 @@ export default function Header({
   currentPage = 'Accueil', 
   onNavigate, 
   patchInfo = {
-    version: '14.1',
-    set: 'Set 10',
-    lastUpdate: '2024-01-15 14:30'
+    version: '15.13',
+    set: 'Set 14',
+    lastUpdate: '2025-07-01 06:00:38'
   }
 }: HeaderProps) {
   const handleNavigation = (page: string) => {
@@ -100,6 +100,7 @@ export default function Header({
             {[
               { name: 'Accueil', key: 'home' },
               { name: 'Champions', key: 'champions' },
+              { name: 'Items', key: 'items' },
               { name: 'Compositions', key: 'compositions' },
             ].map((page) => (
               <button
