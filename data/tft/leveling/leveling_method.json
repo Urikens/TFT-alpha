@@ -1,0 +1,128 @@
+{
+  "standard": {
+    "name": "Standard",
+    "description": "Focus on hitting gold thresholds while keeping up with the pace of the lobby.",
+    "leveling": {
+      "lvl4": [
+        "Lvl  **4**  by  **2-1**",
+        "Save Gold"
+      ],
+      "lvl5": [
+        "Lvl  **5**  by  **2-5**",
+        "Save Gold"
+      ],
+      "lvl6": [
+        "Lvl  **6**  by  **3-2**",
+        "Stabilize (Stay 20g+)"
+      ],
+      "lvl7": [
+        "Lvl  **7**  by  **4-1**",
+        "Stabilize (Stay 20g+)"
+      ],
+      "lvl8": [
+        "Lvl  **8**  by  **5-1**",
+        "Final Upgrades / Level"
+      ]
+    }
+  },
+  "slowroll@5": {
+    "name": "Slowroll - Lvl 5",
+    "description": "Don't level up! Try to 3 star these champions at **Lvl 5** by rolling your excess gold and staying above 50g.",
+    "leveling": {
+      "lvl4": [
+        "Lvl  **4**  by  **2-3**",
+        "Reach 10g"
+      ],
+      "lvl5": [
+        "Lvl  **5**  by  **3-1**",
+        "Slowroll For 3 Star"
+      ],
+      "lvl6": [
+        "Lvl  **6**  by  **4-1**",
+        "Final Upgrades / Level"
+      ],
+      "lvl7": [
+        "Lvl  **7/8  ASAP**",
+        "Econ to 50g & Level"
+      ]
+    }
+  },
+  "slowroll@6": {
+    "name": "Slowroll - Lvl 6",
+    "description": "Try to 3 star these champions at **Lvl 6** by rolling excess gold and staying above 50g.",
+    "leveling": {
+      "lvl4": [
+        "Lvl  **4**  by  **2-1**",
+        "Save Gold"
+      ],
+      "lvl5": [
+        "Lvl  **5**  by  **2-5**",
+        "Save Gold"
+      ],
+      "lvl6": [
+        "Lvl  **6**  by  **3-2**",
+        "Stabilize / Slowroll"
+      ],
+      "lvl7": [
+        "Lvl  **7**  by  **5-3**",
+        "Final Upgrades / Level"
+      ],
+      "lvl8": [
+        "Lvl  **8  ASAP**",
+        "Econ to 50g & Level"
+      ]
+    }
+  },
+  "slowroll@7": {
+    "name": "Slowroll - Lvl 7",
+    "description": "Try to 3 star these champions at **Lvl 7** by rolling excess gold and staying above 50g.",
+    "leveling": {
+      "lvl4": [
+        "Lvl  **4**  by  **2-1**",
+        "Save Gold"
+      ],
+      "lvl5": [
+        "Lvl  **5**  by  **2-5**",
+        "Save Gold"
+      ],
+      "lvl6": [
+        "Lvl  **6**  by  **3-2**",
+        "Stabilize (Stay 20g+)"
+      ],
+      "lvl7": [
+        "Lvl  **7**  by  **4-1**",
+        "Stabilize / Slowroll"
+      ],
+      "lvl8": [
+        "Lvl  **8**  by  **5-5**",
+        "Final Upgrades / Level"
+      ]
+    }
+  },
+  "slowroll@8": {
+    "name": "Slowroll - Lvl 8",
+    "description": "Try to 3 star these champions at **Lvl 8** by rolling excess gold and staying above 50g.",
+    "leveling": {
+      "lvl4": [
+        "Lvl  **4**  by  **2-1**",
+        "Save Gold"
+      ],
+      "lvl5": [
+        "Lvl  **5**  by  **2-5**",
+        "Save Gold"
+      ],
+      "lvl6": [
+        "Lvl  **6**  by  **3-2**",
+        "Save Gold"
+      ],
+      "lvl7": [
+        "Lvl  **7**  by  **4-1**",
+        "Stabilize (Stay 20g+)"
+      ],
+      "lvl8": [
+        "Lvl  **8 ASAP**",
+        "Slowroll / Final Upgrades"
+      ]
+    }
+  }
+}
