@@ -7,7 +7,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Alistar",
     "name": "Alistar",
     "cost": [3],
-    "traits": ["kaka", "Vanguard"],
+    "traits": ["Golden Ox", "Bruiser"],
     "imageUrl": "/images/champions/Alistar.webp",
     "skill": {
       "name": "Pulverize",
@@ -22,7 +22,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Annie",
     "name": "Annie",
     "cost": [1],
-    "traits": ["Divinicorp", "Controller"],
+    "traits": ["Golden Ox", "A.M.P."],
     "imageUrl": "/images/champions/Annie.webp",
     "skill": {
       "name": "Disintegrate",
@@ -37,7 +37,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Aphelios",
     "name": "Aphelios",
     "cost": [4],
-    "traits": ["Divinicorp", "Marksman"],
+    "traits": ["Golden Ox", "Marksman"],
     "imageUrl": "/images/champions/Aphelios.webp",
     "skill": {
       "name": "Moonlight Vigil",
@@ -52,7 +52,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Aurora",
     "name": "Aurora",
     "cost": [5],
-    "traits": ["Anima Squad", "Marksman"],
+    "traits": ["Anima Squad", "Dynamo"],
     "imageUrl": "/images/champions/Aurora.webp",
     "skill": {
       "name": "Spirit Bomb",
@@ -67,7 +67,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Brand",
     "name": "Brand",
     "cost": [2],
-    "traits": ["Divinicorp", "Controller"],
+    "traits": ["Street Demon", "Techie"],
     "imageUrl": "/images/champions/Brand.webp",
     "skill": {
       "name": "Pyroclasm",
@@ -82,7 +82,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Braum",
     "name": "Braum",
     "cost": [1],
-    "traits": ["Ballistek", "Vanguard"],
+    "traits": ["Syndicate", "Vanguard"],
     "imageUrl": "/images/champions/Braum.webp",
     "skill": {
       "name": "Unbreakable",
@@ -97,7 +97,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Chogath",
     "name": "Cho'Gath",
     "cost": [4],
-    "traits": ["Mob", "Bruiser"],
+    "traits": ["BoomBots", "Bruiser"],
     "imageUrl": "/images/champions/Chogath.webp",
     "skill": {
       "name": "Feast",
@@ -112,7 +112,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Darius",
     "name": "Darius",
     "cost": [2],
-    "traits": ["Street Demon", "Bruiser"],
+    "traits": ["Syndicate", "Bruiser"],
     "imageUrl": "/images/champions/Darius.webp",
     "skill": {
       "name": "Noxian Guillotine",
@@ -142,7 +142,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Draven",
     "name": "Draven",
     "cost": [4],
-    "traits": ["Street Demon", "Marksman"],
+    "traits": ["Cypher", "Rapidfire"],
     "imageUrl": "/images/champions/Draven.webp",
     "skill": {
       "name": "Spinning Axe",
@@ -157,7 +157,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Ekko",
     "name": "Ekko",
     "cost": [3],
-    "traits": ["Anima Squad", "Swift"],
+    "traits": ["Street Demon", "Strategist"],
     "imageUrl": "/images/champions/Ekko.webp",
     "skill": {
       "name": "Chronobreak",
@@ -172,7 +172,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Elise",
     "name": "Elise",
     "cost": [1],
-    "traits": ["Mob", "Controller"],
+    "traits": ["Nitro", "Dynamo"],
     "imageUrl": "/images/champions/Elise.webp",
     "skill": {
       "name": "Spider Form",
@@ -187,7 +187,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Fiddlesticks",
     "name": "Fiddlesticks",
     "cost": [5],
-    "traits": ["Mob", "Controller"],
+    "traits": ["BoomBots", "Techie"],
     "imageUrl": "/images/champions/Fiddlesticks.webp",
     "skill": {
       "name": "Crowstorm",
@@ -202,7 +202,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Galio",
     "name": "Galio",
     "cost": [4],
-    "traits": ["Divinicorp", "Vanguard"],
+    "traits": ["Cypher", "Bastion"],
     "imageUrl": "/images/champions/Galio.webp",
     "skill": {
       "name": "Hero's Entrance",
@@ -217,7 +217,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Gragas",
     "name": "Gragas",
     "cost": [2],
-    "traits": ["Ballistek", "Bruiser"],
+    "traits": ["Divinicorp", "Bruiser"],
     "imageUrl": "/images/champions/Gragas.webp",
     "skill": {
       "name": "Explosive Cask",
@@ -232,7 +232,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Graves",
     "name": "Graves",
     "cost": [3],
-    "traits": ["Ballistek", "Marksman"],
+    "traits": ["Golden Ox", "Executioner"],
     "imageUrl": "/images/champions/Graves.webp",
     "skill": {
       "name": "End of the Line",
@@ -247,7 +247,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Illaoi",
     "name": "Illaoi",
     "cost": [3],
-    "traits": ["Divinicorp", "Bruiser"],
+    "traits": ["Anima Squad", "Bastion"],
     "imageUrl": "/images/champions/Illaoi.webp",
     "skill": {
       "name": "Leap of Faith",
@@ -262,7 +262,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Jarvan",
     "name": "Jarvan IV",
     "cost": [1],
-    "traits": ["Divinicorp", "Vanguard"],
+    "traits": ["Golden Ox", "Vanguard"],
     "imageUrl": "/images/champions/Jarvan.webp",
     "skill": {
       "name": "Cataclysm",
@@ -277,7 +277,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Jax",
     "name": "Jax",
     "cost": [2],
-    "traits": ["Anima Squad", "Bruiser"],
+    "traits": ["Exotech", "Bastion"],
     "imageUrl": "/images/champions/Jax.webp",
     "skill": {
       "name": "Counter Strike",
@@ -292,7 +292,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Jhin",
     "name": "Jhin",
     "cost": [4],
-    "traits": ["Anima Squad", "Marksman"],
+    "traits": ["Exotech", "Dynamo"],
     "imageUrl": "/images/champions/Jhin.webp",
     "skill": {
       "name": "Curtain Call",
@@ -307,7 +307,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Jinx",
     "name": "Jinx",
     "cost": [3],
-    "traits": ["Anima Squad", "Marksman"],
+    "traits": ["Street Demon", "Marksman"],
     "imageUrl": "/images/champions/Jinx.webp",
     "skill": {
       "name": "Super Mega Death Rocket!",
@@ -322,7 +322,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Kindred",
     "name": "Kindred",
     "cost": [3],
-    "traits": ["Mob", "Marksman"],
+    "traits": ["Nitro", "Rapidfire"],
     "imageUrl": "/images/champions/Kindred.webp",
     "skill": {
       "name": "Lamb's Respite",
@@ -337,7 +337,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Kobuko",
     "name": "Kobuko",
     "cost": [1],
-    "traits": ["Street Demon", "Swift"],
+    "traits": ["Cyberboss", "Bruiser"],
     "imageUrl": "/images/champions/Kobuko.webp",
     "skill": {
       "name": "Dash Strike",
@@ -352,7 +352,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_KogMaw",
     "name": "Kog'Maw",
     "cost": [2],
-    "traits": ["Ballistek", "Marksman"],
+    "traits": ["BoomBots", "Rapidfire"],
     "imageUrl": "/images/champions/KogMaw.webp",
     "skill": {
       "name": "Living Artillery",
@@ -367,7 +367,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_LeBlanc",
     "name": "LeBlanc",
     "cost": [2],
-    "traits": ["Anima Squad", "Controller"],
+    "traits": ["Cypher", "Strategist"],
     "imageUrl": "/images/champions/LeBlanc.webp",
     "skill": {
       "name": "Distortion",
@@ -397,7 +397,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_MissFortune",
     "name": "Miss Fortune",
     "cost": [5],
-    "traits": ["Ballistek", "Marksman"],
+    "traits": ["Syndicate", "Dynamo"],
     "imageUrl": "/images/champions/MissFortune.webp",
     "skill": {
       "name": "Bullet Time",
@@ -412,7 +412,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Mordekaiser",
     "name": "Mordekaiser",
     "cost": [5],
-    "traits": ["Street Demon", "Vanguard"],
+    "traits": ["Exotech", "Techie"],
     "imageUrl": "/images/champions/Mordekaiser.webp",
     "skill": {
       "name": "Death Realm",
@@ -427,7 +427,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Morgana",
     "name": "Morgana",
     "cost": [4],
-    "traits": ["Divinicorp", "Controller"],
+    "traits": ["Divinicorp", "Dynamo"],
     "imageUrl": "/images/champions/Morgana.webp",
     "skill": {
       "name": "Soul Shackles",
@@ -442,7 +442,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Naafiri",
     "name": "Naafiri",
     "cost": [3],
-    "traits": ["Street Demon", "Swift"],
+    "traits": ["Exotech", "A.M.P."],
     "imageUrl": "/images/champions/Naafiri.webp",
     "skill": {
       "name": "The Call of the Pack",
@@ -457,7 +457,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Neeko",
     "name": "Neeko",
     "cost": [1],
-    "traits": ["Anima Squad", "Controller"],
+    "traits": ["Street Demon", "Strategist"],
     "imageUrl": "/images/champions/Neeko.webp",
     "skill": {
       "name": "Pop Blossom",
@@ -472,7 +472,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_NidaleeCougar",
     "name": "Nidalee",
     "cost": [2],
-    "traits": ["Anima Squad", "Swift"],
+    "traits": ["Nitro", "A.M.P."],
     "imageUrl": "/images/champions/NidaleeCougar.webp",
     "skill": {
       "name": "Pounce",
@@ -487,7 +487,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Poppy",
     "name": "Poppy",
     "cost": [1],
-    "traits": ["Ballistek", "Vanguard"],
+    "traits": ["Cyberboss", "Bastion"],
     "imageUrl": "/images/champions/Poppy.webp",
     "skill": {
       "name": "Hammer Shock",
@@ -502,7 +502,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Renekton",
     "name": "Renekton",
     "cost": [1],
-    "traits": ["Street Demon", "Bruiser"],
+    "traits": ["Overlord", "Divinicorp", "Bastion"],
     "imageUrl": "/images/champions/Renekton.webp",
     "skill": {
       "name": "Ruthless Predator",
@@ -517,7 +517,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Rengar",
     "name": "Rengar",
     "cost": [2],
-    "traits": ["Mob", "Swift"],
+    "traits": ["Street Demon", "Executioner"],
     "imageUrl": "/images/champions/Rengar.webp",
     "skill": {
       "name": "Thrill of the Hunt",
@@ -532,7 +532,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Rhaast",
     "name": "Rhaast",
     "cost": [5],
-    "traits": ["Mob", "Bruiser"],
+    "traits": ["Divinicorp", "Vanguard"],
     "imageUrl": "/images/champions/Rhaast.webp",
     "skill": {
       "name": "The Darkin Scythe",
@@ -547,7 +547,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Samira",
     "name": "Samira",
     "cost": [3],
-    "traits": ["Street Demon", "Marksman"],
+    "traits": ["Street Demon", "A.M.P."],
     "imageUrl": "/images/champions/Samira.webp",
     "skill": {
       "name": "Inferno Trigger",
@@ -562,7 +562,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Sejuani",
     "name": "Sejuani",
     "cost": [2],
-    "traits": ["Ballistek", "Vanguard"],
+    "traits": ["Exotech", "Bastion"],
     "imageUrl": "/images/champions/Sejuani.webp",
     "skill": {
       "name": "Glacial Prison",
@@ -577,7 +577,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Senna",
     "name": "Senna",
     "cost": [1],
-    "traits": ["Divinicorp", "Marksman"],
+    "traits": ["Divinicorp", "Slayer"],
     "imageUrl": "/images/champions/Senna.webp",
     "skill": {
       "name": "Piercing Darkness",
@@ -592,7 +592,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Seraphine",
     "name": "Seraphine",
     "cost": [2],
-    "traits": ["Divinicorp", "Controller"],
+    "traits": ["Anima Squad", "Techie"],
     "imageUrl": "/images/champions/Seraphine.webp",
     "skill": {
       "name": "Encore",
@@ -607,7 +607,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Shaco",
     "name": "Shaco",
     "cost": [3],
-    "traits": ["Mob", "Swift"],
+    "traits": ["Syndicate", "Slayer"],
     "imageUrl": "/images/champions/Shaco.webp",
     "skill": {
       "name": "Deceive",
@@ -622,7 +622,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Shyvana",
     "name": "Shyvana",
     "cost": [4],
-    "traits": ["Street Demon", "Bruiser"],
+    "traits": ["BoomBots", "Bastion"],
     "imageUrl": "/images/champions/Shyvana.webp",
     "skill": {
       "name": "Dragon's Descent",
@@ -637,7 +637,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Skarner",
     "name": "Skarner",
     "cost": [1],
-    "traits": ["Ballistek", "Bruiser"],
+    "traits": ["BoomBots", "Vanguard"],
     "imageUrl": "/images/champions/Skarner.webp",
     "skill": {
       "name": "Impale",
@@ -652,7 +652,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Sylas",
     "name": "Sylas",
     "cost": [2],
-    "traits": ["Anima Squad", "Bruiser"],
+    "traits": ["Anima Squad", "Vanguard"],
     "imageUrl": "/images/champions/Sylas.webp",
     "skill": {
       "name": "Hijack",
@@ -667,7 +667,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_TwistedFate",
     "name": "Twisted Fate",
     "cost": [2],
-    "traits": ["Ballistek", "Controller"],
+    "traits": ["Syndicate", "Rapidfire"],
     "imageUrl": "/images/champions/TwistedFate.webp",
     "skill": {
       "name": "Pick a Card",
@@ -682,7 +682,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Urgot",
     "name": "Urgot",
     "cost": [3],
-    "traits": ["Ballistek", "Bruiser"],
+    "traits": ["BoomBots", "Executioner"],
     "imageUrl": "/images/champions/Urgot.webp",
     "skill": {
       "name": "Fear Beyond Death",
@@ -697,7 +697,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Varus",
     "name": "Varus",
     "cost": [3],
-    "traits": ["Divinicorp", "Marksman"],
+    "traits": ["Exotech", "Executioner"],
     "imageUrl": "/images/champions/Varus.webp",
     "skill": {
       "name": "Chain of Corruption",
@@ -712,7 +712,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Vayne",
     "name": "Vayne",
     "cost": [1],
-    "traits": ["Anima Squad", "Marksman"],
+    "traits": ["Anima Squad", "Slayer"],
     "imageUrl": "/images/champions/Vayne.webp",
     "skill": {
       "name": "Final Hour",
@@ -727,7 +727,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Veigar",
     "name": "Veigar",
     "cost": [3],
-    "traits": ["Mob", "Controller"],
+    "traits": ["Cyberboss", "Techie"],
     "imageUrl": "/images/champions/Veigar.webp",
     "skill": {
       "name": "Primordial Burst",
@@ -742,7 +742,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Vex",
     "name": "Vex",
     "cost": [2],
-    "traits": ["Mob", "Controller"],
+    "traits": ["Divinicorp", "Executioner"],
     "imageUrl": "/images/champions/Vex.webp",
     "skill": {
       "name": "Personal Space",
@@ -757,7 +757,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Vi",
     "name": "Vi",
     "cost": [4],
-    "traits": ["Anima Squad", "Bruiser"],
+    "traits": ["Cypher", "Vanguard"],
     "imageUrl": "/images/champions/Vi.webp",
     "skill": {
       "name": "Assault and Battery",
@@ -772,7 +772,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Viego",
     "name": "Viego",
     "cost": [5],
-    "traits": ["Mob", "Swift"],
+    "traits": ["Soul Killer", "Golden Ox", "Techie"],
     "imageUrl": "/images/champions/Viego.webp",
     "skill": {
       "name": "Sovereign's Domination",
@@ -802,7 +802,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Yuumi",
     "name": "Yuumi",
     "cost": [1],
-    "traits": ["Divinicorp", "Controller"],
+    "traits": ["Anima Squad", "A.M.P.", "Strategist"],
     "imageUrl": "/images/champions/Yuumi.webp",
     "skill": {
       "name": "Final Chapter",
@@ -817,7 +817,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Zac",
     "name": "Zac",
     "cost": [2],
-    "traits": ["Street Demon", "Vanguard"],
+    "traits": ["Virus", "Cypher", "Slayer"],
     "imageUrl": "/images/champions/Zac.webp",
     "skill": {
       "name": "Let's Bounce!",
@@ -832,7 +832,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Zed",
     "name": "Zed",
     "cost": [3],
-    "traits": ["Anima Squad", "Swift"],
+    "traits": ["Cypher", "Slayer"],
     "imageUrl": "/images/champions/Zed.webp",
     "skill": {
       "name": "Death Mark",
@@ -847,7 +847,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Zeri",
     "name": "Zeri",
     "cost": [4],
-    "traits": ["Ballistek", "Marksman"],
+    "traits": ["Exotech", "Rapidfire"],
     "imageUrl": "/images/champions/Zeri.webp",
     "skill": {
       "name": "Lightning Crash",
@@ -862,7 +862,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Ziggs",
     "name": "Ziggs",
     "cost": [1],
-    "traits": ["Ballistek", "Controller"],
+    "traits": ["Cyberboss", "Strategist"],
     "imageUrl": "/images/champions/Ziggs.webp",
     "skill": {
       "name": "Mega Inferno Bomb",
@@ -877,7 +877,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Zyra",
     "name": "Zyra",
     "cost": [2],
-    "traits": ["Divinicorp", "Controller"],
+    "traits": ["Street Demon", "Techie"],
     "imageUrl": "/images/champions/Zyra.webp",
     "skill": {
       "name": "Stranglethorns",
