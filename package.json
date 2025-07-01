@@ -17,7 +17,10 @@
     "scrape:champions:check": "tsx src/script/scrape/champion.ts --check-updates",
     "scrape:champions:report": "tsx src/script/scrape/champion.ts --report --by-tier",
     "scrape:champions:no-images": "tsx src/script/scrape/champion.ts --no-images",
-    "scrape:all": "npm run scrape:traits && npm run scrape:champions && npm run scrape:leveling && npm run scrape:update",
+    "scrape:individual": "tsx src/script/scrape/individual_champion_stats.ts",
+    "scrape:individual:report": "tsx src/script/scrape/individual_champion_stats.ts --report --by-tier",
+    "scrape:individual:no-images": "tsx src/script/scrape/individual_champion_stats.ts --no-images",
+    "scrape:all": "npm run scrape:traits && npm run scrape:champions && npm run scrape:individual && npm run scrape:leveling && npm run scrape:update",
     "scrape:leveling": "tsx src/script/scrape/leveling_method.ts",
     "scrape:update": "tsx src/script/scrape/update.ts"
   },
