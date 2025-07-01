@@ -2,7 +2,36 @@ import axios from 'axios';
 import fs from 'fs/promises';
 import path from 'path';
 
-// Types pour les données des champions TFT
+// Types pour les données des champions TFT (structure réelle de l'API)
+interface ChampionUnit {
+  name: string;
+  star_level: number;
+  core: boolean;
+  avg_nb_items: number;
+  items: string[];
+}
+
+interface CompositionStats {
+  tier: number;
+  pick_rate: number;
+  nb_boards: number;
+  nb_games: number;
+  avg_placement: number;
+  top_4_percent: number;
+  top_1_percent: number;
+}
+
+interface Composition {
+  cluster_id: number;
+  name: string;
+  api_name: string;
+  units: ChampionUnit[];
+  stats: CompositionStats;
+  carry_units: string[];
+  tags: string[];
+  // ... autres propriétés
+}
+
 interface ChampionStats {
   champName: string;
   gamesPlayed: number;
@@ -12,36 +41,9 @@ interface ChampionStats {
   meta: boolean;
   pickRate?: number;
   tier?: string;
-}
-
-interface ChampionData {
-  key: string;
-  name: string;
-  cost: number[];
-  imageUrl: string;
-  traits: string[];
-  health: number[];
-  attackDamage: number[];
-  attackSpeed: number;
-  armor: number;
-  magicalResistance: number;
-  skill: {
-    name: string;
-    imageUrl: string;
-    desc: string;
-    startingMana: number;
-    skillMana: number;
-    stats: string[];
-  };
-  recommendItems: string[];
-  // Statistiques depuis l'API
-  gamesPlayed?: number;
-  rawWinrate?: number;
-  weightedWinrate?: number;
-  avgPlacement?: number;
-  isMeta?: boolean;
-  pickRate?: number;
-  tier?: string;
+  totalAppearances?: number;
+  asCarry?: number;
+  asCore?: number;
 }
 
 interface ChampionStatsData {
@@ -55,6 +57,7 @@ interface ChampionAnalysisStats {
   avgPlacement: number;
   topPerformers: ChampionStats[];
   tierDistribution: { [tier: string]: number };
+  totalCompositions: number;
 }
 
 interface ScrapingResult {
@@ -101,15 +104,121 @@ class TFTChampionScraper {
 
   /**
    * Nettoie le nom du champion pour l'URL d'image
-   * Ex: "Jarvan IV" → "TFT14_Jarvan"
+   * Ex: "TFT14_Jarvan" → "Jarvan", "TFT14_DrMundo" → "DrMundo"
    */
   private cleanChampionName(championName: string): string {
     return championName
-      .replace(/\s+/g, '') // Supprime les espaces
-      .replace(/[^a-zA-Z0-9]/g, '') // Supprime les caractères spéciaux
-      .replace(/IV$/, '') // Supprime "IV" à la fin (pour Jarvan IV)
-      .replace(/^Dr/, 'Dr') // Garde "Dr" au début (pour Dr. Mundo)
-      .replace(/^Miss/, 'Miss'); // Garde "Miss" au début (pour Miss Fortune)
+      .replace(/^TFT\d+_/, '') // Supprime le préfixe TFT14_
+      .replace(/\s+/g, ''); // Supprime les espaces
+  }
+
+  /**
+   * Convertit le nom API en nom d'affichage
+   * Ex: "TFT14_Jarvan" → "Jarvan IV", "TFT14_DrMundo" → "Dr. Mundo"
+   */
+  private getDisplayName(apiName: string): string {
+    const cleanName = this.cleanChampionName(apiName);
+    
+    // Cas spéciaux
+    const specialCases: { [key: string]: string } = {
+      'Jarvan': 'Jarvan IV',
+      'DrMundo': 'Dr. Mundo',
+      'MissFortune': 'Miss Fortune',
+      'KogMaw': "Kog'Maw",
+      'TwistedFate': 'Twisted Fate',
+      'JarvanIV': 'Jarvan IV'
+    };
+    
+    return specialCases[cleanName] || cleanName;
+  }
+
+  /**
+   * Traite les données des compositions pour extraire les statistiques des champions
+   */
+  private processCompositionsData(compositions: Composition[]): ChampionStatsData {
+    const championStats: { [key: string]: {
+      totalGames: number;
+      totalPlacements: number;
+      totalWins: number;
+      appearances: number;
+      asCarry: number;
+      asCore: number;
+      weightedScore: number;
+      totalWeight: number;
+    } } = {};
+
+    console.log(`📊 Traitement de ${compositions.length} compositions...`);
+
+    compositions.forEach((comp, index) => {
+      if (index % 50 === 0) {
+        console.log(`   Progression: ${index}/${compositions.length} compositions traitées`);
+      }
+
+      const { stats } = comp;
+      const weight = stats.nb_games; // Utilise le nombre de games comme poids
+
+      comp.units.forEach(unit => {
+        const championName = this.getDisplayName(unit.name);
+        
+        if (!championStats[championName]) {
+          championStats[championName] = {
+            totalGames: 0,
+            totalPlacements: 0,
+            totalWins: 0,
+            appearances: 0,
+            asCarry: 0,
+            asCore: 0,
+            weightedScore: 0,
+            totalWeight: 0
+          };
+        }
+
+        const champion = championStats[championName];
+        
+        // Accumule les statistiques pondérées
+        champion.totalGames += stats.nb_games;
+        champion.totalPlacements += stats.avg_placement * weight;
+        champion.totalWins += stats.top_1_percent * weight;
+        champion.appearances += 1;
+        champion.weightedScore += (8 - stats.avg_placement) * weight; // Score inversé (meilleur = plus haut)
+        champion.totalWeight += weight;
+        
+        // Marque si c'est un carry ou core
+        if (comp.carry_units.includes(unit.name)) {
+          champion.asCarry += 1;
+        }
+        if (unit.core) {
+          champion.asCore += 1;
+        }
+      });
+    });
+
+    // Convertit en format final
+    const result: ChampionStatsData = {};
+    
+    Object.entries(championStats).forEach(([championName, stats]) => {
+      if (stats.totalWeight > 0) {
+        const avgPlacement = stats.totalPlacements / stats.totalWeight;
+        const winRate = (stats.totalWins / stats.totalWeight) * 100;
+        const weightedWinrate = (stats.weightedScore / stats.totalWeight) * 10; // Normalise
+        
+        result[championName] = {
+          champName: championName,
+          gamesPlayed: stats.totalGames,
+          rawWinrate: winRate,
+          weightedWinrate: Math.min(weightedWinrate, 100), // Cap à 100%
+          avgPlacement: avgPlacement,
+          meta: stats.asCarry > 0 || weightedWinrate > 30, // Meta si carry ou bon score
+          pickRate: (stats.appearances / compositions.length) * 100,
+          totalAppearances: stats.appearances,
+          asCarry: stats.asCarry,
+          asCore: stats.asCore
+        };
+      }
+    });
+
+    console.log(`✅ ${Object.keys(result).length} champions extraits des compositions`);
+    return result;
   }
 
   /**
@@ -117,8 +226,10 @@ class TFTChampionScraper {
    */
   private async downloadChampionImage(championName: string): Promise<string | null> {
     try {
-      const cleanedName = this.cleanChampionName(championName);
-      const imageUrl = `${this.imageBaseUrl}/TFT14_${cleanedName}.webp`;
+      // Convertit le nom d'affichage vers le nom API pour l'image
+      const apiName = this.getApiNameForImage(championName);
+      const imageUrl = `${this.imageBaseUrl}/${apiName}.webp`;
+      const cleanedName = this.cleanChampionName(apiName);
       const localPath = path.join(this.imagesDir, `${cleanedName}.webp`);
       const relativePath = `/images/champions/${cleanedName}.webp`;
 
@@ -153,15 +264,30 @@ class TFTChampionScraper {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {
-          console.warn(`❌ Image non trouvée: ${this.cleanChampionName(championName)}`);
+          console.warn(`❌ Image non trouvée: ${championName}`);
         } else {
-          console.warn(`❌ Erreur téléchargement ${this.cleanChampionName(championName)}:`, error.message);
+          console.warn(`❌ Erreur téléchargement ${championName}:`, error.message);
         }
       } else {
-        console.warn(`❌ Erreur inattendue pour ${this.cleanChampionName(championName)}:`, error);
+        console.warn(`❌ Erreur inattendue pour ${championName}:`, error);
       }
       return null;
     }
+  }
+
+  /**
+   * Convertit le nom d'affichage vers le nom API pour les images
+   */
+  private getApiNameForImage(displayName: string): string {
+    const specialCases: { [key: string]: string } = {
+      'Jarvan IV': 'TFT14_Jarvan',
+      'Dr. Mundo': 'TFT14_DrMundo',
+      'Miss Fortune': 'TFT14_MissFortune',
+      "Kog'Maw": 'TFT14_KogMaw',
+      'Twisted Fate': 'TFT14_TwistedFate'
+    };
+    
+    return specialCases[displayName] || `TFT14_${displayName.replace(/\s+/g, '')}`;
   }
 
   /**
@@ -220,7 +346,7 @@ class TFTChampionScraper {
     const { weightedWinrate, avgPlacement, gamesPlayed } = champion;
     
     // Facteur de popularité (plus de games = plus fiable)
-    const popularityFactor = Math.min(gamesPlayed / 100, 1);
+    const popularityFactor = Math.min(gamesPlayed / 1000, 1);
     
     // Score composite
     const placementScore = (8 - avgPlacement) / 7; // Normalise entre 0-1
@@ -236,7 +362,7 @@ class TFTChampionScraper {
   /**
    * Extrait les statistiques d'analyse des champions
    */
-  private extractStats(data: ChampionStatsData): ChampionAnalysisStats {
+  private extractStats(data: ChampionStatsData, totalCompositions: number): ChampionAnalysisStats {
     const champions = Object.values(data);
     const totalChampions = champions.length;
     const metaChampions = champions.filter(c => c.meta).length;
@@ -262,38 +388,41 @@ class TFTChampionScraper {
       avgWinrate: Math.round(avgWinrate * 100) / 100,
       avgPlacement: Math.round(avgPlacement * 100) / 100,
       topPerformers,
-      tierDistribution
+      tierDistribution,
+      totalCompositions
     };
   }
 
   /**
    * Valide les données récupérées
    */
-  private validateData(data: any): data is ChampionStatsData {
-    if (!data || typeof data !== 'object') {
-      console.warn('⚠️ Données invalides: pas un objet');
+  private validateData(data: any): data is Composition[] {
+    if (!Array.isArray(data)) {
+      console.warn('⚠️ Données invalides: pas un tableau');
       return false;
     }
 
-    const keys = Object.keys(data);
-    if (keys.length === 0) {
-      console.warn('⚠️ Données invalides: objet vide');
+    if (data.length === 0) {
+      console.warn('⚠️ Données invalides: tableau vide');
       return false;
     }
 
     // Vérifie quelques entrées pour s'assurer de la structure
-    const sampleKeys = keys.slice(0, 3);
-    for (const key of sampleKeys) {
-      const champion = data[key];
-      if (!champion || typeof champion !== 'object') {
-        console.warn(`⚠️ Champion invalide pour la clé ${key}`);
+    const sampleComps = data.slice(0, 3);
+    for (const comp of sampleComps) {
+      if (!comp || typeof comp !== 'object') {
+        console.warn(`⚠️ Composition invalide`);
         return false;
       }
 
-      if (typeof champion.champName !== 'string' || 
-          typeof champion.weightedWinrate !== 'number' ||
-          typeof champion.avgPlacement !== 'number') {
-        console.warn(`⚠️ Structure invalide pour le champion ${key}`);
+      if (!comp.units || !Array.isArray(comp.units) || !comp.stats) {
+        console.warn(`⚠️ Structure invalide pour la composition`);
+        return false;
+      }
+
+      // Vérifie qu'il y a des unités avec des noms
+      if (comp.units.length === 0 || !comp.units[0].name) {
+        console.warn(`⚠️ Unités invalides dans la composition`);
         return false;
       }
     }
@@ -311,7 +440,7 @@ class TFTChampionScraper {
       console.log('🔄 Récupération des données des champions TFT...');
       console.log(`📡 URL: ${this.baseUrl}`);
       
-      const response = await axios.get<ChampionStatsData>(this.baseUrl, {
+      const response = await axios.get<Composition[]>(this.baseUrl, {
         timeout: 15000,
         headers: {
           'User-Agent': 'TFT-Champions-Scraper/1.0',
@@ -325,16 +454,19 @@ class TFTChampionScraper {
         throw new Error(`Statut HTTP non valide: ${response.status} - ${response.statusText}`);
       }
 
-      const data = response.data;
+      const rawData = response.data;
       
       // Validation des données
-      if (!this.validateData(data)) {
+      if (!this.validateData(rawData)) {
         throw new Error('Données reçues invalides ou corrompues');
       }
 
-      const stats = this.extractStats(data);
+      console.log(`✅ ${rawData.length} compositions récupérées avec succès`);
       
-      console.log('✅ Données des champions récupérées avec succès');
+      // Traite les compositions pour extraire les stats des champions
+      const championData = this.processCompositionsData(rawData);
+      const stats = this.extractStats(championData, rawData.length);
+      
       console.log(`📊 Nombre total de champions: ${stats.totalChampions}`);
       console.log(`🎯 Champions meta: ${stats.metaChampions}`);
       console.log(`📈 Winrate moyen: ${stats.avgWinrate}%`);
@@ -342,7 +474,7 @@ class TFTChampionScraper {
 
       return {
         success: true,
-        data,
+        data: championData,
         timestamp,
         stats
       };
@@ -538,6 +670,7 @@ class TFTChampionScraper {
     console.log(`├─ Champions meta: ${stats.metaChampions}`);
     console.log(`├─ Winrate moyen: ${stats.avgWinrate}%`);
     console.log(`├─ Placement moyen: ${stats.avgPlacement}`);
+    console.log(`├─ Compositions analysées: ${stats.totalCompositions}`);
     console.log(`├─ Distribution des tiers:`);
     console.log(`│  ├─ Tier S: ${stats.tierDistribution.S}`);
     console.log(`│  ├─ Tier A: ${stats.tierDistribution.A}`);
@@ -561,6 +694,7 @@ class TFTChampionScraper {
       let report = '# TFT Set 14 - Champions Performance Report\n\n';
       report += `Généré le: ${new Date().toLocaleString('fr-FR')}\n`;
       report += `Nombre total de champions: ${stats.totalChampions}\n`;
+      report += `Compositions analysées: ${stats.totalCompositions}\n`;
       report += `Images téléchargées: ${Object.values(imageMap).filter(Boolean).length}\n\n`;
 
       // Statistiques générales
@@ -569,6 +703,7 @@ class TFTChampionScraper {
       report += `- **Champions meta:** ${stats.metaChampions}\n`;
       report += `- **Winrate moyen:** ${stats.avgWinrate}%\n`;
       report += `- **Placement moyen:** ${stats.avgPlacement}\n`;
+      report += `- **Compositions analysées:** ${stats.totalCompositions}\n`;
       report += `- **Images disponibles:** ${Object.values(imageMap).filter(Boolean).length}/${stats.totalChampions}\n\n`;
 
       // Distribution des tiers
@@ -580,12 +715,12 @@ class TFTChampionScraper {
 
       // Top performers
       report += '## Top 10 Performers\n\n';
-      report += '| Rang | Champion | Winrate | Placement | Games | Meta |\n';
-      report += '|------|----------|---------|-----------|-------|------|\n';
+      report += '| Rang | Champion | Winrate | Placement | Games | Meta | Carry | Core |\n';
+      report += '|------|----------|---------|-----------|-------|------|-------|------|\n';
       stats.topPerformers.forEach((champion, index) => {
         const imagePath = imageMap[champion.champName];
         const imageCell = imagePath ? `![${champion.champName}](${imagePath})` : champion.champName;
-        report += `| ${index + 1} | ${imageCell} | ${champion.weightedWinrate.toFixed(1)}% | ${champion.avgPlacement.toFixed(1)} | ${champion.gamesPlayed} | ${champion.meta ? '✅' : '❌'} |\n`;
+        report += `| ${index + 1} | ${imageCell} | ${champion.weightedWinrate.toFixed(1)}% | ${champion.avgPlacement.toFixed(1)} | ${champion.gamesPlayed} | ${champion.meta ? '✅' : '❌'} | ${champion.asCarry || 0} | ${champion.asCore || 0} |\n`;
       });
       report += '\n';
 
@@ -608,7 +743,10 @@ class TFTChampionScraper {
             report += `- **Winrate:** ${champion.weightedWinrate.toFixed(1)}%\n`;
             report += `- **Placement moyen:** ${champion.avgPlacement.toFixed(1)}\n`;
             report += `- **Games joués:** ${champion.gamesPlayed}\n`;
-            report += `- **Meta:** ${champion.meta ? 'Oui' : 'Non'}\n\n`;
+            report += `- **Pick rate:** ${champion.pickRate?.toFixed(1)}%\n`;
+            report += `- **Meta:** ${champion.meta ? 'Oui' : 'Non'}\n`;
+            report += `- **Apparitions comme carry:** ${champion.asCarry || 0}\n`;
+            report += `- **Apparitions comme core:** ${champion.asCore || 0}\n\n`;
           });
         }
       }
@@ -627,7 +765,7 @@ class TFTChampionScraper {
   async generateChampionsForApp(data: ChampionStatsData, imageMap: { [key: string]: string | null }): Promise<void> {
     try {
       const champions = Object.entries(data).map(([championName, champion]) => ({
-        key: `TFT14_${this.cleanChampionName(championName)}`,
+        key: this.getApiNameForImage(championName),
         name: championName,
         cost: [1], // À ajuster selon les données réelles
         imageUrl: imageMap[championName] || this.getChampionImageUrl(championName),
@@ -652,7 +790,11 @@ class TFTChampionScraper {
         weightedWinrate: champion.weightedWinrate,
         avgPlacement: champion.avgPlacement,
         isMeta: champion.meta,
-        tier: this.calculateTier(champion)
+        pickRate: champion.pickRate,
+        tier: this.calculateTier(champion),
+        totalAppearances: champion.totalAppearances,
+        asCarry: champion.asCarry,
+        asCore: champion.asCore
       }));
 
       const appChampionsPath = path.join('./src/data', 'champions_generated.ts');
@@ -680,6 +822,7 @@ class TFTChampionScraper {
         content += `    weightedWinrate: ${champion.weightedWinrate},\n`;
         content += `    avgPlacement: ${champion.avgPlacement},\n`;
         content += `    isMeta: ${champion.isMeta},\n`;
+        content += `    pickRate: ${champion.pickRate},\n`;
         content += `    tier: "${champion.tier}"\n`;
         content += `  },\n`;
       });
@@ -697,8 +840,8 @@ class TFTChampionScraper {
    * Génère l'URL d'image pour un champion (fallback)
    */
   private getChampionImageUrl(championName: string): string {
-    const cleanedName = this.cleanChampionName(championName);
-    return `${this.imageBaseUrl}/TFT14_${cleanedName}.webp`;
+    const apiName = this.getApiNameForImage(championName);
+    return `${this.imageBaseUrl}/${apiName}.webp`;
   }
 
   /**
