@@ -1,0 +1,185 @@
+[
+  {
+    "success": true,
+    "timestamp": "2025-07-01T14:33:58.895Z",
+    "stats": {
+      "totalTraits": 76,
+      "uniqueTraits": 25,
+      "avgPickRate": 6.59,
+      "avgPlacement": 4.26,
+      "avgTop4Rate": 53.96,
+      "avgTop1Rate": 16.53,
+      "styleDistribution": {
+        "1": 21,
+        "2": 24,
+        "3": 4,
+        "4": 24,
+        "5": 3
+      },
+      "countDistribution": {
+        "1": 5,
+        "2": 15,
+        "3": 12,
+        "4": 17,
+        "5": 9,
+        "6": 9,
+        "7": 5,
+        "8": 1,
+        "10": 3
+      },
+      "topTraits": [
+        {
+          "apiName": "TFT14_EdgeRunner",
+          "displayName": "Edge Runner",
+          "count": 10,
+          "style": "5",
+          "stats": {
+            "nbGames": 986,
+            "nbBoards": 988,
+            "avgPlacement": 1.0495951417004048,
+            "top4Percent": 1,
+            "top1Percent": 0.9635627530364372,
+            "pickRate": 0.00032028080976584166
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_AnimaSquad",
+          "displayName": "Anima Squad",
+          "count": 10,
+          "style": "5",
+          "stats": {
+            "nbGames": 6848,
+            "nbBoards": 7027,
+            "avgPlacement": 1.2385086096484987,
+            "top4Percent": 0.9863384089938807,
+            "top1Percent": 0.8615340828233955,
+            "pickRate": 0.002277948633830536
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_StreetDemon",
+          "displayName": "Street Demon",
+          "count": 10,
+          "style": "5",
+          "stats": {
+            "nbGames": 5280,
+            "nbBoards": 5372,
+            "avgPlacement": 1.3293000744601637,
+            "top4Percent": 0.9744973938942666,
+            "top1Percent": 0.827066269545793,
+            "pickRate": 0.0017414458603867424
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_Mob",
+          "displayName": "Mob",
+          "count": 7,
+          "style": "4",
+          "stats": {
+            "nbGames": 9373,
+            "nbBoards": 9615,
+            "avgPlacement": 2.781591263650546,
+            "top4Percent": 0.8180967238689547,
+            "top1Percent": 0.3152366094643786,
+            "pickRate": 0.0031169028197353924
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_Divinicorp",
+          "displayName": "Divinicorp",
+          "count": 7,
+          "style": "4",
+          "stats": {
+            "nbGames": 25502,
+            "nbBoards": 26285,
+            "avgPlacement": 3.376830892143808,
+            "top4Percent": 0.7078181472322618,
+            "top1Percent": 0.23534335172151416,
+            "pickRate": 0.008520831057383754
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_Cyberboss",
+          "displayName": "Cyberboss",
+          "count": 4,
+          "style": "4",
+          "stats": {
+            "nbGames": 60249,
+            "nbBoards": 62664,
+            "avgPlacement": 3.4030543852929913,
+            "top4Percent": 0.7103919315715562,
+            "top1Percent": 0.20735988765479382,
+            "pickRate": 0.020313842776484518
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_BallisTek",
+          "displayName": "Ballis Tek",
+          "count": 6,
+          "style": "4",
+          "stats": {
+            "nbGames": 60115,
+            "nbBoards": 65227,
+            "avgPlacement": 3.7051987673816056,
+            "top4Percent": 0.6285127324574179,
+            "top1Percent": 0.25087770401827464,
+            "pickRate": 0.0211446926908872
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_Techie",
+          "displayName": "Techie",
+          "count": 8,
+          "style": "4",
+          "stats": {
+            "nbGames": 25729,
+            "nbBoards": 26328,
+            "avgPlacement": 3.7156639319355818,
+            "top4Percent": 0.6470297781829232,
+            "top1Percent": 0.18003646308113036,
+            "pickRate": 0.00853477040436749
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_Supercharge",
+          "displayName": "Supercharge",
+          "count": 5,
+          "style": "4",
+          "stats": {
+            "nbGames": 67504,
+            "nbBoards": 71582,
+            "avgPlacement": 3.838451007236456,
+            "top4Percent": 0.6275739711100556,
+            "top1Percent": 0.16555838059847447,
+            "pickRate": 0.02320479850673935
+          },
+          "tier": "C"
+        },
+        {
+          "apiName": "TFT14_Overlord",
+          "displayName": "Overlord",
+          "count": 1,
+          "style": "3",
+          "stats": {
+            "nbGames": 324046,
+            "nbBoards": 589782,
+            "avgPlacement": 3.8699994235158077,
+            "top4Percent": 0.6163446832897579,
+            "top1Percent": 0.184919173525133,
+            "pickRate": 0.1911901382037628
+          },
+          "tier": "S"
+        }
+      ]
+    },
+    "downloadedImages": 76
+  }
+]
