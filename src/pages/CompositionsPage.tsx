@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Crown, Star, Copy, Eye, Heart, Flame, BarChart3, Target, TrendingUp, Users, Trophy, Shield, Sword, Sparkles, ChevronDown, ChevronUp, ExternalLink, Info, Zap, Search, Filter, ArrowUpDown } from 'lucide-react';
 import { Champion, Item } from '../types';
 import { commonSynergies } from '../data/synergies';
+import { generatedChampions } from '../data/champions_generated';
+import { generatedItemsStats } from '../data/items_stats_generated';
 
 interface Composition {
   id: string;
@@ -50,13 +52,9 @@ export default function CompositionsPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [championsRes, itemsRes] = await Promise.all([
-          fetch('/src/data/champions_TFT14.json'),
-          fetch('/src/data/items_TFT14.json')
-        ]);
-
-        const championsData = await championsRes.json();
-        const itemsData = await itemsRes.json();
+        // Utiliser les données générées directement
+        const championsData = generatedChampions;
+        const itemsData = generatedItemsStats;
 
         setChampions(championsData);
         setItems(itemsData);
@@ -87,14 +85,14 @@ export default function CompositionsPage() {
         rollDown: 8,
         gameplan: 'Jouer économie jusqu\'au niveau 8, puis roll pour Aurora 3* et Leona 2*. Positionner Aurora en sécurité à l\'arrière.',
         keyItems: ['Infinity Edge', 'Last Whisper', 'Bloodthirster'],
-        champions: championsData.filter(c => c.traits?.includes('AnimaSquad')).slice(0, 8).map((champion, index) => ({
+        champions: championsData.filter(c => c.traits?.includes('Anima Squad')).slice(0, 8).map((champion, index) => ({
           champion,
           items: itemsData.slice(index * 3, (index * 3) + 3),
           isCarry: champion.cost[0] >= 4,
           level: champion.cost[0] >= 4 ? 3 : champion.cost[0] >= 3 ? 2 : 1
         })),
         traits: [
-          { name: 'AnimaSquad', count: 7, active: true, level: 3 },
+          { name: 'Anima Squad', count: 7, active: true, level: 3 },
           { name: 'Marksman', count: 3, active: true, level: 2 },
           { name: 'Vanguard', count: 2, active: true, level: 1 }
         ],
@@ -106,7 +104,7 @@ export default function CompositionsPage() {
       },
       {
         id: '2',
-        name: 'Exotech Rapidfire',
+        name: 'Ballistek Rapidfire',
         tier: 'S',
         winRate: 74.8,
         avgPlacement: 2.4,
@@ -114,18 +112,18 @@ export default function CompositionsPage() {
         difficulty: 'Difficile',
         gamePhase: 'Mid',
         rollDown: 7,
-        gameplan: 'Transition rapide vers Exotech au niveau 7. Prioriser Zeri 3* avec items AD. Flex entre Rapidfire et Marksman.',
-        keyItems: ['Guinsoo\'s Rageblade', 'Runaan\'s Hurricane', 'Giant Slayer'],
-        champions: championsData.filter(c => c.traits?.includes('Exotech') || c.traits?.includes('Rapidfire')).slice(0, 8).map((champion, index) => ({
+        gameplan: 'Transition rapide vers Ballistek au niveau 7. Prioriser Zeri 3* avec items AD. Flex entre Rapidfire et Marksman.',
+        keyItems: ['Guinsoo\'s Rageblade', 'Runaan\'s Hurricane', 'Last Whisper'],
+        champions: championsData.filter(c => c.traits?.includes('Ballistek')).slice(0, 8).map((champion, index) => ({
           champion,
           items: itemsData.slice((index * 3) + 3, (index * 3) + 6),
           isCarry: champion.cost[0] >= 3,
           level: champion.cost[0] >= 4 ? 3 : champion.cost[0] >= 3 ? 2 : 1
         })),
         traits: [
-          { name: 'Exotech', count: 5, active: true, level: 2 },
-          { name: 'Rapidfire', count: 4, active: true, level: 2 },
-          { name: 'Marksman', count: 2, active: true, level: 1 }
+          { name: 'Ballistek', count: 5, active: true, level: 2 },
+          { name: 'Marksman', count: 4, active: true, level: 2 },
+          { name: 'Vanguard', count: 2, active: true, level: 1 }
         ],
         earlyComp: championsData.slice(5, 10),
         positioning: {
@@ -135,7 +133,7 @@ export default function CompositionsPage() {
       },
       {
         id: '3',
-        name: 'Syndicate Bruiser',
+        name: 'Street Demon Bruiser',
         tier: 'A',
         winRate: 69.3,
         avgPlacement: 3.2,
@@ -145,14 +143,14 @@ export default function CompositionsPage() {
         rollDown: 6,
         gameplan: 'Composition agressive early/mid game. Roll au niveau 6 pour stabiliser avec Darius 3*. Transition vers 8 si économie le permet.',
         keyItems: ['Warmog\'s Armor', 'Gargoyle Stoneplate', 'Bramble Vest'],
-        champions: championsData.filter(c => c.traits?.includes('Syndicate') || c.traits?.includes('Bruiser')).slice(0, 8).map((champion, index) => ({
+        champions: championsData.filter(c => c.traits?.includes('Street Demon')).slice(0, 8).map((champion, index) => ({
           champion,
           items: itemsData.slice((index * 3) + 6, (index * 3) + 9),
           isCarry: champion.cost[0] >= 3,
           level: champion.cost[0] >= 4 ? 3 : champion.cost[0] >= 3 ? 2 : 1
         })),
         traits: [
-          { name: 'Syndicate', count: 6, active: true, level: 3 },
+          { name: 'Street Demon', count: 6, active: true, level: 3 },
           { name: 'Bruiser', count: 4, active: true, level: 2 },
           { name: 'Vanguard', count: 2, active: true, level: 1 }
         ],
@@ -164,7 +162,7 @@ export default function CompositionsPage() {
       },
       {
         id: '4',
-        name: 'Divinicorp Dynamo',
+        name: 'Divinicorp Controller',
         tier: 'A',
         winRate: 65.7,
         avgPlacement: 3.5,
@@ -172,9 +170,9 @@ export default function CompositionsPage() {
         difficulty: 'Moyen',
         gamePhase: 'Mid',
         rollDown: 7,
-        gameplan: 'Composition AP scaling. Prioriser Morgana 3* avec items AP. Utiliser Dynamo pour maximiser les dégâts de zone.',
+        gameplan: 'Composition AP scaling. Prioriser Morgana 3* avec items AP. Utiliser Controller pour maximiser les dégâts de zone.',
         keyItems: ['Archangel\'s Staff', 'Rabadon\'s Deathcap', 'Morellonomicon'],
-        champions: championsData.filter(c => c.traits?.includes('Divinicorp') || c.traits?.includes('Dynamo')).slice(0, 8).map((champion, index) => ({
+        champions: championsData.filter(c => c.traits?.includes('Divinicorp')).slice(0, 8).map((champion, index) => ({
           champion,
           items: itemsData.slice((index * 3) + 9, (index * 3) + 12),
           isCarry: champion.cost[0] >= 3,
@@ -182,8 +180,8 @@ export default function CompositionsPage() {
         })),
         traits: [
           { name: 'Divinicorp', count: 5, active: true, level: 2 },
-          { name: 'Dynamo', count: 3, active: true, level: 2 },
-          { name: 'Techie', count: 2, active: true, level: 1 }
+          { name: 'Controller', count: 3, active: true, level: 2 },
+          { name: 'Marksman', count: 2, active: true, level: 1 }
         ],
         earlyComp: championsData.slice(15, 20),
         positioning: {
@@ -193,7 +191,7 @@ export default function CompositionsPage() {
       },
       {
         id: '5',
-        name: 'Bastion Vanguard',
+        name: 'Mob Vanguard',
         tier: 'B',
         winRate: 58.2,
         avgPlacement: 4.1,
@@ -203,14 +201,14 @@ export default function CompositionsPage() {
         rollDown: 6,
         gameplan: 'Composition tanky pour débuter. Facile à jouer, bonne pour apprendre les bases. Transition possible vers d\'autres comps.',
         keyItems: ['Warmog\'s Armor', 'Dragon\'s Claw', 'Gargoyle Stoneplate'],
-        champions: championsData.filter(c => c.traits?.includes('Bastion') || c.traits?.includes('Vanguard')).slice(0, 8).map((champion, index) => ({
+        champions: championsData.filter(c => c.traits?.includes('Mob')).slice(0, 8).map((champion, index) => ({
           champion,
           items: itemsData.slice((index * 3) + 12, (index * 3) + 15),
           isCarry: champion.cost[0] >= 3,
           level: champion.cost[0] >= 4 ? 3 : champion.cost[0] >= 3 ? 2 : 1
         })),
         traits: [
-          { name: 'Bastion', count: 4, active: true, level: 2 },
+          { name: 'Mob', count: 4, active: true, level: 2 },
           { name: 'Vanguard', count: 6, active: true, level: 3 },
           { name: 'Bruiser', count: 2, active: true, level: 1 }
         ],
@@ -222,7 +220,7 @@ export default function CompositionsPage() {
       },
       {
         id: '6',
-        name: 'BoomBots Executioner',
+        name: 'Swift Controller',
         tier: 'B',
         winRate: 55.9,
         avgPlacement: 4.3,
@@ -231,17 +229,17 @@ export default function CompositionsPage() {
         gamePhase: 'Mid',
         rollDown: 7,
         gameplan: 'Composition explosive avec beaucoup de dégâts AoE. Nécessite un bon positionnement et timing des sorts.',
-        keyItems: ['Infinity Edge', 'Jeweled Gauntlet', 'Giant Slayer'],
-        champions: championsData.filter(c => c.traits?.includes('BoomBots') || c.traits?.includes('Executioner')).slice(0, 8).map((champion, index) => ({
+        keyItems: ['Infinity Edge', 'Jeweled Gauntlet', 'Last Whisper'],
+        champions: championsData.filter(c => c.traits?.includes('Swift')).slice(0, 8).map((champion, index) => ({
           champion,
           items: itemsData.slice((index * 3) + 15, (index * 3) + 18),
           isCarry: champion.cost[0] >= 3,
           level: champion.cost[0] >= 4 ? 3 : champion.cost[0] >= 3 ? 2 : 1
         })),
         traits: [
-          { name: 'BoomBots', count: 5, active: true, level: 2 },
-          { name: 'Executioner', count: 3, active: true, level: 2 },
-          { name: 'Techie', count: 2, active: true, level: 1 }
+          { name: 'Swift', count: 5, active: true, level: 2 },
+          { name: 'Controller', count: 3, active: true, level: 2 },
+          { name: 'Marksman', count: 2, active: true, level: 1 }
         ],
         earlyComp: championsData.slice(25, 30),
         positioning: {

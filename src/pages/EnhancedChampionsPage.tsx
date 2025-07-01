@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Search, ArrowUpDown, Grid3X3, List } from 'lucide-react';
 import { Champion, Item, FilterState } from '../types';
 import { commonSynergies } from '../data/synergies';
+import { generatedChampions } from '../data/champions_generated';
+import { generatedItemsStats } from '../data/items_stats_generated';
 import SearchBar from '../components/SearchBar';
 import AnalyzeButton from '../components/AnalyzeButton';
 import AnalysisModal from '../components/AnalysisModal';
@@ -94,46 +96,9 @@ export default function EnhancedChampionsPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Charger les champions
-        const championsRes = await fetch('/src/data/champions_14.json');
-        if (!championsRes.ok) throw new Error('Erreur lors du chargement des champions');
-        const championsData: Champion[] = await championsRes.json();
-  
-        // Charger la méta (tableau)
-        const metaRes = await fetch('/src/data/champion_meta.json');
-        if (!metaRes.ok) throw new Error('Erreur lors du chargement des données méta');
-        const metaArray: {
-          champName: string;
-          gamesPlayed: number;
-          rawWinrate: number;
-          weightedWinrate: number;
-          avgPlacement: number;
-          meta: boolean;
-        }[] = await metaRes.json();
-  
-        // Transformer la liste en objet indexé par nom de champion pour accès rapide
-        const metaData = metaArray.reduce((acc, meta) => {
-          acc[meta.champName] = meta;
-          return acc;
-        }, {} as Record<string, typeof metaArray[0]>);
-  
-        // Charger les items
-        const itemsRes = await fetch('/src/data/items_14.json');
-        if (!itemsRes.ok) throw new Error('Erreur lors du chargement des items');
-        const itemsData: Item[] = await itemsRes.json();
-  
-        // Fusionner les données champions + méta
-        const championsWithStats = championsData.map((champion) => {
-          const metaStats = metaData[champion.name] || {};
-  
-          return {
-            ...champion,
-            isMeta: metaStats.meta ?? false,
-            winRate: metaStats.rawWinrate ?? null,
-            avgPlacement: metaStats.avgPlacement ?? null,
-            gamesPlayed: metaStats.gamesPlayed ?? 0,
-          };
-        });
+        // Utiliser les données générées directement
+        const championsWithStats = generatedChampions;
+        const itemsData = generatedItemsStats;
 
         // Générer des optimisations simulées
         const mockOptimizations: Optimization[] = [
@@ -193,7 +158,7 @@ export default function EnhancedChampionsPage() {
         setItems(itemsData);
         setOptimizations(mockOptimizations);
       } catch (error) {
-        console.error(error);
+        console.error('Erreur lors du chargement des données:', error);
       } finally {
         setLoading(false);
       }
