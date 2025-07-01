@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowUpDown, Grid3X3, List } from 'lucide-react';
+import { Search, ArrowUpDown, Grid3X3, List, X, RotateCcw } from 'lucide-react';
 import { Champion, Item, FilterState } from '../types';
 import { commonSynergies } from '../data/synergies';
 import SearchBar from '../components/SearchBar';
@@ -84,9 +84,14 @@ export default function EnhancedChampionsPage() {
     viewMode: 'grid',
   });
 
-  // États de sélection
+  // États de sélection - NOUVEAU SYSTÈME
+  const [selectedChampions, setSelectedChampions] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedSynergies, setSelectedSynergies] = useState<string[]>([]);
   const [selectedOptimizations, setSelectedOptimizations] = useState<string[]>([]);
+
+  // État pour contrôler l'affichage filtré ou complet
+  const [showFilteredResults, setShowFilteredResults] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -220,6 +225,7 @@ export default function EnhancedChampionsPage() {
         selectedTags: [...prev.selectedTags, trimmedValue],
       }));
       setInputValue('');
+      setShowFilteredResults(true);
     }
   };
 
@@ -228,14 +234,62 @@ export default function EnhancedChampionsPage() {
       ...prev,
       selectedTags: prev.selectedTags.filter((_, i) => i !== index),
     }));
+    
+    // Si plus de tags, reset l'affichage
+    if (filters.selectedTags.length === 1) {
+      setShowFilteredResults(false);
+    }
   };
 
-  const addAsTag = (name: string) => {
-    if (!filters.selectedTags.includes(name)) {
-      setFilters((prev) => ({
-        ...prev,
-        selectedTags: [...prev.selectedTags, name],
-      }));
+  // NOUVEAU : Fonction pour ajouter à la sélection et reset l'affichage
+  const addToSelection = (name: string, type: 'champion' | 'item' | 'synergy' | 'optimization', id?: string) => {
+    switch (type) {
+      case 'champion':
+        if (!selectedChampions.includes(name)) {
+          setSelectedChampions(prev => [...prev, name]);
+        }
+        break;
+      case 'item':
+        if (id && !selectedItems.includes(id)) {
+          setSelectedItems(prev => [...prev, id]);
+        }
+        break;
+      case 'synergy':
+        if (!selectedSynergies.includes(name)) {
+          setSelectedSynergies(prev => [...prev, name]);
+        }
+        break;
+      case 'optimization':
+        if (id && !selectedOptimizations.includes(id)) {
+          setSelectedOptimizations(prev => [...prev, id]);
+        }
+        break;
+    }
+
+    // Reset l'affichage pour montrer tous les éléments
+    setShowFilteredResults(false);
+    setInputValue('');
+    setFilters(prev => ({
+      ...prev,
+      selectedTags: []
+    }));
+  };
+
+  // NOUVEAU : Fonction pour supprimer de la sélection
+  const removeFromSelection = (name: string, type: 'champion' | 'item' | 'synergy' | 'optimization') => {
+    switch (type) {
+      case 'champion':
+        setSelectedChampions(prev => prev.filter(n => n !== name));
+        break;
+      case 'item':
+        setSelectedItems(prev => prev.filter(n => n !== name));
+        break;
+      case 'synergy':
+        setSelectedSynergies(prev => prev.filter(n => n !== name));
+        break;
+      case 'optimization':
+        setSelectedOptimizations(prev => prev.filter(n => n !== name));
+        break;
     }
   };
 
@@ -244,6 +298,21 @@ export default function EnhancedChampionsPage() {
     setFilters((prev) => ({
       ...prev,
       selectedTags: [],
+    }));
+    setShowFilteredResults(false);
+  };
+
+  // NOUVEAU : Reset complet de toutes les sélections
+  const resetAllSelections = () => {
+    setSelectedChampions([]);
+    setSelectedItems([]);
+    setSelectedSynergies([]);
+    setSelectedOptimizations([]);
+    setShowFilteredResults(false);
+    setInputValue('');
+    setFilters(prev => ({
+      ...prev,
+      selectedTags: []
     }));
   };
 
@@ -316,23 +385,6 @@ export default function EnhancedChampionsPage() {
     setShowResults(false);
   };
 
-  // Gestion des sélections
-  const toggleItemSelection = (itemKey: string) => {
-    setSelectedItems(prev => 
-      prev.includes(itemKey)
-        ? prev.filter(key => key !== itemKey)
-        : [...prev, itemKey]
-    );
-  };
-
-  const toggleOptimizationSelection = (optimizationId: string) => {
-    setSelectedOptimizations(prev => 
-      prev.includes(optimizationId)
-        ? prev.filter(id => id !== optimizationId)
-        : [...prev, optimizationId]
-    );
-  };
-
   const toggleSynergy = (synergy: string) => {
     setFilters((prev) => ({
       ...prev,
@@ -353,8 +405,8 @@ export default function EnhancedChampionsPage() {
       viewMode: 'grid',
     });
     setInputValue('');
-    setSelectedItems([]);
-    setSelectedOptimizations([]);
+    setShowFilteredResults(false);
+    resetAllSelections();
   };
 
   // Toggle favorite
@@ -380,34 +432,6 @@ export default function EnhancedChampionsPage() {
     ).length;
   };
 
-  // Statistiques pour les onglets
-  const tabCounts = {
-    champions: champions.length,
-    items: items.length,
-    synergies: commonSynergies.length,
-    optimizations: optimizations.length,
-  };
-
-  // Statistiques pour le hub
-  const favoritesCount = favorites.length;
-  const metaCount = champions.filter((c) => c.isMeta).length;
-
-  const hasSearchCriteria =
-    inputValue.length > 0 || 
-    filters.selectedTags.length > 0 ||
-    selectedItems.length > 0 ||
-    selectedOptimizations.length > 0 ||
-    filters.selectedSynergies.length > 0;
-
-  if (showResults) {
-    return (
-      <ResultsPage
-        searchedChampions={filters.selectedTags}
-        onBack={handleBackFromResults}
-      />
-    );
-  }
-
   // Fonction de recherche améliorée
   const searchInText = (text: string, searchTerms: string[]): boolean => {
     if (searchTerms.length === 0) return true;
@@ -420,6 +444,17 @@ export default function EnhancedChampionsPage() {
 
   // Filtrage selon l'onglet actif avec recherche améliorée
   const getFilteredData = () => {
+    // Si on n'affiche pas les résultats filtrés, retourner toutes les données
+    if (!showFilteredResults && inputValue.trim() === '' && filters.selectedTags.length === 0) {
+      switch (activeTab) {
+        case 'champions': return champions;
+        case 'items': return items;
+        case 'synergies': return commonSynergies;
+        case 'optimizations': return optimizations;
+        default: return [];
+      }
+    }
+
     const searchTerms = [
       ...filters.selectedTags,
       ...(inputValue.trim() ? [inputValue.trim()] : [])
@@ -507,6 +542,36 @@ export default function EnhancedChampionsPage() {
     }
   });
 
+  // Statistiques pour les onglets
+  const tabCounts = {
+    champions: champions.length,
+    items: items.length,
+    synergies: commonSynergies.length,
+    optimizations: optimizations.length,
+  };
+
+  // Statistiques pour le hub
+  const favoritesCount = favorites.length;
+  const metaCount = champions.filter((c) => c.isMeta).length;
+
+  // Total des sélections
+  const totalSelections = selectedChampions.length + selectedItems.length + selectedSynergies.length + selectedOptimizations.length;
+
+  const hasSearchCriteria =
+    inputValue.length > 0 || 
+    filters.selectedTags.length > 0 ||
+    totalSelections > 0 ||
+    filters.selectedSynergies.length > 0;
+
+  if (showResults) {
+    return (
+      <ResultsPage
+        searchedChampions={[...selectedChampions, ...filters.selectedTags]}
+        onBack={handleBackFromResults}
+      />
+    );
+  }
+
   return (
     <>
       {/* Header de section */}
@@ -520,6 +585,20 @@ export default function EnhancedChampionsPage() {
           </div>
         </div>
         <div className="flex items-center space-x-4">
+          {/* Affichage des sélections */}
+          {totalSelections > 0 && (
+            <div className="flex items-center space-x-2 bg-slate-800/60 rounded-lg border border-slate-600/50 px-4 py-2">
+              <span className="text-sm text-slate-300">Sélectionnés:</span>
+              <span className="text-sm font-bold text-blue-400">{totalSelections}</span>
+              <button
+                onClick={resetAllSelections}
+                className="p-1 text-slate-400 hover:text-red-400 transition-colors rounded"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+          
           <div className="flex items-center space-x-1 bg-slate-800/60 rounded-lg border border-slate-600/50 p-1">
             <button
               onClick={() =>
@@ -548,6 +627,106 @@ export default function EnhancedChampionsPage() {
           </div>
         </div>
       </div>
+
+      {/* Affichage des sélections actuelles */}
+      {totalSelections > 0 && (
+        <div className="mb-6 bg-slate-800/30 backdrop-blur rounded-xl border border-slate-700/30 p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-white font-semibold">Éléments sélectionnés ({totalSelections})</h3>
+            <button
+              onClick={resetAllSelections}
+              className="text-slate-400 hover:text-red-400 transition-colors text-sm flex items-center space-x-1"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>Tout effacer</span>
+            </button>
+          </div>
+          
+          <div className="space-y-3">
+            {selectedChampions.length > 0 && (
+              <div>
+                <div className="text-xs text-slate-400 mb-2">Champions ({selectedChampions.length})</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedChampions.map((name) => (
+                    <div key={name} className="flex items-center space-x-2 bg-blue-600/20 text-blue-300 px-3 py-1 rounded-lg text-sm border border-blue-500/30">
+                      <span>{name}</span>
+                      <button
+                        onClick={() => removeFromSelection(name, 'champion')}
+                        className="hover:text-blue-100 transition-colors"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {selectedItems.length > 0 && (
+              <div>
+                <div className="text-xs text-slate-400 mb-2">Items ({selectedItems.length})</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedItems.map((id) => {
+                    const item = items.find(i => i.key === id);
+                    return item ? (
+                      <div key={id} className="flex items-center space-x-2 bg-green-600/20 text-green-300 px-3 py-1 rounded-lg text-sm border border-green-500/30">
+                        <span>{item.name}</span>
+                        <button
+                          onClick={() => removeFromSelection(id, 'item')}
+                          className="hover:text-green-100 transition-colors"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+
+            {selectedSynergies.length > 0 && (
+              <div>
+                <div className="text-xs text-slate-400 mb-2">Synergies ({selectedSynergies.length})</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedSynergies.map((name) => (
+                    <div key={name} className="flex items-center space-x-2 bg-purple-600/20 text-purple-300 px-3 py-1 rounded-lg text-sm border border-purple-500/30">
+                      <span>{name}</span>
+                      <button
+                        onClick={() => removeFromSelection(name, 'synergy')}
+                        className="hover:text-purple-100 transition-colors"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {selectedOptimizations.length > 0 && (
+              <div>
+                <div className="text-xs text-slate-400 mb-2">Optimisations ({selectedOptimizations.length})</div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedOptimizations.map((id) => {
+                    const optimization = optimizations.find(o => o.id === id);
+                    return optimization ? (
+                      <div key={id} className="flex items-center space-x-2 bg-orange-600/20 text-orange-300 px-3 py-1 rounded-lg text-sm border border-orange-500/30">
+                        <span>{optimization.name}</span>
+                        <button
+                          onClick={() => removeFromSelection(id, 'optimization')}
+                          className="hover:text-orange-100 transition-colors"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Navigation par onglets */}
       <TabNavigation
@@ -661,7 +840,7 @@ export default function EnhancedChampionsPage() {
                       viewMode={filters.viewMode}
                       isFavorite={favorites.includes(item.name)}
                       onToggleFavorite={toggleFavorite}
-                      onAddAsTag={addAsTag}
+                      onAddAsTag={(name) => addToSelection(name, 'champion')}
                       recommendedItems={getRecommendedItems(item)}
                     />
                   );
@@ -672,8 +851,8 @@ export default function EnhancedChampionsPage() {
                       item={item}
                       viewMode={filters.viewMode}
                       isSelected={selectedItems.includes(item.key)}
-                      onToggleSelect={toggleItemSelection}
-                      onAddAsTag={addAsTag}
+                      onToggleSelect={(key) => addToSelection(item.name, 'item', key)}
+                      onAddAsTag={(name) => addToSelection(name, 'item', item.key)}
                     />
                   );
                 } else if (activeTab === 'synergies') {
@@ -682,9 +861,9 @@ export default function EnhancedChampionsPage() {
                       key={item.name}
                       synergy={item}
                       viewMode={filters.viewMode}
-                      isSelected={filters.selectedSynergies.includes(item.name)}
-                      onToggleSelect={toggleSynergy}
-                      onAddAsTag={addAsTag}
+                      isSelected={selectedSynergies.includes(item.name)}
+                      onToggleSelect={(name) => addToSelection(name, 'synergy')}
+                      onAddAsTag={(name) => addToSelection(name, 'synergy')}
                       championCount={getSynergyChampionCount(item.name)}
                     />
                   );
@@ -695,8 +874,8 @@ export default function EnhancedChampionsPage() {
                       optimization={item}
                       viewMode={filters.viewMode}
                       isSelected={selectedOptimizations.includes(item.id)}
-                      onToggleSelect={toggleOptimizationSelection}
-                      onAddAsTag={addAsTag}
+                      onToggleSelect={(id) => addToSelection(item.name, 'optimization', id)}
+                      onAddAsTag={(name) => addToSelection(name, 'optimization', item.id)}
                     />
                   );
                 }
@@ -714,7 +893,7 @@ export default function EnhancedChampionsPage() {
                       viewMode={filters.viewMode}
                       isFavorite={favorites.includes(item.name)}
                       onToggleFavorite={toggleFavorite}
-                      onAddAsTag={addAsTag}
+                      onAddAsTag={(name) => addToSelection(name, 'champion')}
                       recommendedItems={getRecommendedItems(item)}
                     />
                   );
@@ -725,8 +904,8 @@ export default function EnhancedChampionsPage() {
                       item={item}
                       viewMode={filters.viewMode}
                       isSelected={selectedItems.includes(item.key)}
-                      onToggleSelect={toggleItemSelection}
-                      onAddAsTag={addAsTag}
+                      onToggleSelect={(key) => addToSelection(item.name, 'item', key)}
+                      onAddAsTag={(name) => addToSelection(name, 'item', item.key)}
                     />
                   );
                 } else if (activeTab === 'synergies') {
@@ -735,9 +914,9 @@ export default function EnhancedChampionsPage() {
                       key={item.name}
                       synergy={item}
                       viewMode={filters.viewMode}
-                      isSelected={filters.selectedSynergies.includes(item.name)}
-                      onToggleSelect={toggleSynergy}
-                      onAddAsTag={addAsTag}
+                      isSelected={selectedSynergies.includes(item.name)}
+                      onToggleSelect={(name) => addToSelection(name, 'synergy')}
+                      onAddAsTag={(name) => addToSelection(name, 'synergy')}
                       championCount={getSynergyChampionCount(item.name)}
                     />
                   );
@@ -748,8 +927,8 @@ export default function EnhancedChampionsPage() {
                       optimization={item}
                       viewMode={filters.viewMode}
                       isSelected={selectedOptimizations.includes(item.id)}
-                      onToggleSelect={toggleOptimizationSelection}
-                      onAddAsTag={addAsTag}
+                      onToggleSelect={(id) => addToSelection(item.name, 'optimization', id)}
+                      onAddAsTag={(name) => addToSelection(name, 'optimization', item.id)}
                     />
                   );
                 }
