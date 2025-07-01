@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowUpDown, Grid3X3, List, Filter, ChevronDown, ChevronUp, Star, Package } from 'lucide-react';
+import { Search, ArrowUpDown, Grid3X3, List, Filter, ChevronDown, ChevronUp, Star, Package, Download, SlidersHorizontal, Eye, EyeOff } from 'lucide-react';
 import { Item } from '../types';
 import SearchBar from '../components/SearchBar';
 import FilterHub from '../components/FilterHub';
@@ -11,12 +11,24 @@ export default function ItemsDataPage() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [viewMode, setViewMode] = useState<'grid' | 'compact'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'compact' | 'table'>('table');
   const [sortBy, setSortBy] = useState<'name' | 'tier' | 'pickRate' | 'avgPlacement'>('tier');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [showFilters, setShowFilters] = useState(false);
   const [filterTier, setFilterTier] = useState<number | 'all'>('all');
   const [filterType, setFilterType] = useState<string>('all');
   const [patchInfo, setPatchInfo] = useState({ version: '', set: '', lastUpdate: '' });
+  const [hoveredRow, setHoveredRow] = useState<string | null>(null);
+  const [visibleColumns, setVisibleColumns] = useState({
+    name: true,
+    tier: true,
+    type: true,
+    pickRate: true,
+    avgPlacement: true,
+    top4Percent: true,
+    top1Percent: true,
+    craftable: true
+  });
 
   // Chargement des données
   useEffect(() => {
@@ -131,18 +143,26 @@ export default function ItemsDataPage() {
 
   // Tri des items
   const sortedItems = [...filteredItems].sort((a, b) => {
+    let comparison = 0;
+    
     switch (sortBy) {
       case 'name':
-        return a.name.localeCompare(b.name);
+        comparison = a.name.localeCompare(b.name);
+        break;
       case 'tier':
-        return a.tier - b.tier;
+        comparison = a.tier - b.tier;
+        break;
       case 'pickRate':
-        return b.pickRate - a.pickRate;
+        comparison = b.pickRate - a.pickRate;
+        break;
       case 'avgPlacement':
-        return a.avgPlacement - b.avgPlacement;
+        comparison = a.avgPlacement - b.avgPlacement;
+        break;
       default:
-        return 0;
+        comparison = 0;
     }
+    
+    return sortDirection === 'asc' ? comparison : -comparison;
   });
 
   // Toggle item selection
@@ -165,6 +185,90 @@ export default function ItemsDataPage() {
   // Obtenir les types d'items uniques
   const itemTypes = Array.from(new Set(items.map(item => item.itemType)));
 
+  // Gestion du tri des colonnes
+  const handleColumnSort = (column: 'name' | 'tier' | 'pickRate' | 'avgPlacement') => {
+    if (sortBy === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(column);
+      setSortDirection('asc');
+    }
+  };
+
+  // Toggle visibilité des colonnes
+  const toggleColumnVisibility = (column: keyof typeof visibleColumns) => {
+    setVisibleColumns(prev => ({
+      ...prev,
+      [column]: !prev[column]
+    }));
+  };
+
+  // Obtenir l'icône de tri pour une colonne
+  const getSortIcon = (column: string) => {
+    if (sortBy !== column) return <ChevronDown className="w-4 h-4 opacity-50" />;
+    return sortDirection === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />;
+  };
+
+  // Fonction pour obtenir la couleur du tier
+  const getTierColor = (tier: number) => {
+    switch (tier) {
+      case 1: return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 2: return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 3: return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      case 4: return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      case 5: return 'bg-red-500/20 text-red-400 border-red-500/30';
+      default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+    }
+  };
+
+  // Fonction pour obtenir la couleur du placement
+  const getPlacementColor = (placement: number) => {
+    if (placement <= 3.5) return 'text-green-400';
+    if (placement <= 4.2) return 'text-yellow-400';
+    return 'text-red-400';
+  };
+
+  // Exporter les données en CSV
+  const exportToCSV = () => {
+    // Définir les en-têtes
+    const headers = [
+      'Nom',
+      'Tier',
+      'Type',
+      'Pick Rate',
+      'Placement Moyen',
+      'Top 4%',
+      'Top 1%',
+      'Craftable'
+    ].join(',');
+    
+    // Convertir les données en lignes CSV
+    const rows = sortedItems.map(item => [
+      item.name,
+      item.tier,
+      item.itemType,
+      (item.pickRate * 100).toFixed(1) + '%',
+      item.avgPlacement.toFixed(2),
+      (item.top4Percent * 100).toFixed(1) + '%',
+      (item.top1Percent * 100).toFixed(1) + '%',
+      item.craftable ? 'Oui' : 'Non'
+    ].join(','));
+    
+    // Combiner en-têtes et lignes
+    const csvContent = [headers, ...rows].join('\n');
+    
+    // Créer un blob et un lien de téléchargement
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `items_tft_${patchInfo.version}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       {/* Header de section */}
@@ -178,6 +282,13 @@ export default function ItemsDataPage() {
           </div>
         </div>
         <div className="flex items-center space-x-4">
+          <button
+            onClick={exportToCSV}
+            className="flex items-center space-x-2 px-4 py-2 bg-green-600/20 text-green-400 rounded-lg hover:bg-green-600/30 transition-colors border border-green-500/30"
+          >
+            <Download className="w-4 h-4" />
+            <span>Exporter CSV</span>
+          </button>
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={`flex items-center space-x-2 px-4 py-2 rounded-lg border transition-all ${
@@ -209,6 +320,16 @@ export default function ItemsDataPage() {
               }`}
             >
               <List className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode('table')}
+              className={`p-2 rounded transition-all ${
+                viewMode === 'table'
+                  ? 'bg-blue-600 text-white shadow-md'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+              }`}
+            >
+              <SlidersHorizontal className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -301,6 +422,30 @@ export default function ItemsDataPage() {
                     <span className="text-slate-300 text-sm">{option.label}</span>
                   </label>
                 ))}
+                
+                <div className="pt-2 flex items-center space-x-3">
+                  <span className="text-slate-300 text-sm">Direction:</span>
+                  <button
+                    onClick={() => setSortDirection('asc')}
+                    className={`px-3 py-1 rounded text-xs ${
+                      sortDirection === 'asc' 
+                        ? 'bg-blue-500 text-white' 
+                        : 'bg-slate-700 text-slate-300'
+                    }`}
+                  >
+                    Ascendant
+                  </button>
+                  <button
+                    onClick={() => setSortDirection('desc')}
+                    className={`px-3 py-1 rounded text-xs ${
+                      sortDirection === 'desc' 
+                        ? 'bg-blue-500 text-white' 
+                        : 'bg-slate-700 text-slate-300'
+                    }`}
+                  >
+                    Descendant
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -342,7 +487,7 @@ export default function ItemsDataPage() {
               </div>
             </div>
 
-            {/* Statistiques */}
+            {/* Statistiques et options de colonnes */}
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Star className="w-4 h-4 text-yellow-400" />
@@ -372,6 +517,30 @@ export default function ItemsDataPage() {
                   <div className="text-xs text-slate-400">Uniques</div>
                 </div>
               </div>
+              
+              {viewMode === 'table' && (
+                <div className="pt-4 border-t border-slate-700/30 mt-4">
+                  <h4 className="text-white text-sm font-medium mb-2">Colonnes visibles</h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    {Object.entries(visibleColumns).map(([column, isVisible]) => (
+                      <label key={column} className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={isVisible}
+                          onChange={() => toggleColumnVisibility(column as keyof typeof visibleColumns)}
+                          className="sr-only"
+                        />
+                        <div className={`w-4 h-4 rounded border flex items-center justify-center ${
+                          isVisible ? 'bg-blue-500 border-blue-500' : 'border-slate-500'
+                        }`}>
+                          {isVisible && <div className="w-2 h-2 bg-white rounded-sm"></div>}
+                        </div>
+                        <span className="text-slate-300 text-xs capitalize">{column}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -419,7 +588,7 @@ export default function ItemsDataPage() {
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="p-0">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
               <div className="relative">
@@ -456,8 +625,174 @@ export default function ItemsDataPage() {
                 </button>
               </div>
             </div>
+          ) : viewMode === 'table' ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead className="text-xs text-slate-400 uppercase bg-slate-800/50 sticky top-0">
+                  <tr>
+                    {visibleColumns.name && (
+                      <th scope="col" className="px-4 py-3 cursor-pointer hover:bg-slate-700/30" onClick={() => handleColumnSort('name')}>
+                        <div className="flex items-center space-x-1">
+                          <span>Item</span>
+                          {getSortIcon('name')}
+                        </div>
+                      </th>
+                    )}
+                    {visibleColumns.tier && (
+                      <th scope="col" className="px-4 py-3 cursor-pointer hover:bg-slate-700/30" onClick={() => handleColumnSort('tier')}>
+                        <div className="flex items-center space-x-1">
+                          <span>Tier</span>
+                          {getSortIcon('tier')}
+                        </div>
+                      </th>
+                    )}
+                    {visibleColumns.type && (
+                      <th scope="col" className="px-4 py-3">
+                        <span>Type</span>
+                      </th>
+                    )}
+                    {visibleColumns.pickRate && (
+                      <th scope="col" className="px-4 py-3 cursor-pointer hover:bg-slate-700/30" onClick={() => handleColumnSort('pickRate')}>
+                        <div className="flex items-center space-x-1">
+                          <span>Pick Rate</span>
+                          {getSortIcon('pickRate')}
+                        </div>
+                      </th>
+                    )}
+                    {visibleColumns.avgPlacement && (
+                      <th scope="col" className="px-4 py-3 cursor-pointer hover:bg-slate-700/30" onClick={() => handleColumnSort('avgPlacement')}>
+                        <div className="flex items-center space-x-1">
+                          <span>Placement</span>
+                          {getSortIcon('avgPlacement')}
+                        </div>
+                      </th>
+                    )}
+                    {visibleColumns.top4Percent && (
+                      <th scope="col" className="px-4 py-3">
+                        <span>Top 4%</span>
+                      </th>
+                    )}
+                    {visibleColumns.top1Percent && (
+                      <th scope="col" className="px-4 py-3">
+                        <span>Top 1%</span>
+                      </th>
+                    )}
+                    {visibleColumns.craftable && (
+                      <th scope="col" className="px-4 py-3">
+                        <span>Craftable</span>
+                      </th>
+                    )}
+                    <th scope="col" className="px-4 py-3">
+                      <span>Actions</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sortedItems.map((item) => (
+                    <tr 
+                      key={item.key} 
+                      className={`border-b border-slate-700/30 ${
+                        hoveredRow === item.key ? 'bg-slate-700/30' : 'hover:bg-slate-700/20'
+                      } transition-colors`}
+                      onMouseEnter={() => setHoveredRow(item.key)}
+                      onMouseLeave={() => setHoveredRow(null)}
+                    >
+                      {visibleColumns.name && (
+                        <td className="px-4 py-3">
+                          <div className="flex items-center space-x-3">
+                            <img 
+                              src={item.imageUrl} 
+                              alt={item.name} 
+                              className="w-10 h-10 rounded-lg object-cover border border-slate-600/50"
+                            />
+                            <div>
+                              <div className="font-medium text-white">{item.name}</div>
+                              {item.isEmblem && (
+                                <div className="text-xs text-purple-400">Emblème</div>
+                              )}
+                              {item.isUnique && (
+                                <div className="text-xs text-yellow-400">Unique</div>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                      )}
+                      {visibleColumns.tier && (
+                        <td className="px-4 py-3">
+                          <span className={`px-2 py-1 rounded-md text-xs font-bold border ${getTierColor(item.tier)}`}>
+                            {item.tier}
+                          </span>
+                        </td>
+                      )}
+                      {visibleColumns.type && (
+                        <td className="px-4 py-3">
+                          <span className="text-slate-300 capitalize">{item.itemType}</span>
+                        </td>
+                      )}
+                      {visibleColumns.pickRate && (
+                        <td className="px-4 py-3">
+                          <div className="flex flex-col">
+                            <span className="font-medium text-white">{(item.pickRate * 100).toFixed(1)}%</span>
+                            <div className="w-full bg-slate-700/50 rounded-full h-1.5 mt-1">
+                              <div
+                                className="h-1.5 rounded-full bg-blue-500 transition-all"
+                                style={{ width: `${Math.min((item.pickRate * 100) * 3, 100)}%` }}
+                              ></div>
+                            </div>
+                          </div>
+                        </td>
+                      )}
+                      {visibleColumns.avgPlacement && (
+                        <td className="px-4 py-3">
+                          <span className={`font-medium ${getPlacementColor(item.avgPlacement)}`}>
+                            {item.avgPlacement.toFixed(2)}
+                          </span>
+                        </td>
+                      )}
+                      {visibleColumns.top4Percent && (
+                        <td className="px-4 py-3">
+                          <span className="text-slate-300">{(item.top4Percent * 100).toFixed(1)}%</span>
+                        </td>
+                      )}
+                      {visibleColumns.top1Percent && (
+                        <td className="px-4 py-3">
+                          <span className="text-slate-300">{(item.top1Percent * 100).toFixed(1)}%</span>
+                        </td>
+                      )}
+                      {visibleColumns.craftable && (
+                        <td className="px-4 py-3">
+                          <span className={item.craftable ? 'text-green-400' : 'text-red-400'}>
+                            {item.craftable ? 'Oui' : 'Non'}
+                          </span>
+                        </td>
+                      )}
+                      <td className="px-4 py-3">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => toggleItemSelection(item.key)}
+                            className={`p-1.5 rounded transition-colors ${
+                              selectedItems.includes(item.key)
+                                ? 'text-blue-500 bg-blue-500/10'
+                                : 'text-slate-400 hover:text-blue-400 hover:bg-blue-500/10'
+                            }`}
+                          >
+                            <Star className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => addItemAsTag(item.name)}
+                            className="p-1.5 text-slate-400 hover:text-blue-400 transition-colors rounded hover:bg-blue-500/10"
+                          >
+                            <Search className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : viewMode === 'grid' ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4 p-6">
               {sortedItems.map((item) => (
                 <ItemCard
                   key={item.key}
@@ -470,7 +805,7 @@ export default function ItemsDataPage() {
               ))}
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-3 p-6">
               {sortedItems.map((item) => (
                 <ItemCard
                   key={item.key}
