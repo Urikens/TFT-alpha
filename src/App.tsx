@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from './components/Layout';
-import ChampionsPage from './pages/ChampionsPage';
+import EnhancedChampionsPage from './pages/EnhancedChampionsPage';
 import ChampionsDataPage from './pages/ChampionsDataPage';
 import CompositionsPage from './pages/CompositionsPage';
 
@@ -34,13 +34,13 @@ export default function App() {
       onNavigate={handleNavigation}
     >
       {currentPage === 'home' ? (
-        <ChampionsPage />
+        <EnhancedChampionsPage />
       ) : currentPage === 'champions' ? (
         <ChampionsDataPage />
       ) : currentPage === 'compositions' ? (
         <CompositionsPage />
       ) : (
-        <ChampionsPage />
+        <EnhancedChampionsPage />
       )}
     </Layout>
   );
