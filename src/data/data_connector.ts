@@ -7,66 +7,65 @@ import { commonSynergies } from './synergies';
 
 // Mapping des traits corrects pour chaque champion
 const championTraitsMapping: Record<string, string[]> = {
-  "Alistar": ["Golden Ox", "Bruiser"],
-  "Annie": ["Golden Ox", "A.M.P."],
-  "Aphelios": ["Golden Ox", "Marksman"],
-  "Aurora": ["Anima Squad", "Dynamo"],
+  "Alistar": ["Kaka", "Vanguard"],
+  "Annie": ["Divinicorp", "Controller"],
+  "Aphelios": ["Divinicorp", "Marksman"],
+  "Aurora": ["Anima Squad", "Marksman"],
   "Brand": ["Street Demon", "Techie"],
-  "Braum": ["Syndicate", "Vanguard"],
-  "Cho'Gath": ["BoomBots", "Bruiser"],
-  "Darius": ["Syndicate", "Bruiser"],
+  "Braum": ["Ballistek", "Vanguard"],
+  "Cho'Gath": ["Mob", "Bruiser"],
+  "Darius": ["Street Demon", "Bruiser"],
   "Dr. Mundo": ["Street Demon", "Bruiser"],
-  "Draven": ["Cypher", "Rapidfire"],
-  "Ekko": ["Street Demon", "Strategist"],
-  "Elise": ["Nitro", "Dynamo"],
-  "Fiddlesticks": ["BoomBots", "Techie"],
-  "Galio": ["Cypher", "Bastion"],
-  "Garen": ["God of the Net"],
-  "Gragas": ["Divinicorp", "Bruiser"],
-  "Graves": ["Golden Ox", "Executioner"],
-  "Illaoi": ["Anima Squad", "Bastion"],
-  "Jarvan IV": ["Golden Ox", "Vanguard"],
-  "Jax": ["Exotech", "Bastion"],
-  "Jhin": ["Exotech", "Dynamo"],
-  "Jinx": ["Street Demon", "Marksman"],
-  "Kindred": ["Nitro", "Rapidfire"],
-  "Kobuko": ["Cyberboss", "Bruiser"],
-  "Kog'Maw": ["BoomBots", "Rapidfire"],
-  "LeBlanc": ["Cypher", "Strategist"],
+  "Draven": ["Street Demon", "Marksman"],
+  "Ekko": ["Anima Squad", "Swift"],
+  "Elise": ["Mob", "Controller"],
+  "Fiddlesticks": ["Mob", "Controller"],
+  "Galio": ["Divinicorp", "Vanguard"],
+  "Gragas": ["Ballistek", "Bruiser"],
+  "Graves": ["Ballistek", "Marksman"],
+  "Illaoi": ["Divinicorp", "Bruiser"],
+  "Jarvan IV": ["Divinicorp", "Vanguard"],
+  "Jax": ["Anima Squad", "Bruiser"],
+  "Jhin": ["Anima Squad", "Marksman"],
+  "Jinx": ["Anima Squad", "Marksman"],
+  "Kindred": ["Mob", "Marksman"],
+  "Kobuko": ["Street Demon", "Swift"],
+  "Kog'Maw": ["Ballistek", "Marksman"],
+  "LeBlanc": ["Anima Squad", "Controller"],
   "Leona": ["Anima Squad", "Vanguard"],
-  "Miss Fortune": ["Syndicate", "Dynamo"],
-  "Mordekaiser": ["Exotech", "Techie"],
-  "Morgana": ["Divinicorp", "Dynamo"],
-  "Naafiri": ["Exotech", "A.M.P."],
-  "Neeko": ["Street Demon", "Strategist"],
-  "Nidalee": ["Nitro", "A.M.P."],
-  "Poppy": ["Cyberboss", "Bastion"],
-  "Rengar": ["Street Demon", "Executioner"],
-  "Renekton": ["Overlord", "Divinicorp", "Bastion"],
-  "Rhaast": ["Divinicorp", "Vanguard"],
-  "Samira": ["Street Demon", "A.M.P."],
-  "Sejuani": ["Exotech", "Bastion"],
-  "Senna": ["Divinicorp", "Slayer"],
-  "Seraphine": ["Anima Squad", "Techie"],
-  "Shaco": ["Syndicate", "Slayer"],
-  "Shyvana": ["BoomBots", "Bastion"],
-  "Skarner": ["BoomBots", "Vanguard"],
-  "Sylas": ["Anima Squad", "Vanguard"],
-  "Twisted Fate": ["Syndicate", "Rapidfire"],
-  "Urgot": ["BoomBots", "Executioner"],
-  "Varus": ["Exotech", "Executioner"],
-  "Vayne": ["Anima Squad", "Slayer"],
-  "Veigar": ["Cyberboss", "Techie"],
-  "Vex": ["Divinicorp", "Executioner"],
-  "Vi": ["Cypher", "Vanguard"],
-  "Viego": ["Soul Killer", "Golden Ox", "Techie"],
+  "Miss Fortune": ["Ballistek", "Marksman"],
+  "Mordekaiser": ["Street Demon", "Vanguard"],
+  "Morgana": ["Divinicorp", "Controller"],
+  "Naafiri": ["Street Demon", "Swift"],
+  "Neeko": ["Anima Squad", "Controller"],
+  "Nidalee": ["Anima Squad", "Swift"],
+  "Poppy": ["Ballistek", "Vanguard"],
+  "Rengar": ["Mob", "Swift"],
+  "Renekton": ["Street Demon", "Bruiser"],
+  "Rhaast": ["Mob", "Bruiser"],
+  "Samira": ["Street Demon", "Marksman"],
+  "Sejuani": ["Ballistek", "Vanguard"],
+  "Senna": ["Divinicorp", "Marksman"],
+  "Seraphine": ["Divinicorp", "Controller"],
+  "Shaco": ["Mob", "Swift"],
+  "Shyvana": ["Street Demon", "Bruiser"],
+  "Skarner": ["Ballistek", "Bruiser"],
+  "Sylas": ["Anima Squad", "Bruiser"],
+  "Twisted Fate": ["Ballistek", "Controller"],
+  "Urgot": ["Ballistek", "Bruiser"],
+  "Varus": ["Divinicorp", "Marksman"],
+  "Vayne": ["Anima Squad", "Marksman"],
+  "Veigar": ["Mob", "Controller"],
+  "Vex": ["Mob", "Controller"],
+  "Vi": ["Anima Squad", "Bruiser"],
+  "Viego": ["Mob", "Swift"],
   "Xayah": ["Anima Squad", "Marksman"],
-  "Yuumi": ["Anima Squad", "A.M.P.", "Strategist"],
-  "Zac": ["Virus", "Cypher", "Slayer"],
-  "Zed": ["Cypher", "Slayer"],
-  "Zeri": ["Exotech", "Rapidfire"],
-  "Ziggs": ["Cyberboss", "Strategist"],
-  "Zyra": ["Street Demon", "Techie"]
+  "Yuumi": ["Divinicorp", "Controller"],
+  "Zac": ["Street Demon", "Vanguard"],
+  "Zed": ["Anima Squad", "Swift"],
+  "Zeri": ["Ballistek", "Marksman"],
+  "Ziggs": ["Ballistek", "Controller"],
+  "Zyra": ["Divinicorp", "Controller"]
 };
 
 /**
@@ -144,15 +143,7 @@ export class TFTDataConnector {
       'Controller': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
       'Bruiser': ['WarmogsArmor', 'TitansResolve', 'SteraksGage', 'RedBuff', 'Bloodthirster'],
       'Vanguard': ['BrambleVest', 'DragonsClaw', 'GargoyleStoneplate', 'WarmogsArmor', 'Redemption'],
-      'Swift': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper'],
-      'Rapidfire': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper'],
-      'Techie': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
-      'Strategist': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
-      'Dynamo': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
-      'A.M.P.': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
-      'Slayer': ['Bloodthirster', 'InfinityEdge', 'GuinsoosRageblade', 'LastWhisper', 'Deathblade'],
-      'Executioner': ['InfinityEdge', 'JeweledGauntlet', 'Deathblade', 'LastWhisper', 'PowerGauntlet'],
-      'Bastion': ['BrambleVest', 'DragonsClaw', 'GargoyleStoneplate', 'WarmogsArmor', 'Redemption']
+      'Swift': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper']
     };
 
     this.champions.forEach(champion => {
@@ -161,7 +152,7 @@ export class TFTDataConnector {
       if (champion.traits) {
         // Priorise la classe principale pour les items
         const classTraits = champion.traits.filter(trait => 
-          Object.keys(itemsByClass).includes(trait)
+          ['Marksman', 'Controller', 'Bruiser', 'Vanguard', 'Swift'].includes(trait)
         );
         
         if (classTraits.length > 0) {
@@ -171,14 +162,10 @@ export class TFTDataConnector {
         
         // Si c'est un carry, priorise les items offensifs
         if (champion.asCarry > 0) {
-          if (champion.traits.includes('Marksman') || champion.traits.includes('Rapidfire')) {
+          if (champion.traits.includes('Marksman')) {
             recommendedItemKeys = ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade'];
-          } else if (champion.traits.includes('Controller') || champion.traits.includes('Techie') || 
-                    champion.traits.includes('Dynamo') || champion.traits.includes('A.M.P.') || 
-                    champion.traits.includes('Strategist')) {
+          } else if (champion.traits.includes('Controller')) {
             recommendedItemKeys = ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet'];
-          } else if (champion.traits.includes('Slayer') || champion.traits.includes('Executioner')) {
-            recommendedItemKeys = ['Bloodthirster', 'InfinityEdge', 'Deathblade'];
           } else {
             recommendedItemKeys = ['Bloodthirster', 'InfinityEdge', 'GuinsoosRageblade'];
           }
