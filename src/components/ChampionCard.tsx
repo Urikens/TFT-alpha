@@ -98,11 +98,15 @@ export default function ChampionCard({
                     className={`px-1 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1`}
                   >
                     {synergyData.imageUrl ? (
-                      <img 
-                        src={synergyData.imageUrl} 
-                        alt={trait}
-                        className="w-4 h-4 object-cover rounded"
-                      />
+                      <div className="relative">
+                        {/* Hexagonal gold background */}
+                        <div className="absolute inset-0 w-4 h-4 bg-gradient-to-br from-yellow-300 to-amber-600 rounded-md transform rotate-45 -z-10"></div>
+                        <img 
+                          src={synergyData.imageUrl} 
+                          alt={trait}
+                          className="w-4 h-4 object-cover rounded relative z-10"
+                        />
+                      </div>
                     ) : (
                       <span className="text-xs">{synergyData.icon}</span>
                     )}
@@ -216,11 +220,15 @@ export default function ChampionCard({
                   className="px-2 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1"
                 >
                   {synergyData.imageUrl ? (
-                    <img 
-                      src={synergyData.imageUrl} 
-                      alt={trait}
-                      className="w-4 h-4 object-cover rounded"
-                    />
+                    <div className="relative">
+                      {/* Hexagonal gold background */}
+                      <div className="absolute inset-0 w-4 h-4 bg-gradient-to-br from-yellow-300 to-amber-600 rounded-md transform rotate-45 -z-10"></div>
+                      <img 
+                        src={synergyData.imageUrl} 
+                        alt={trait}
+                        className="w-4 h-4 object-cover rounded relative z-10"
+                      />
+                    </div>
                   ) : (
                     <span className="text-xs">{synergyData.icon}</span>
                   )}

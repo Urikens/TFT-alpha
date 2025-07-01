@@ -266,8 +266,12 @@ export default function ActiveSelectionPanel({
                     {selectedSynergies.map((name) => (
                       <div key={name} className="group flex items-center justify-between bg-purple-500/5 hover:bg-purple-500/10 border border-purple-500/10 rounded-lg p-3 transition-all duration-200">
                         <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
-                            <Sparkles className="w-5 h-5 text-white" />
+                          <div className="relative">
+                            {/* Hexagonal gold background */}
+                            <div className="absolute inset-0 w-10 h-10 bg-gradient-to-br from-yellow-300 to-amber-600 rounded-lg transform rotate-45 -z-10"></div>
+                            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center relative z-10">
+                              <Sparkles className="w-5 h-5 text-white" />
+                            </div>
                           </div>
                           <span className="text-purple-100 font-medium text-sm">{name}</span>
                         </div>

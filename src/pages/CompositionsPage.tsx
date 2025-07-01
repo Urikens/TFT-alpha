@@ -632,11 +632,15 @@ export default function CompositionsPage() {
                           className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs transition-all duration-300 hover:scale-105 border-2 ${getTraitLevelColor(trait.level)}`}
                         >
                           {synergyData.imageUrl ? (
-                            <img 
-                              src={synergyData.imageUrl} 
-                              alt={trait.name}
-                              className="w-4 h-4 object-cover rounded"
-                            />
+                            <div className="relative">
+                              {/* Hexagonal gold background */}
+                              <div className="absolute inset-0 w-4 h-4 bg-gradient-to-br from-yellow-300 to-amber-600 rounded-md transform rotate-45 -z-10"></div>
+                              <img 
+                                src={synergyData.imageUrl} 
+                                alt={trait.name}
+                                className="w-4 h-4 object-cover rounded relative z-10"
+                              />
+                            </div>
                           ) : (
                             <span className="text-blue-400">⚡</span>
                           )}

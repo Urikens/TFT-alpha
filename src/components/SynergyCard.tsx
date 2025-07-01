@@ -48,11 +48,15 @@ export default function SynergyCard({
         <div className="relative z-10 flex flex-col items-center space-y-3">
           <div className="relative">
             {synergy.imageUrl ? (
-              <img
-                src={synergy.imageUrl}
-                alt={synergy.name}
-                className="w-16 h-16 rounded-lg object-cover shadow-lg transition-transform duration-300 group-hover:scale-110"
-              />
+              <div className="relative">
+                {/* Hexagonal gold background */}
+                <div className="absolute inset-0 w-16 h-16 bg-gradient-to-br from-yellow-300 to-amber-600 rounded-xl transform rotate-45 -z-10"></div>
+                <img
+                  src={synergy.imageUrl}
+                  alt={synergy.name}
+                  className="w-16 h-16 rounded-lg object-cover shadow-lg transition-transform duration-300 group-hover:scale-110 relative z-10"
+                />
+              </div>
             ) : (
               <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${synergy.color} flex items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-110`}>
                 <span className="text-2xl">{synergy.icon}</span>
@@ -101,11 +105,15 @@ export default function SynergyCard({
       {/* Image/Icône de la synergie */}
       <div className="relative z-10 flex-shrink-0">
         {synergy.imageUrl ? (
-          <img
-            src={synergy.imageUrl}
-            alt={synergy.name}
-            className="w-16 h-16 rounded-lg object-cover transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl border-2 border-slate-600/50 group-hover:border-purple-400/60"
-          />
+          <div className="relative">
+            {/* Hexagonal gold background */}
+            <div className="absolute inset-0 w-16 h-16 bg-gradient-to-br from-yellow-300 to-amber-600 rounded-xl transform rotate-45 -z-10"></div>
+            <img
+              src={synergy.imageUrl}
+              alt={synergy.name}
+              className="w-16 h-16 rounded-lg object-cover transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl border-2 border-slate-600/50 group-hover:border-purple-400/60 relative z-10"
+            />
+          </div>
         ) : (
           <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${synergy.color} flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl border-2 border-slate-600/50 group-hover:border-purple-400/60`}>
             <span className="text-2xl">{synergy.icon}</span>
