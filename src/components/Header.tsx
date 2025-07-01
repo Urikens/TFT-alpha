@@ -101,6 +101,7 @@ export default function Header({
               { name: 'Accueil', key: 'home' },
               { name: 'Champions', key: 'champions' },
               { name: 'Items', key: 'items' },
+              { name: 'Synergies', key: 'synergies' },
               { name: 'Compositions', key: 'compositions' },
             ].map((page) => (
               <button
