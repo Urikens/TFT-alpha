@@ -7,7 +7,7 @@ export const generatedChampions: Champion[] = [
     "key": "TFT14_Alistar",
     "name": "Alistar",
     "cost": [3],
-    "traits": ["Armorclad", "Vanguard"],
+    "traits": ["kaka", "Vanguard"],
     "imageUrl": "/images/champions/Alistar.webp",
     "skill": {
       "name": "Pulverize",
