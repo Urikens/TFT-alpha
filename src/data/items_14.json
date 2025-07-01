@@ -1,0 +1,667 @@
+[
+  {
+    "key": "BruiserEmblem",
+    "ingameKey": "TFT14_Item_BruiserEmblemItem",
+    "name": "난동꾼 상징",
+    "desc": "[고유] 장착 시 난동꾼 특성 획득<br>최대 체력 240당 1%의 추가 마법 피해를 입힘",
+    "shortDesc": "난동꾼<br>특성 획득",
+    "fromDesc": "체력 +150",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/BruiserEmblem_1731368184-tft_set13_emblem_bruiser.png",
+    "compositions": [
+      "FryingPan",
+      "GiantsBelt"
+    ],
+    "affectedTraitKey": "Bruiser",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "CorruptedChassis",
+    "ingameKey": "TFT14_MordekaiserCyberneticItem",
+    "name": "타락한 몸체",
+    "desc": "장착 유닛의 모든 보호막 효과 15% 증가. 7초마다 장착 유닛이 자신 최대 체력의 10%만큼 현재 대상의 체력을 흡수하여 5초 동안 지속되는 보호막으로 전환<br><br>추천 사용자: 모데카이저, 잭스, 세주아니",
+    "shortDesc": "",
+    "fromDesc": "체력 +200",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/CorruptedChassis_1741762898-TFT14_Item_MordekaiserCyberneticItem.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "Holobow",
+    "ingameKey": "TFT14_VarusCyberneticItem",
+    "name": "홀로그램 활",
+    "desc": "기본 공격 시 치명타가 적용되면 추가 마나 2 획득. 스킬 사용 후 5초 동안 치명타 확률 40% 증가 <br><br>추천 사용자: 바루스, 진, 제리",
+    "shortDesc": "",
+    "fromDesc": "마나 +15<br>주문력 +30<br>공격 속도 +25%<br>공격력 +15%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/Holobow_1741762918-TFT14_Item_VarusCyberneticItem.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "RepulsorLantern",
+    "ingameKey": "TFT14_JaxCyberneticItem",
+    "name": "추진기 가로등",
+    "desc": "체력 5% 획득. 3초마다 1칸 이내 모든 적에게 장착 유닛 최대 체력의 6%만큼 마법 피해를 입힘<br><br>추천 사용자: 잭스, 모데카이저, 세주아니",
+    "shortDesc": "",
+    "fromDesc": "체력 +444",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/RepulsorLantern_1741763371-TFT14_Item_JaxCyberneticItem.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "PulseStabilizer",
+    "ingameKey": "TFT14_JhinCyberneticItem",
+    "name": "맥박 안정화 장치",
+    "desc": "체력이 12% 아래인 적 처형. 스킬에 치명타 적용 가능. 기본 스킬에 치명타 적용이 가능한 경우, 대신 치명타 피해량이 10% 증가<br><br>추천 사용자: 진, 제리",
+    "shortDesc": "",
+    "fromDesc": "공격력 +30%<br>치명타 확률 +30%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/PulseStabilizer_1741763525-TFT14_Item_JhinCyberneticItem.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "AnimaSquadEmblem",
+    "ingameKey": "TFT14_Item_DarkWebEmblemItem",
+    "name": "동물특공대 상징",
+    "desc": "[고유] 장착 시 동물특공대 특성 획득",
+    "shortDesc": "동물특공대<br>특성 획득",
+    "fromDesc": "마나 +15",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/AnimaSquadEmblem_1741826153-TFT14_Emblem_AnimaSquad.TFT_Set14.png",
+    "compositions": [
+      "Spatula",
+      "Tearofthegoddess"
+    ],
+    "affectedTraitKey": "AnimaSquad",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "BastionEmblem",
+    "ingameKey": "TFT14_Item_ArmorcladEmblemItem",
+    "name": "요새 상징",
+    "desc": "[고유] 장착 시 요새 특성 획득<br>방어력 및 마법 저항력의 15%만큼 주문력 획득",
+    "shortDesc": "요새<br>특성 획득",
+    "fromDesc": "방어력 +20",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/BastionEmblem_1741826205-TFT14_Emblem_Bastion.TFT_Set14.png",
+    "compositions": [
+      "ChainVest",
+      "FryingPan"
+    ],
+    "affectedTraitKey": "Bastion",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "BoomBotsEmblem",
+    "ingameKey": "TFT14_Item_BallistekEmblemItem",
+    "name": "폭발 봇 상징",
+    "desc": "[고유] 장착 시 폭발 봇 특성 획득",
+    "shortDesc": "폭발 봇<br>특성 획득",
+    "fromDesc": "방어력 +20",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/BoomBotsEmblem_1741826261-TFT14_Emblem_BoomBots.TFT_Set14.png",
+    "compositions": [
+      "ChainVest",
+      "Spatula"
+    ],
+    "affectedTraitKey": "BoomBots",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "CypherEmblem",
+    "ingameKey": "TFT14_Item_CypherEmblemItem",
+    "name": "사이퍼 상징",
+    "desc": "[고유] 장착 시 사이퍼 특성 획득",
+    "shortDesc": "사이퍼<br>특성 획득",
+    "fromDesc": "체력 +150",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/CypherEmblem_1741826294-TFT14_Emblem_Cypher.TFT_Set14.png",
+    "affectedTraitKey": "Cypher",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "DivinicorpEmblem",
+    "ingameKey": "TFT14_Item_DivinicorpEmblemItem",
+    "name": "신성기업 상징",
+    "desc": "[고유] 장착 시 신성기업 특성 획득",
+    "shortDesc": "신성기업<br>특성 획득",
+    "fromDesc": "공격 속도 +10%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/DivinicorpEmblem_1741826321-TFT14_Emblem_Divinicorp.TFT_Set14.png",
+    "compositions": [
+      "RecurveBow",
+      "Spatula"
+    ],
+    "affectedTraitKey": "Divinicorp",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "DynamoEmblem",
+    "ingameKey": "TFT14_Item_ThirstyEmblemItem",
+    "name": "다이나모 상징",
+    "desc": "[고유] 장착 시 다이나모 특성 획득<br>스킬 사용 시 사용한 마나 10당 피해 증폭 1.5% 획득",
+    "shortDesc": "다이나모<br>특성 획득",
+    "fromDesc": "마나 +15",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/DynamoEmblem_1741826412-TFT14_Emblem_Dynamo.TFT_Set14.png",
+    "compositions": [
+      "FryingPan",
+      "Tearofthegoddess"
+    ],
+    "affectedTraitKey": "Dynamo",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "ExecutionerEmblem",
+    "ingameKey": "TFT14_Item_CutterEmblemItem",
+    "name": "처형자 상징",
+    "desc": "[고유] 장착 시 처형자 특성 획득<br>치명타 발동 시 대상의 방어력 및 마법 저항력 20%만큼 무시",
+    "shortDesc": "처형자<br>특성 획득",
+    "fromDesc": "치명타 확률 +20%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/ExecutionerEmblem_1741826457-TFT14_Emblem_Executioner.TFT_Set14.png",
+    "compositions": [
+      "FryingPan",
+      "SparringGloves"
+    ],
+    "affectedTraitKey": "Executioner",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "ExotechEmblem",
+    "ingameKey": "TFT14_Item_EdgeRunnerEmblemItem",
+    "name": "엑소테크 상징",
+    "desc": "[고유] 장착 시 엑소테크 특성 획득",
+    "shortDesc": "엑소테크<br>특성 획득",
+    "fromDesc": "치명타 확률 +20%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/ExotechEmblem_1741826499-TFT14_Emblem_Exotech.TFT_Set14.png",
+    "compositions": [
+      "SparringGloves",
+      "Spatula"
+    ],
+    "affectedTraitKey": "Exotech",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "GoldenOxEmblem",
+    "ingameKey": "TFT14_Item_ImmortalEmblemItem",
+    "name": "황금 황소 상징",
+    "desc": "[고유] 장착 시 황금 황소 특성 획득",
+    "shortDesc": "황금 황소<br>특성 획득",
+    "fromDesc": "체력 +150",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/GoldenOxEmblem_1741826534-TFT14_Emblem_GoldenOx.TFT_Set14.png",
+    "compositions": [
+      "GiantsBelt",
+      "Spatula"
+    ],
+    "affectedTraitKey": "GoldenOx",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "MarksmanEmblem",
+    "ingameKey": "TFT14_Item_MarksmanEmblemItem",
+    "name": "사격수 상징",
+    "desc": "[고유] 장착 시 사격수 특성 획득<br>적에게 물리 피해를 입힐 경우 대상 방어력 3 감소",
+    "shortDesc": "사격수<br>특성 획득",
+    "fromDesc": "공격력 +10%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/MarksmanEmblem_1741826570-TFT14_Emblem_Marksman.TFT_Set14.png",
+    "compositions": [
+      "BFSword",
+      "FryingPan"
+    ],
+    "affectedTraitKey": "Marksman",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "RapidfireEmblem",
+    "ingameKey": "TFT14_Item_SwiftEmblemItem",
+    "name": "속사포 상징",
+    "desc": "[고유] 장착 시 속사포 특성 획득 및 사거리 2 증가",
+    "shortDesc": "속사포<br>특성 획득",
+    "fromDesc": "공격 속도 +10%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/RapidfireEmblem_1741826610-TFT14_Emblem_Rapidfire.TFT_Set14.png",
+    "compositions": [
+      "FryingPan",
+      "RecurveBow"
+    ],
+    "affectedTraitKey": "Rapidfire",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "SlayerEmblem",
+    "ingameKey": "TFT14_Item_StrongEmblemItem",
+    "name": "학살자 상징",
+    "desc": "[고유] 장착 시 학살자 특성 획득<br>체력 회복량 33% 증가",
+    "shortDesc": "학살자<br>특성 획득",
+    "fromDesc": "마법 저항력 +20",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/SlayerEmblem_1741826648-TFT14_Emblem_Slayer.TFT_Set14.png",
+    "compositions": [
+      "FryingPan",
+      "NegatronCloak"
+    ],
+    "affectedTraitKey": "Slayer",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "StrategistEmblem",
+    "ingameKey": "TFT14_Item_ControllerEmblemItem",
+    "name": "책략가 상징",
+    "desc": "[고유] 장착 시 책략가 특성 획득 및 다른 책략가의 추가 효과 50% 획득",
+    "shortDesc": "책략가<br>특성 획득",
+    "fromDesc": "공격력 +10%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/StrategistEmblem_1742801269-tft14_emblem_strategist.tft_set14.png",
+    "compositions": [
+      "BFSword",
+      "Spatula"
+    ],
+    "affectedTraitKey": "Strategist",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "StreetDemonEmblem",
+    "ingameKey": "TFT14_Item_StreetDemonEmblemItem",
+    "name": "거리의 악마 상징",
+    "desc": "[고유] 장착 시 거리의 악마 특성 획득",
+    "shortDesc": "거리의 악마<br>특성 획득",
+    "fromDesc": "주문력 +10%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/StreetDemonEmblem_1741826747-TFT14_Emblem_StreetDemon.TFT_Set14.png",
+    "compositions": [
+      "NeedlesslyLargeRod",
+      "Spatula"
+    ],
+    "affectedTraitKey": "StreetDemon",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "SyndicateEmblem",
+    "ingameKey": "TFT14_Item_MobEmblemItem",
+    "name": "범죄 조직 상징",
+    "desc": "[고유] 장착 시 범죄 조직 특성 획득<br><br>범죄 두목 추가 효과: 전투 시작 시 공격 속도 +30% 및 최대 체력의 30%에 해당하는 보호막 획득",
+    "shortDesc": "범죄 조직<br>특성 획득",
+    "fromDesc": "마법 저항력 +20",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/SyndicateEmblem_1741826824-TFT14_Emblem_Syndicate.TFT_Set14.png",
+    "compositions": [
+      "NegatronCloak",
+      "Spatula"
+    ],
+    "affectedTraitKey": "Syndicate",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "TechieEmblem",
+    "ingameKey": "TFT14_Item_TechieEmblemItem",
+    "name": "기술광 상징",
+    "desc": "[고유] 장착 시 기술광 특성 획득<br>장착 시 모든 요소로부터 주문력 15% 추가 획득",
+    "shortDesc": "기술광<br>특성 획득",
+    "fromDesc": "주문력 +10%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/TechieEmblem_1741826870-TFT14_Emblem_Techie.TFT_Set14.png",
+    "compositions": [
+      "FryingPan",
+      "NeedlesslyLargeRod"
+    ],
+    "affectedTraitKey": "Techie",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "VanguardEmblem",
+    "ingameKey": "TFT14_Item_GuardianEmblemItem",
+    "name": "선봉대 상징",
+    "desc": "[고유] 장착 시 선봉대 특성 획득<br>장착 시 보호막을 얻을 때마다 최대 체력 150 획득",
+    "shortDesc": "선봉대<br>특성 획득",
+    "fromDesc": "체력 +150",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/VanguardEmblem_1741826895-TFT14_Emblem_Vanguard.TFT_Set14.png",
+    "affectedTraitKey": "Vanguard",
+    "isUnique": true,
+    "isEmblem": true,
+    "isNew": true
+  },
+  {
+    "key": "Cybercoil",
+    "ingameKey": "TFT14_SejuaniCyberneticItem",
+    "name": "사이버 코일",
+    "desc": "스킬 및 기본 공격이 8초 동안 적에게 표식을 남김. 표식이 남은 적에게 입힌 피해량의 10%만큼 체력 회복<br><br>추천 사용자: 세주아니, 잭스, 모데카이저",
+    "shortDesc": "",
+    "fromDesc": "방어력 +65<br>마법 저항력 +65",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/Cybercoil_1742134388-TFT14_Item_SejuaniCyberneticItem.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "FluxCapacitor",
+    "ingameKey": "TFT14_ZeriCyberneticItem",
+    "name": "유동 콘덴서",
+    "desc": "기본 공격 시 충전 획득. 4회 충전되면 다음 기본 공격 시 충전을 소모해 대상 최대 체력의 8%만큼 물리 피해를 입히고 방어력을 10 감소시킴<br><br>추천 사용자: 제리, 나피리",
+    "shortDesc": "",
+    "fromDesc": "공격력 +25%<br>공격 속도 +25%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/FluxCapacitor_1742134533-TFT14_Item_ZeriCyberneticItem.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "HyperFangs",
+    "ingameKey": "TFT14_NaafiriCyberneticItem",
+    "name": "하이퍼 송곳니",
+    "desc": "적에게 피해를 입힐 때마다 입힌 피해량의 30%를 저장. 4초 후 대상 및 가장 가까운 적에게 저장된 피해만큼 물리 피해를 입힘<br><br>추천 사용자: 나피리, 진, 바루스",
+    "shortDesc": "",
+    "fromDesc": "공격력 +30%<br>주문력 +30<br>모든 피해 흡혈 +15%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/HyperFangs_1742134715-TFT14_Item_NaafiriCyberneticItem.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "AnimaBlade",
+    "ingameKey": "TFT14_AnimaSquad_T3_YasuoQ",
+    "name": "돌풍",
+    "desc": "6초마다 무작위 동물특공대 챔피언이 회오리바람을 소환해 마법 피해를 입힙니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/AnimaBlade_1742137120-TFT14_Item_Icon_AnimaSquad_YasuoQ.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "AnimaLaser",
+    "ingameKey": "TFT14_AnimaSquad_T3_Laser",
+    "name": "절멸자",
+    "desc": "6초에 절멸자가 최대 체력 비례 고정 피해를 1회 입힙니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/AnimaLaser_1742137132-TFT14_Item_Icon_AnimaSquad_Laser.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "AnimaMine",
+    "ingameKey": "TFT14_AnimaSquad_T1_Mines",
+    "name": "동물 지뢰",
+    "desc": "5초마다 무작위 동물특공대 챔피언이 지뢰 3개를 발사합니다. 지뢰는 폭발해 범위 내 적에게 물리 피해를 입힙니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/AnimaMine_1742137143-TFT14_Item_Icon_AnimaSquad_Mine.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "AnimaTrain",
+    "ingameKey": "TFT14_AnimaSquad_T3_Train",
+    "name": "최후의 도시 대중교통",
+    "desc": "몇 초마다 최후의 도시 대중교통이 전장을 가로지르는 열차를 소환해 파괴적인 피해를 입히고 체력이 낮은 적을 데려갑니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/AnimaTrain_1742137167-TFT14_Item_Icon_AnimaSquad_Train.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "Boomerang",
+    "ingameKey": "TFT14_AnimaSquad_Weapon_Boomerang",
+    "name": "칼날 부메랑",
+    "desc": "4초마다 무작위 동물특공대 챔피언이 돌아오는 칼날 부메랑을 던져 물리 피해를 입힙니다. 처음 적중하는 대상은 더 큰 피해를 입습니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/Boomerang_1742137179-TFT14_Item_Icon_AnimaSquad_Boomerang.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "FireBow",
+    "ingameKey": "TFT14_AnimaSquad_T1_SearingShortbow",
+    "name": "타오르는 단궁",
+    "desc": "5초마다 무작위 동물특공대 챔피언이 타오르는 단궁을 발사합니다. 화살은 지속 마법 피해를 입히는 구역을 남깁니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/FireBow_1742137189-TFT14_Item_Icon_AnimaSquad_FireBow.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "GatlingGun",
+    "ingameKey": "TFT14_AnimaSquad_Weapon_GatlingBunnyGuns",
+    "name": "개틀링 토끼 건",
+    "desc": "5.5초마다 무작위 동물특공대 챔피언이 긴 원뿔 범위에 개틀링 토끼 건을 발사해 높은 물리 피해를 입힙니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/GatlingGun_1742137210-TFT14_Item_Icon_AnimaSquad_GatlingGun.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "GuidingHex",
+    "ingameKey": "TFT14_AnimaSquad_T1_Magic",
+    "name": "인도의 저주",
+    "desc": "4초마다 무작위 동물특공대 챔피언이 인도의 저주를 사용합니다. 인도의 저주는 주변 무작위 대상 3명에게 마법 피해를 입힙니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/GuidingHex_1742137221-TFT14_Item_Icon_AnimaSquad_GuidingHex.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "SupplyDrop",
+    "ingameKey": "TFT14_AnimaSquad_Weapon_SupplyDrop",
+    "name": "깜짝 보급품 투하",
+    "desc": "8초마다 보급품 투하 요청으로 지원함을 호출해 전장에 강력한 보급품을 투하합니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/SupplyDrop_1742137242-TFT14_Item_Icon_AnimaSquad_SupplyDrop.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "UwUBlaster",
+    "ingameKey": "TFT14_AnimaSquad_Weapon_UwUBlasters",
+    "name": "귀여운 발사기",
+    "desc": "4초마다 무작위 동물특공대 챔피언이 귀여운 발사기를 빠르게 발사해 처음 적중한 적에게 물리 피해를 입힙니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/UwUBlaster_1742137263-TFT14_Item_Icon_AnimaSquad_UwUBlaster.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "VortexGlove",
+    "ingameKey": "TFT14_AnimaSquad_Weapon_VortexGlove",
+    "name": "소용돌이 장갑",
+    "desc": "5초마다 무작위 동물특공대 챔피언이 소용돌이 장갑으로 관통하는 구체를 발사합니다. 구체는 마법 피해를 입히며 적에게 적중할 때마다 피해가 감소합니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/VortexGlove_1742137257-TFT14_Item_Icon_AnimaSquad_VortexGlove.TFT_Set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_AnimaSquad"
+    ]
+  },
+  {
+    "key": "PulseSilencer",
+    "ingameKey": "TFT14_JhinCyberneticItem_Radiant",
+    "name": "맥박 억제기",
+    "desc": "체력이 44% 아래인 적 처형. 스킬에 치명타 적용 가능.치명타 피해량 44% 증가<br><br>추천 사용자: 진, 제리",
+    "shortDesc": "",
+    "fromDesc": "공격력 +44%<br>치명타 확률 +44%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/PulseSilencer_1742353693-tft14_item_jhincyberneticitem_radiant.tft_set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "HijackedCybercoil",
+    "ingameKey": "TFT14_SejuaniCyberneticItem_Radiant",
+    "name": "강탈한 사이버 코일",
+    "desc": "스킬 및 기본 공격 시 10초 동안 적에게 표식을 남김. 표식이 남은 적에게 입힌 피해량의 75%만큼 체력 회복<br><br>추천 사용자: 세주아니, 잭스, 모데카이저",
+    "shortDesc": "",
+    "fromDesc": "방어력 +100<br>마법 저항력 +100",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/HijackedCybercoil_1742353701-tft14_item_sejuanicyberneticitem_radiant.tft_set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "FullyChargedFluxCapacitor",
+    "ingameKey": "TFT14_ZeriCyberneticItem_Radiant",
+    "name": "완충된 유동 콘덴서",
+    "desc": "기본 공격 2회마다 충전되어 대상 최대 체력의 20%만큼 물리 피해를 입히고 방어력을 15 감소시킴<br><br>추천 사용자: 제리, 나피리",
+    "shortDesc": "",
+    "fromDesc": "공격력 +30%<br>공격 속도 +50%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/FullyChargedFluxCapacitor_1742353677-tft14_item_zericyberneticitem_radiant.tft_set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "NullifierLantern",
+    "ingameKey": "TFT14_JaxCyberneticItem_Radiant",
+    "name": "무효화 가로등",
+    "desc": "체력 50% 획득. 1초마다 1칸 이내 모든 적에게 장착 유닛 최대 체력의 10%만큼 마법 피해를 입힘<br><br>추천 사용자: 잭스, 모데카이저, 세주아니",
+    "shortDesc": "",
+    "fromDesc": "체력 +777",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/NullifierLantern_1742353685-tft14_item_jaxcyberneticitem_radiant.tft_set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "HarmonizedChassis",
+    "ingameKey": "TFT14_MordekaiserCyberneticItem_Radiant",
+    "name": "조화로운 몸체",
+    "desc": "장착 유닛의 모든 보호막 효과 100% 증가.매초 장착 유닛이 자신 최대 체력의 8%만큼 가장 가까운 적 3명의 체력을 흡수하여 8초 동안 지속되는 보호막으로 전환<br><br>추천 사용자: 모데카이저, 잭스, 세주아니",
+    "shortDesc": "",
+    "fromDesc": "체력 +400",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/HarmonizedChassis_1742353668-tft14_item_mordekaisercyberneticitem_radiant.tft_set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "ApexFangs",
+    "ingameKey": "TFT14_NaafiriCyberneticItem_Radiant",
+    "name": "최첨단 송곳니",
+    "desc": "적에게 피해를 입힐 때마다 잠시 후 가장 가까운 적에게 입힌 피해량의 100%만큼 물리 피해를 입힘<br><br>추천 사용자: 나피리, 진, 바루스",
+    "shortDesc": "",
+    "fromDesc": "공격력 +40%<br>주문력 +40<br>모든 피해 흡혈 +30%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/ApexFangs_1742353655-tft14_item_naafiricyberneticitem_radiant.tft_set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "ScopedHolobow",
+    "ingameKey": "TFT14_VarusCyberneticItem_Radiant",
+    "name": "조준경 부착 홀로그램 활",
+    "desc": "기본 공격 시 치명타가 적용되면 추가 마나 10 획득. 스킬 사용 후 8초 동안 치명타 확률 100% 증가 <br><br>추천 사용자: 바루스, 진, 제리",
+    "shortDesc": "",
+    "fromDesc": "주문력 +40<br>마나 +30<br>공격 속도+20%<br>공격력 +15%",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/ScopedHolobow_1742353629-tft14_item_varuscyberneticitem_radiant.tft_set14.png",
+    "isNew": true,
+    "tags": [
+      "TFT14_Exotech"
+    ]
+  },
+  {
+    "key": "BossSelector",
+    "ingameKey": "TFT14_Mob_Consumable_BossSelector",
+    "name": "범죄 두목 모자 #1",
+    "desc": "범죄 조직 챔피언을 범죄 두목으로 승진시키고 스킬을 업그레이드합니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/BossSelector_1742372292-tft14_mob_bosshat.tft_set14.png",
+    "isUnique": true,
+    "isNew": true,
+    "tags": [
+      "Consumable"
+    ]
+  },
+  {
+    "key": "Chrome",
+    "ingameKey": "TFT14_Item_Nitro_ChromeCounter",
+    "name": "크롬",
+    "desc": "크롬이 누적되면 주문력과 체력이 증가합니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/Chrome_1742372510-tft14_item_chromecounter.tft_set14.png",
+    "isUnique": true,
+    "isNew": true,
+    "tags": [
+      "Etc"
+    ]
+  },
+  {
+    "key": "BossSelector2",
+    "ingameKey": "TFT14_Mob_Consumable_BossSelector2",
+    "name": "범죄 두목 모자 #2",
+    "desc": "범죄 조직 챔피언을 범죄 두목으로 승진시키고 스킬을 업그레이드합니다.",
+    "shortDesc": "",
+    "fromDesc": "",
+    "imageUrl": "//cdn.lolchess.gg/upload/images/items/BossSelector2_1742372809-tft14_mob_bosshat2.tft_set14.png",
+    "isUnique": true,
+    "isNew": true,
+    "tags": [
+      "Consumable"
+    ]
+  }
+]

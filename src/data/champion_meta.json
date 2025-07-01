@@ -1,0 +1,490 @@
+[
+  {
+    "champName": "Urgot",
+    "gamesPlayed": 13,
+    "rawWinrate": 76.92307692307693,
+    "weightedWinrate": 40.60606060606061,
+    "avgPlacement": 1.3846153846153846,
+    "meta": true
+  },
+  {
+    "champName": "Garen",
+    "gamesPlayed": 33,
+    "rawWinrate": 45.45454545454545,
+    "weightedWinrate": 34.71698113207547,
+    "avgPlacement": 2.3636363636363638,
+    "meta": true
+  },
+  {
+    "champName": "Chogath",
+    "gamesPlayed": 18,
+    "rawWinrate": 50,
+    "weightedWinrate": 32.631578947368425,
+    "avgPlacement": 2.388888888888889,
+    "meta": true
+  },
+  {
+    "champName": "Zac",
+    "gamesPlayed": 28,
+    "rawWinrate": 42.857142857142854,
+    "weightedWinrate": 32.083333333333336,
+    "avgPlacement": 2.2142857142857144,
+    "meta": true
+  },
+  {
+    "champName": "Vex",
+    "gamesPlayed": 20,
+    "rawWinrate": 45,
+    "weightedWinrate": 31,
+    "avgPlacement": 2.45,
+    "meta": true
+  },
+  {
+    "champName": "Viego",
+    "gamesPlayed": 21,
+    "rawWinrate": 42.857142857142854,
+    "weightedWinrate": 30.24390243902439,
+    "avgPlacement": 1.8571428571428572,
+    "meta": true
+  },
+  {
+    "champName": "Kobuko",
+    "gamesPlayed": 38,
+    "rawWinrate": 34.21052631578947,
+    "weightedWinrate": 28.275862068965512,
+    "avgPlacement": 2.6578947368421053,
+    "meta": true
+  },
+  {
+    "champName": "Fiddlesticks",
+    "gamesPlayed": 14,
+    "rawWinrate": 42.857142857142854,
+    "weightedWinrate": 27.647058823529413,
+    "avgPlacement": 2.642857142857143,
+    "meta": true
+  },
+  {
+    "champName": "Poppy",
+    "gamesPlayed": 16,
+    "rawWinrate": 31.25,
+    "weightedWinrate": 23.333333333333332,
+    "avgPlacement": 2.625,
+    "meta": true
+  },
+  {
+    "champName": "Renekton",
+    "gamesPlayed": 29,
+    "rawWinrate": 27.586206896551722,
+    "weightedWinrate": 23.26530612244898,
+    "avgPlacement": 2.896551724137931,
+    "meta": true
+  },
+  {
+    "champName": "KogMaw",
+    "gamesPlayed": 13,
+    "rawWinrate": 30.76923076923077,
+    "weightedWinrate": 22.424242424242426,
+    "avgPlacement": 3.8461538461538463,
+    "meta": true
+  },
+  {
+    "champName": "Shaco",
+    "gamesPlayed": 3,
+    "rawWinrate": 33.33333333333333,
+    "weightedWinrate": 19.130434782608695,
+    "avgPlacement": 3.3333333333333335,
+    "meta": true
+  },
+  {
+    "champName": "Annie",
+    "gamesPlayed": 3,
+    "rawWinrate": 33.33333333333333,
+    "weightedWinrate": 19.130434782608695,
+    "avgPlacement": 1.6666666666666667,
+    "meta": true
+  },
+  {
+    "champName": "Vayne",
+    "gamesPlayed": 9,
+    "rawWinrate": 22.22222222222222,
+    "weightedWinrate": 18.620689655172416,
+    "avgPlacement": 2.7777777777777777,
+    "meta": true
+  },
+  {
+    "champName": "Graves",
+    "gamesPlayed": 4,
+    "rawWinrate": 25,
+    "weightedWinrate": 18.333333333333336,
+    "avgPlacement": 3,
+    "meta": true
+  },
+  {
+    "champName": "Naafiri",
+    "gamesPlayed": 16,
+    "rawWinrate": 18.75,
+    "weightedWinrate": 17.77777777777778,
+    "avgPlacement": 3.375,
+    "meta": true
+  },
+  {
+    "champName": "Yuumi",
+    "gamesPlayed": 5,
+    "rawWinrate": 20,
+    "weightedWinrate": 17.6,
+    "avgPlacement": 2.8,
+    "meta": true
+  },
+  {
+    "champName": "Seraphine",
+    "gamesPlayed": 11,
+    "rawWinrate": 18.181818181818183,
+    "weightedWinrate": 17.419354838709676,
+    "avgPlacement": 3.272727272727273,
+    "meta": true
+  },
+  {
+    "champName": "Senna",
+    "gamesPlayed": 6,
+    "rawWinrate": 16.666666666666664,
+    "weightedWinrate": 16.923076923076923,
+    "avgPlacement": 2.6666666666666665,
+    "meta": true
+  },
+  {
+    "champName": "Xayah",
+    "gamesPlayed": 7,
+    "rawWinrate": 14.285714285714285,
+    "weightedWinrate": 16.296296296296298,
+    "avgPlacement": 4.285714285714286,
+    "meta": true
+  },
+  {
+    "champName": "Skarner",
+    "gamesPlayed": 14,
+    "rawWinrate": 14.285714285714285,
+    "weightedWinrate": 15.882352941176473,
+    "avgPlacement": 3.642857142857143,
+    "meta": false
+  },
+  {
+    "champName": "Brand",
+    "gamesPlayed": 14,
+    "rawWinrate": 14.285714285714285,
+    "weightedWinrate": 15.882352941176473,
+    "avgPlacement": 3.7142857142857144,
+    "meta": false
+  },
+  {
+    "champName": "Gragas",
+    "gamesPlayed": 27,
+    "rawWinrate": 14.814814814814813,
+    "weightedWinrate": 15.74468085106383,
+    "avgPlacement": 3.3333333333333335,
+    "meta": false
+  },
+  {
+    "champName": "Illaoi",
+    "gamesPlayed": 8,
+    "rawWinrate": 12.5,
+    "weightedWinrate": 15.714285714285717,
+    "avgPlacement": 3.625,
+    "meta": false
+  },
+  {
+    "champName": "Alistar",
+    "gamesPlayed": 8,
+    "rawWinrate": 12.5,
+    "weightedWinrate": 15.714285714285717,
+    "avgPlacement": 3.375,
+    "meta": false
+  },
+  {
+    "champName": "Nidalee",
+    "gamesPlayed": 8,
+    "rawWinrate": 12.5,
+    "weightedWinrate": 15.714285714285717,
+    "avgPlacement": 3.25,
+    "meta": false
+  },
+  {
+    "champName": "Samira",
+    "gamesPlayed": 8,
+    "rawWinrate": 12.5,
+    "weightedWinrate": 15.714285714285717,
+    "avgPlacement": 2.875,
+    "meta": false
+  },
+  {
+    "champName": "Morgana",
+    "gamesPlayed": 21,
+    "rawWinrate": 14.285714285714285,
+    "weightedWinrate": 15.609756097560975,
+    "avgPlacement": 3.3333333333333335,
+    "meta": false
+  },
+  {
+    "champName": "TwistedFate",
+    "gamesPlayed": 2,
+    "rawWinrate": 0,
+    "weightedWinrate": 15.454545454545457,
+    "avgPlacement": 5.5,
+    "meta": false
+  },
+  {
+    "champName": "Zeri",
+    "gamesPlayed": 15,
+    "rawWinrate": 13.333333333333334,
+    "weightedWinrate": 15.42857142857143,
+    "avgPlacement": 4.133333333333334,
+    "meta": false
+  },
+  {
+    "champName": "MissFortune",
+    "gamesPlayed": 15,
+    "rawWinrate": 13.333333333333334,
+    "weightedWinrate": 15.42857142857143,
+    "avgPlacement": 3,
+    "meta": false
+  },
+  {
+    "champName": "Aurora",
+    "gamesPlayed": 30,
+    "rawWinrate": 13.333333333333334,
+    "weightedWinrate": 14.800000000000002,
+    "avgPlacement": 3.1666666666666665,
+    "meta": false
+  },
+  {
+    "champName": "Jinx",
+    "gamesPlayed": 3,
+    "rawWinrate": 0,
+    "weightedWinrate": 14.782608695652174,
+    "avgPlacement": 3.3333333333333335,
+    "meta": false
+  },
+  {
+    "champName": "Zed",
+    "gamesPlayed": 10,
+    "rawWinrate": 10,
+    "weightedWinrate": 14.666666666666666,
+    "avgPlacement": 4.1,
+    "meta": false
+  },
+  {
+    "champName": "Ekko",
+    "gamesPlayed": 10,
+    "rawWinrate": 10,
+    "weightedWinrate": 14.666666666666666,
+    "avgPlacement": 4,
+    "meta": false
+  },
+  {
+    "champName": "DrMundo",
+    "gamesPlayed": 18,
+    "rawWinrate": 11.11111111111111,
+    "weightedWinrate": 14.210526315789473,
+    "avgPlacement": 3.611111111111111,
+    "meta": false
+  },
+  {
+    "champName": "Rengar",
+    "gamesPlayed": 4,
+    "rawWinrate": 0,
+    "weightedWinrate": 14.16666666666667,
+    "avgPlacement": 2,
+    "meta": false
+  },
+  {
+    "champName": "Sejuani",
+    "gamesPlayed": 26,
+    "rawWinrate": 11.538461538461538,
+    "weightedWinrate": 13.91304347826087,
+    "avgPlacement": 3.923076923076923,
+    "meta": false
+  },
+  {
+    "champName": "Neeko",
+    "gamesPlayed": 12,
+    "rawWinrate": 8.333333333333332,
+    "weightedWinrate": 13.750000000000002,
+    "avgPlacement": 3.9166666666666665,
+    "meta": false
+  },
+  {
+    "champName": "Leblanc",
+    "gamesPlayed": 5,
+    "rawWinrate": 0,
+    "weightedWinrate": 13.600000000000001,
+    "avgPlacement": 5.4,
+    "meta": false
+  },
+  {
+    "champName": "Aphelios",
+    "gamesPlayed": 5,
+    "rawWinrate": 0,
+    "weightedWinrate": 13.600000000000001,
+    "avgPlacement": 3.6,
+    "meta": false
+  },
+  {
+    "champName": "Jhin",
+    "gamesPlayed": 28,
+    "rawWinrate": 10.714285714285714,
+    "weightedWinrate": 13.333333333333334,
+    "avgPlacement": 3.6785714285714284,
+    "meta": false
+  },
+  {
+    "champName": "Zyra",
+    "gamesPlayed": 13,
+    "rawWinrate": 7.6923076923076925,
+    "weightedWinrate": 13.333333333333334,
+    "avgPlacement": 3.923076923076923,
+    "meta": false
+  },
+  {
+    "champName": "Unknown",
+    "gamesPlayed": 6,
+    "rawWinrate": 0,
+    "weightedWinrate": 13.076923076923078,
+    "avgPlacement": 3.8333333333333335,
+    "meta": false
+  },
+  {
+    "champName": "Veigar",
+    "gamesPlayed": 14,
+    "rawWinrate": 7.142857142857142,
+    "weightedWinrate": 12.941176470588237,
+    "avgPlacement": 4.428571428571429,
+    "meta": false
+  },
+  {
+    "champName": "Elise",
+    "gamesPlayed": 22,
+    "rawWinrate": 9.090909090909092,
+    "weightedWinrate": 12.85714285714286,
+    "avgPlacement": 3.272727272727273,
+    "meta": false
+  },
+  {
+    "champName": "Galio",
+    "gamesPlayed": 7,
+    "rawWinrate": 0,
+    "weightedWinrate": 12.592592592592593,
+    "avgPlacement": 5.428571428571429,
+    "meta": false
+  },
+  {
+    "champName": "Draven",
+    "gamesPlayed": 7,
+    "rawWinrate": 0,
+    "weightedWinrate": 12.592592592592593,
+    "avgPlacement": 5.428571428571429,
+    "meta": false
+  },
+  {
+    "champName": "Jax",
+    "gamesPlayed": 24,
+    "rawWinrate": 8.333333333333332,
+    "weightedWinrate": 12.272727272727273,
+    "avgPlacement": 4.166666666666667,
+    "meta": false
+  },
+  {
+    "champName": "Sylas",
+    "gamesPlayed": 16,
+    "rawWinrate": 6.25,
+    "weightedWinrate": 12.222222222222223,
+    "avgPlacement": 4.1875,
+    "meta": false
+  },
+  {
+    "champName": "Varus",
+    "gamesPlayed": 16,
+    "rawWinrate": 6.25,
+    "weightedWinrate": 12.222222222222223,
+    "avgPlacement": 4.1875,
+    "meta": false
+  },
+  {
+    "champName": "Leona",
+    "gamesPlayed": 17,
+    "rawWinrate": 5.88235294117647,
+    "weightedWinrate": 11.891891891891893,
+    "avgPlacement": 4.0588235294117645,
+    "meta": false
+  },
+  {
+    "champName": "Darius",
+    "gamesPlayed": 9,
+    "rawWinrate": 0,
+    "weightedWinrate": 11.724137931034484,
+    "avgPlacement": 4.111111111111111,
+    "meta": false
+  },
+  {
+    "champName": "Ziggs",
+    "gamesPlayed": 9,
+    "rawWinrate": 0,
+    "weightedWinrate": 11.724137931034484,
+    "avgPlacement": 4.555555555555555,
+    "meta": false
+  },
+  {
+    "champName": "Mordekaiser",
+    "gamesPlayed": 35,
+    "rawWinrate": 8.571428571428571,
+    "weightedWinrate": 11.636363636363637,
+    "avgPlacement": 4.314285714285714,
+    "meta": false
+  },
+  {
+    "champName": "JarvanIV",
+    "gamesPlayed": 20,
+    "rawWinrate": 5,
+    "weightedWinrate": 11.000000000000002,
+    "avgPlacement": 4,
+    "meta": false
+  },
+  {
+    "champName": "Braum",
+    "gamesPlayed": 11,
+    "rawWinrate": 0,
+    "weightedWinrate": 10.967741935483872,
+    "avgPlacement": 4,
+    "meta": false
+  },
+  {
+    "champName": "Shyvana",
+    "gamesPlayed": 12,
+    "rawWinrate": 0,
+    "weightedWinrate": 10.625000000000002,
+    "avgPlacement": 3.75,
+    "meta": false
+  },
+  {
+    "champName": "Vi",
+    "gamesPlayed": 13,
+    "rawWinrate": 0,
+    "weightedWinrate": 10.303030303030305,
+    "avgPlacement": 4.769230769230769,
+    "meta": false
+  },
+  {
+    "champName": "Kindred",
+    "gamesPlayed": 24,
+    "rawWinrate": 4.166666666666666,
+    "weightedWinrate": 10,
+    "avgPlacement": 4.125,
+    "meta": false
+  },
+  {
+    "champName": "Rhaast",
+    "gamesPlayed": 21,
+    "rawWinrate": 0,
+    "weightedWinrate": 8.292682926829269,
+    "avgPlacement": 3.857142857142857,
+    "meta": false
+  }
+]
