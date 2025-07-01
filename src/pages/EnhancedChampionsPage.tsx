@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowUpDown, Grid3X3, List, X, RotateCcw, Crown, Package, Sparkles, Target } from 'lucide-react';
+import { Search, ArrowUpDown, Grid3X3, List } from 'lucide-react';
 import { Champion, Item, FilterState } from '../types';
 import { commonSynergies } from '../data/synergies';
 import SearchBar from '../components/SearchBar';
@@ -11,6 +11,7 @@ import ItemCard from '../components/ItemCard';
 import SynergyCard from '../components/SynergyCard';
 import OptimizationCard from '../components/OptimizationCard';
 import TabNavigation from '../components/TabNavigation';
+import SelectionPanel from '../components/SelectionPanel';
 import ResultsPage from './ResultsPage';
 
 // Types pour les optimisations
@@ -203,21 +204,23 @@ export default function EnhancedChampionsPage() {
     fetchData();
   }, []);
 
-  // NOUVEAU : Fonction pour détecter automatiquement le bon onglet
+  // AMÉLIORÉ : Fonction pour détecter automatiquement le bon onglet avec recherche universelle
   const detectBestTab = (searchTerm: string): 'champions' | 'items' | 'synergies' | 'optimizations' => {
     const term = searchTerm.toLowerCase().trim();
     
-    // Recherche dans les champions
+    // Recherche dans les champions (nom + traits)
     const championMatches = champions.filter(champion => 
       champion.name.toLowerCase().includes(term) ||
       (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(term)))
     ).length;
 
-    // Recherche dans les items
+    // Recherche dans les items (nom + descriptions + tags)
     const itemMatches = items.filter(item =>
       item.name.toLowerCase().includes(term) ||
       (item.shortDesc && item.shortDesc.toLowerCase().includes(term)) ||
-      (item.desc && item.desc.toLowerCase().includes(term))
+      (item.desc && item.desc.toLowerCase().includes(term)) ||
+      (item.tags && item.tags.some(tag => tag.toLowerCase().includes(term))) ||
+      (item.affectedTraitKey && item.affectedTraitKey.toLowerCase().includes(term))
     ).length;
 
     // Recherche dans les synergies
@@ -225,11 +228,15 @@ export default function EnhancedChampionsPage() {
       synergy.name.toLowerCase().includes(term)
     ).length;
 
-    // Recherche dans les optimisations
+    // Recherche dans les optimisations (nom + description + type + difficulté + phase)
     const optimizationMatches = optimizations.filter(optimization =>
       optimization.name.toLowerCase().includes(term) ||
       optimization.description.toLowerCase().includes(term) ||
-      optimization.type.toLowerCase().includes(term)
+      optimization.type.toLowerCase().includes(term) ||
+      optimization.difficulty.toLowerCase().includes(term) ||
+      optimization.gamePhase.toLowerCase().includes(term) ||
+      optimization.impact.toLowerCase().includes(term) ||
+      (optimization.tips && optimization.tips.some(tip => tip.toLowerCase().includes(term)))
     ).length;
 
     // Retourne l'onglet avec le plus de résultats
@@ -257,12 +264,12 @@ export default function EnhancedChampionsPage() {
     }
   };
 
-  // NOUVEAU : Gestion de la saisie avec changement automatique d'onglet
+  // AMÉLIORÉ : Gestion de la saisie avec changement automatique d'onglet
   const handleInputChange = (value: string) => {
     setInputValue(value);
     
     // Si on tape quelque chose, détecter le meilleur onglet et changer automatiquement
-    if (value.trim().length > 0) {
+    if (value.trim().length > 1) { // Changé de 0 à 1 pour éviter les changements trop fréquents
       const bestTab = detectBestTab(value);
       if (bestTab !== activeTab) {
         setActiveTab(bestTab);
@@ -335,22 +342,21 @@ export default function EnhancedChampionsPage() {
     }));
   };
 
-  // NOUVEAU : Fonction pour supprimer de la sélection
-  const removeFromSelection = (name: string, type: 'champion' | 'item' | 'synergy' | 'optimization') => {
-    switch (type) {
-      case 'champion':
-        setSelectedChampions(prev => prev.filter(n => n !== name));
-        break;
-      case 'item':
-        setSelectedItems(prev => prev.filter(n => n !== name));
-        break;
-      case 'synergy':
-        setSelectedSynergies(prev => prev.filter(n => n !== name));
-        break;
-      case 'optimization':
-        setSelectedOptimizations(prev => prev.filter(n => n !== name));
-        break;
-    }
+  // NOUVEAU : Fonctions pour supprimer de la sélection
+  const removeFromChampions = (name: string) => {
+    setSelectedChampions(prev => prev.filter(n => n !== name));
+  };
+
+  const removeFromItems = (id: string) => {
+    setSelectedItems(prev => prev.filter(n => n !== id));
+  };
+
+  const removeFromSynergies = (name: string) => {
+    setSelectedSynergies(prev => prev.filter(n => n !== name));
+  };
+
+  const removeFromOptimizations = (id: string) => {
+    setSelectedOptimizations(prev => prev.filter(n => n !== id));
   };
 
   const clearSearch = () => {
@@ -492,7 +498,7 @@ export default function EnhancedChampionsPage() {
     ).length;
   };
 
-  // Fonction de recherche améliorée
+  // AMÉLIORÉ : Fonction de recherche universelle
   const searchInText = (text: string, searchTerms: string[]): boolean => {
     if (searchTerms.length === 0) return true;
     
@@ -502,7 +508,7 @@ export default function EnhancedChampionsPage() {
     );
   };
 
-  // Filtrage selon l'onglet actif avec recherche améliorée
+  // AMÉLIORÉ : Filtrage selon l'onglet actif avec recherche universelle
   const getFilteredData = () => {
     // Si on n'affiche pas les résultats filtrés, retourner toutes les données
     if (!showFilteredResults && inputValue.trim() === '' && filters.selectedTags.length === 0) {
@@ -523,12 +529,14 @@ export default function EnhancedChampionsPage() {
     switch (activeTab) {
       case 'champions':
         return champions.filter((champion) => {
-          // Recherche dans le nom et les traits
+          // Recherche dans le nom, traits, et skill
           const matchesSearch = searchTerms.length === 0 || 
             searchInText(champion.name, searchTerms) ||
             (champion.traits && champion.traits.some(trait => 
               searchInText(trait, searchTerms)
-            ));
+            )) ||
+            (champion.skill && searchInText(champion.skill.name, searchTerms)) ||
+            (champion.skill && searchInText(champion.skill.desc, searchTerms));
 
           const matchesFavorites =
             !filters.showOnlyFavorites || favorites.includes(champion.name);
@@ -543,34 +551,40 @@ export default function EnhancedChampionsPage() {
 
       case 'items':
         return items.filter((item) => {
-          // Recherche dans le nom, description courte et description
+          // Recherche dans le nom, descriptions, tags, et trait affecté
           const matchesSearch = searchTerms.length === 0 ||
             searchInText(item.name, searchTerms) ||
             searchInText(item.shortDesc || '', searchTerms) ||
             searchInText(item.desc || '', searchTerms) ||
-            (item.tags && item.tags.some(tag => searchInText(tag, searchTerms)));
+            searchInText(item.fromDesc || '', searchTerms) ||
+            searchInText(item.affectedTraitKey || '', searchTerms) ||
+            (item.tags && item.tags.some(tag => searchInText(tag, searchTerms))) ||
+            (item.compositions && item.compositions.some(comp => searchInText(comp, searchTerms)));
 
           return matchesSearch;
         });
 
       case 'synergies':
         return commonSynergies.filter((synergy) => {
-          // Recherche dans le nom
+          // Recherche dans le nom et l'icône
           const matchesSearch = searchTerms.length === 0 ||
-            searchInText(synergy.name, searchTerms);
+            searchInText(synergy.name, searchTerms) ||
+            searchInText(synergy.icon, searchTerms);
 
           return matchesSearch;
         });
 
       case 'optimizations':
         return optimizations.filter((optimization) => {
-          // Recherche dans le nom, description et type
+          // Recherche dans tous les champs de l'optimisation
           const matchesSearch = searchTerms.length === 0 ||
             searchInText(optimization.name, searchTerms) ||
             searchInText(optimization.description, searchTerms) ||
             searchInText(optimization.type, searchTerms) ||
             searchInText(optimization.difficulty, searchTerms) ||
-            searchInText(optimization.gamePhase, searchTerms);
+            searchInText(optimization.gamePhase, searchTerms) ||
+            searchInText(optimization.impact, searchTerms) ||
+            (optimization.tips && optimization.tips.some(tip => searchInText(tip, searchTerms)));
 
           return matchesSearch;
         });
@@ -645,48 +659,6 @@ export default function EnhancedChampionsPage() {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          {/* Affichage compact des sélections */}
-          {totalSelections > 0 && (
-            <div className="flex items-center space-x-3 bg-slate-800/60 rounded-lg border border-slate-600/50 px-4 py-2">
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-slate-300">Sélections:</span>
-                <div className="flex items-center space-x-1">
-                  {selectedChampions.length > 0 && (
-                    <div className="flex items-center space-x-1 bg-blue-600/20 px-2 py-1 rounded text-xs">
-                      <Crown className="w-3 h-3 text-blue-400" />
-                      <span className="text-blue-300 font-medium">{selectedChampions.length}</span>
-                    </div>
-                  )}
-                  {selectedItems.length > 0 && (
-                    <div className="flex items-center space-x-1 bg-green-600/20 px-2 py-1 rounded text-xs">
-                      <Package className="w-3 h-3 text-green-400" />
-                      <span className="text-green-300 font-medium">{selectedItems.length}</span>
-                    </div>
-                  )}
-                  {selectedSynergies.length > 0 && (
-                    <div className="flex items-center space-x-1 bg-purple-600/20 px-2 py-1 rounded text-xs">
-                      <Sparkles className="w-3 h-3 text-purple-400" />
-                      <span className="text-purple-300 font-medium">{selectedSynergies.length}</span>
-                    </div>
-                  )}
-                  {selectedOptimizations.length > 0 && (
-                    <div className="flex items-center space-x-1 bg-orange-600/20 px-2 py-1 rounded text-xs">
-                      <Target className="w-3 h-3 text-orange-400" />
-                      <span className="text-orange-300 font-medium">{selectedOptimizations.length}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={resetAllSelections}
-                className="p-1 text-slate-400 hover:text-red-400 transition-colors rounded"
-                title="Effacer toutes les sélections"
-              >
-                <RotateCcw className="w-4 h-4" />
-              </button>
-            </div>
-          )}
-          
           <div className="flex items-center space-x-1 bg-slate-800/60 rounded-lg border border-slate-600/50 p-1">
             <button
               onClick={() =>
@@ -716,82 +688,6 @@ export default function EnhancedChampionsPage() {
         </div>
       </div>
 
-      {/* Panneau détaillé des sélections (affiché seulement si sélections) */}
-      {totalSelections > 0 && (
-        <div className="mb-6 bg-slate-800/20 backdrop-blur rounded-xl border border-slate-700/30 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-white font-medium text-sm">Éléments sélectionnés</h3>
-            <button
-              onClick={resetAllSelections}
-              className="text-slate-400 hover:text-red-400 transition-colors text-xs flex items-center space-x-1"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>Effacer tout</span>
-            </button>
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            {selectedChampions.map((name) => (
-              <div key={name} className="flex items-center space-x-2 bg-blue-600/10 text-blue-300 px-2 py-1 rounded text-xs border border-blue-500/20">
-                <Crown className="w-3 h-3" />
-                <span>{name}</span>
-                <button
-                  onClick={() => removeFromSelection(name, 'champion')}
-                  className="hover:text-blue-100 transition-colors"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            ))}
-
-            {selectedItems.map((id) => {
-              const item = items.find(i => i.key === id);
-              return item ? (
-                <div key={id} className="flex items-center space-x-2 bg-green-600/10 text-green-300 px-2 py-1 rounded text-xs border border-green-500/20">
-                  <Package className="w-3 h-3" />
-                  <span>{item.name}</span>
-                  <button
-                    onClick={() => removeFromSelection(id, 'item')}
-                    className="hover:text-green-100 transition-colors"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                </div>
-              ) : null;
-            })}
-
-            {selectedSynergies.map((name) => (
-              <div key={name} className="flex items-center space-x-2 bg-purple-600/10 text-purple-300 px-2 py-1 rounded text-xs border border-purple-500/20">
-                <Sparkles className="w-3 h-3" />
-                <span>{name}</span>
-                <button
-                  onClick={() => removeFromSelection(name, 'synergy')}
-                  className="hover:text-purple-100 transition-colors"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            ))}
-
-            {selectedOptimizations.map((id) => {
-              const optimization = optimizations.find(o => o.id === id);
-              return optimization ? (
-                <div key={id} className="flex items-center space-x-2 bg-orange-600/10 text-orange-300 px-2 py-1 rounded text-xs border border-orange-500/20">
-                  <Target className="w-3 h-3" />
-                  <span>{optimization.name}</span>
-                  <button
-                    onClick={() => removeFromSelection(id, 'optimization')}
-                    className="hover:text-orange-100 transition-colors"
-                  >
-                    <X className="w-3 h-3" />
-                  </button>
-                </div>
-              ) : null;
-            })}
-          </div>
-        </div>
-      )}
-
       {/* Navigation par onglets */}
       <TabNavigation
         activeTab={activeTab}
@@ -804,7 +700,7 @@ export default function EnhancedChampionsPage() {
         <div className="flex-1">
           <SearchBar
             inputValue={inputValue}
-            setInputValue={handleInputChange} // MODIFIÉ : utilise la nouvelle fonction
+            setInputValue={handleInputChange}
             selectedTags={filters.selectedTags}
             onAddTag={addTag}
             onRemoveTag={removeTag}
@@ -818,6 +714,22 @@ export default function EnhancedChampionsPage() {
           isAnalyzing={isAnalyzing}
         />
       </div>
+
+      {/* NOUVEAU : Panneau des sélections */}
+      <SelectionPanel
+        selectedChampions={selectedChampions}
+        selectedItems={selectedItems}
+        selectedSynergies={selectedSynergies}
+        selectedOptimizations={selectedOptimizations}
+        champions={champions}
+        items={items}
+        optimizations={optimizations}
+        onRemoveChampion={removeFromChampions}
+        onRemoveItem={removeFromItems}
+        onRemoveSynergy={removeFromSynergies}
+        onRemoveOptimization={removeFromOptimizations}
+        onClearAll={resetAllSelections}
+      />
 
       {/* Affichage du contenu selon l'onglet */}
       <div className="bg-slate-800/30 backdrop-blur rounded-xl border border-slate-700/30 overflow-hidden shadow-2xl">
