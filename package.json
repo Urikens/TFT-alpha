@@ -11,6 +11,7 @@
     "scrape:traits:watch": "tsx src/script/scrape/synergie.ts --continuous",
     "scrape:traits:check": "tsx src/script/scrape/synergie.ts --check-updates",
     "scrape:traits:report": "tsx src/script/scrape/synergie.ts --report --by-type",
+    "scrape:traits:no-images": "tsx src/script/scrape/synergie.ts --no-images",
     "scrape:all": "npm run scrape:traits && npm run scrape:leveling && npm run scrape:update",
     "scrape:leveling": "tsx src/script/scrape/leveling_method.ts",
     "scrape:update": "tsx src/script/scrape/update.ts"

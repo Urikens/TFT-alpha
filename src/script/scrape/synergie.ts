@@ -37,14 +37,18 @@ interface ScrapingResult {
   error?: string;
   timestamp: string;
   stats?: TraitStats;
+  downloadedImages?: number;
 }
 
 class TFTTraitsScraper {
   private baseUrl = 'https://utils.iesdev.com/static/json/tftTest/set14/fr_fr/traits';
+  private imageBaseUrl = 'https://blitz-cdn.blitz.gg/blitz/tft/traits/dark';
   private outputDir = './data/tft/traits';
+  private imagesDir = './public/images/traits';
 
   constructor() {
     this.ensureOutputDirectory();
+    this.ensureImagesDirectory();
   }
 
   /**
@@ -56,6 +60,128 @@ class TFTTraitsScraper {
     } catch (error) {
       console.error('Erreur lors de la création du répertoire:', error);
     }
+  }
+
+  /**
+   * Assure que le répertoire d'images existe
+   */
+  private async ensureImagesDirectory(): Promise<void> {
+    try {
+      await fs.mkdir(this.imagesDir, { recursive: true });
+    } catch (error) {
+      console.error('Erreur lors de la création du répertoire d\'images:', error);
+    }
+  }
+
+  /**
+   * Nettoie l'apiKey pour obtenir le nom du trait
+   * Ex: "TFT14_Armorclad" -> "armorclad"
+   */
+  private cleanApiKey(apiKey: string): string {
+    return apiKey
+      .replace(/^TFT\d+_/, '') // Supprime le préfixe TFT14_
+      .toLowerCase(); // Convertit en minuscules
+  }
+
+  /**
+   * Télécharge une image depuis l'URL et la sauvegarde localement
+   */
+  private async downloadImage(apiKey: string): Promise<string | null> {
+    try {
+      const cleanedName = this.cleanApiKey(apiKey);
+      const imageUrl = `${this.imageBaseUrl}/trait-${cleanedName}.webp`;
+      const localPath = path.join(this.imagesDir, `${cleanedName}.webp`);
+      const relativePath = `/images/traits/${cleanedName}.webp`;
+
+      // Vérifie si l'image existe déjà
+      try {
+        await fs.access(localPath);
+        console.log(`⏭️ Image déjà existante: ${cleanedName}.webp`);
+        return relativePath;
+      } catch {
+        // L'image n'existe pas, on la télécharge
+      }
+
+      console.log(`📥 Téléchargement: ${imageUrl}`);
+      
+      const response = await axios.get(imageUrl, {
+        responseType: 'arraybuffer',
+        timeout: 10000,
+        headers: {
+          'User-Agent': 'TFT-Traits-Scraper/1.0',
+        }
+      });
+
+      if (response.status === 200) {
+        await fs.writeFile(localPath, response.data);
+        console.log(`✅ Image sauvegardée: ${cleanedName}.webp`);
+        return relativePath;
+      } else {
+        console.warn(`⚠️ Erreur HTTP ${response.status} pour ${cleanedName}`);
+        return null;
+      }
+
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 404) {
+          console.warn(`❌ Image non trouvée: ${this.cleanApiKey(apiKey)}`);
+        } else {
+          console.warn(`❌ Erreur téléchargement ${this.cleanApiKey(apiKey)}:`, error.message);
+        }
+      } else {
+        console.warn(`❌ Erreur inattendue pour ${this.cleanApiKey(apiKey)}:`, error);
+      }
+      return null;
+    }
+  }
+
+  /**
+   * Télécharge toutes les images des traits
+   */
+  private async downloadAllImages(data: TFTTraitsData): Promise<{ [key: string]: string | null }> {
+    console.log('\n🖼️ Téléchargement des images des traits...');
+    
+    const imageMap: { [key: string]: string | null } = {};
+    const traits = Object.entries(data);
+    let downloadedCount = 0;
+    let skippedCount = 0;
+    let errorCount = 0;
+
+    // Télécharge les images en parallèle (par groupes de 5 pour éviter la surcharge)
+    const batchSize = 5;
+    for (let i = 0; i < traits.length; i += batchSize) {
+      const batch = traits.slice(i, i + batchSize);
+      
+      const promises = batch.map(async ([apiKey, trait]) => {
+        const imagePath = await this.downloadImage(apiKey);
+        imageMap[apiKey] = imagePath;
+        
+        if (imagePath) {
+          if (imagePath.includes('déjà existante')) {
+            skippedCount++;
+          } else {
+            downloadedCount++;
+          }
+        } else {
+          errorCount++;
+        }
+      });
+
+      await Promise.all(promises);
+      
+      // Petite pause entre les batches
+      if (i + batchSize < traits.length) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+
+    console.log(`\n📊 Résumé du téléchargement d'images:`);
+    console.log(`├─ Téléchargées: ${downloadedCount}`);
+    console.log(`├─ Déjà existantes: ${skippedCount}`);
+    console.log(`├─ Erreurs: ${errorCount}`);
+    console.log(`└─ Total traité: ${traits.length}`);
+
+    return imageMap;
   }
 
   /**
@@ -239,9 +365,9 @@ class TFTTraitsScraper {
   }
 
   /**
-   * Sauvegarde une version nettoyée (sans HTML) des données
+   * Sauvegarde une version nettoyée (sans HTML) des données avec images locales
    */
-  async saveCleanedData(data: TFTTraitsData): Promise<void> {
+  async saveCleanedData(data: TFTTraitsData, imageMap: { [key: string]: string | null }): Promise<void> {
     try {
       const cleanedData: TFTTraitsData = {};
       
@@ -253,7 +379,9 @@ class TFTTraitsScraper {
           bonuses: trait.bonuses.map(bonus => ({
             ...bonus,
             effect: this.cleanHtmlText(bonus.effect)
-          }))
+          })),
+          // Ajoute l'URL de l'image locale
+          localImageUrl: imageMap[traitKey] || null
         };
       }
 
@@ -270,19 +398,24 @@ class TFTTraitsScraper {
   /**
    * Sauvegarde les données par type (origines/classes)
    */
-  async saveDataByType(data: TFTTraitsData): Promise<void> {
+  async saveDataByType(data: TFTTraitsData, imageMap: { [key: string]: string | null }): Promise<void> {
     try {
       const origins: TFTTraitsData = {};
       const classes: TFTTraitsData = {};
       const others: TFTTraitsData = {};
 
       for (const [key, trait] of Object.entries(data)) {
+        const traitWithImage = {
+          ...trait,
+          localImageUrl: imageMap[key] || null
+        };
+
         if (trait.type === 'origin') {
-          origins[key] = trait;
+          origins[key] = traitWithImage;
         } else if (trait.type === 'class') {
-          classes[key] = trait;
+          classes[key] = traitWithImage;
         } else {
-          others[key] = trait;
+          others[key] = traitWithImage;
         }
       }
 
@@ -432,18 +565,20 @@ class TFTTraitsScraper {
   /**
    * Génère un rapport détaillé des traits
    */
-  async generateReport(data: TFTTraitsData, stats: TraitStats): Promise<void> {
+  async generateReport(data: TFTTraitsData, stats: TraitStats, imageMap: { [key: string]: string | null }): Promise<void> {
     try {
       let report = '# TFT Set 14 - Traits/Synergies Report\n\n';
       report += `Généré le: ${new Date().toLocaleString('fr-FR')}\n`;
-      report += `Nombre total de traits: ${stats.totalTraits}\n\n`;
+      report += `Nombre total de traits: ${stats.totalTraits}\n`;
+      report += `Images téléchargées: ${Object.values(imageMap).filter(Boolean).length}\n\n`;
 
       // Statistiques générales
       report += '## Statistiques générales\n\n';
       report += `- **Origines:** ${stats.origins}\n`;
       report += `- **Classes:** ${stats.classes}\n`;
       report += `- **Autres types:** ${stats.otherTypes}\n`;
-      report += `- **Moyenne de bonus par trait:** ${stats.avgBonuses}\n\n`;
+      report += `- **Moyenne de bonus par trait:** ${stats.avgBonuses}\n`;
+      report += `- **Images disponibles:** ${Object.values(imageMap).filter(Boolean).length}/${stats.totalTraits}\n\n`;
 
       // Origines
       const origins = Object.entries(data).filter(([,trait]) => trait.type === 'origin');
@@ -451,6 +586,12 @@ class TFTTraitsScraper {
         report += '## Origines\n\n';
         for (const [key, trait] of origins) {
           report += `### ${this.cleanHtmlText(trait.name)}\n\n`;
+          
+          // Ajoute l'image si disponible
+          if (imageMap[key]) {
+            report += `![${trait.name}](${imageMap[key]})\n\n`;
+          }
+          
           if (trait.description) {
             report += `**Description:** ${this.cleanHtmlText(trait.description)}\n\n`;
           }
@@ -468,6 +609,12 @@ class TFTTraitsScraper {
         report += '## Classes\n\n';
         for (const [key, trait] of classes) {
           report += `### ${this.cleanHtmlText(trait.name)}\n\n`;
+          
+          // Ajoute l'image si disponible
+          if (imageMap[key]) {
+            report += `![${trait.name}](${imageMap[key]})\n\n`;
+          }
+          
           if (trait.description) {
             report += `**Description:** ${this.cleanHtmlText(trait.description)}\n\n`;
           }
@@ -485,6 +632,12 @@ class TFTTraitsScraper {
         report += '## Autres Traits\n\n';
         for (const [key, trait] of others) {
           report += `### ${this.cleanHtmlText(trait.name)} (${trait.type})\n\n`;
+          
+          // Ajoute l'image si disponible
+          if (imageMap[key]) {
+            report += `![${trait.name}](${imageMap[key]})\n\n`;
+          }
+          
           if (trait.description) {
             report += `**Description:** ${this.cleanHtmlText(trait.description)}\n\n`;
           }
@@ -505,15 +658,15 @@ class TFTTraitsScraper {
   }
 
   /**
-   * Génère un fichier de synergies pour l'application
+   * Génère un fichier de synergies pour l'application avec images locales
    */
-  async generateSynergiesForApp(data: TFTTraitsData): Promise<void> {
+  async generateSynergiesForApp(data: TFTTraitsData, imageMap: { [key: string]: string | null }): Promise<void> {
     try {
       const synergies = Object.entries(data).map(([key, trait]) => ({
         name: this.cleanHtmlText(trait.name),
         icon: this.getTraitIcon(trait.type),
         color: this.getTraitColor(trait.type),
-        imageUrl: this.getTraitImageUrl(key),
+        imageUrl: imageMap[key] || this.getTraitImageUrl(key),
         type: trait.type,
         bonusLevels: trait.bonuses.length,
         maxLevel: Math.max(...trait.bonuses.map(b => b.needed))
@@ -566,12 +719,11 @@ class TFTTraitsScraper {
   }
 
   /**
-   * Génère l'URL d'image pour un trait (placeholder)
+   * Génère l'URL d'image pour un trait (fallback)
    */
   private getTraitImageUrl(traitKey: string): string {
-    // Pour l'instant, retourne une URL placeholder
-    // Dans une vraie implémentation, cela pourrait mapper vers les vraies images
-    return `https://cdn.lolchess.gg/upload/images/traits/${traitKey.toLowerCase()}.png`;
+    const cleanedName = this.cleanApiKey(traitKey);
+    return `${this.imageBaseUrl}/trait-${cleanedName}.webp`;
   }
 
   /**
@@ -583,7 +735,8 @@ class TFTTraitsScraper {
     generateReport?: boolean,
     saveCleanedVersion?: boolean,
     saveByType?: boolean,
-    generateAppFile?: boolean
+    generateAppFile?: boolean,
+    downloadImages?: boolean
   } = {}): Promise<ScrapingResult> {
     const { 
       saveData = true, 
@@ -591,7 +744,8 @@ class TFTTraitsScraper {
       generateReport = false,
       saveCleanedVersion = true,
       saveByType = false,
-      generateAppFile = true
+      generateAppFile = true,
+      downloadImages = true
     } = options;
 
     console.log('🚀 Démarrage du scraping TFT Traits/Synergies...\n');
@@ -616,6 +770,16 @@ class TFTTraitsScraper {
       // Analyse les données
       this.analyzeData(result.data, result.stats);
 
+      // Télécharge les images si demandé
+      let imageMap: { [key: string]: string | null } = {};
+      let downloadedImages = 0;
+      
+      if (downloadImages) {
+        imageMap = await this.downloadAllImages(result.data);
+        downloadedImages = Object.values(imageMap).filter(Boolean).length;
+        result.downloadedImages = downloadedImages;
+      }
+
       // Sauvegarde si demandé
       if (saveData) {
         await this.saveData(result.data);
@@ -623,22 +787,22 @@ class TFTTraitsScraper {
 
       // Sauvegarde la version nettoyée
       if (saveCleanedVersion) {
-        await this.saveCleanedData(result.data);
+        await this.saveCleanedData(result.data, imageMap);
       }
 
       // Sauvegarde par type
       if (saveByType) {
-        await this.saveDataByType(result.data);
+        await this.saveDataByType(result.data, imageMap);
       }
 
       // Génère un rapport
       if (generateReport) {
-        await this.generateReport(result.data, result.stats);
+        await this.generateReport(result.data, result.stats, imageMap);
       }
 
       // Génère le fichier pour l'application
       if (generateAppFile) {
-        await this.generateSynergiesForApp(result.data);
+        await this.generateSynergiesForApp(result.data, imageMap);
       }
     }
 
@@ -663,6 +827,7 @@ async function runTraitsScraper() {
   const saveCleanedVersion = !args.includes('--no-clean');
   const saveByType = args.includes('--by-type');
   const generateAppFile = !args.includes('--no-app-file');
+  const downloadImages = !args.includes('--no-images');
 
   if (continuous) {
     console.log('🔄 Mode continu activé (vérification toutes les 15 minutes)');
@@ -674,7 +839,8 @@ async function runTraitsScraper() {
       generateReport,
       saveCleanedVersion,
       saveByType,
-      generateAppFile
+      generateAppFile,
+      downloadImages
     });
     
     // Scraping périodique
@@ -686,7 +852,8 @@ async function runTraitsScraper() {
         generateReport: false, // Pas de rapport à chaque fois
         saveCleanedVersion,
         saveByType: false, // Pas de séparation par type à chaque fois
-        generateAppFile
+        generateAppFile,
+        downloadImages
       });
     }, 15 * 60 * 1000); // 15 minutes
     
@@ -698,7 +865,8 @@ async function runTraitsScraper() {
       generateReport,
       saveCleanedVersion,
       saveByType,
-      generateAppFile
+      generateAppFile,
+      downloadImages
     });
   }
 }
