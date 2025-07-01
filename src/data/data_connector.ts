@@ -5,6 +5,69 @@ import { generatedChampions } from './champions_generated';
 import { generatedItemsStats } from './items_stats_generated';
 import { commonSynergies } from './synergies';
 
+// Mapping des traits corrects pour chaque champion
+const championTraitsMapping: Record<string, string[]> = {
+  "Alistar": ["Golden Ox", "Bruiser"],
+  "Annie": ["Golden Ox", "A.M.P."],
+  "Aphelios": ["Golden Ox", "Marksman"],
+  "Aurora": ["Anima Squad", "Dynamo"],
+  "Brand": ["Street Demon", "Techie"],
+  "Braum": ["Syndicate", "Vanguard"],
+  "Chogath": ["BoomBots", "Bruiser"],
+  "Darius": ["Syndicate", "Bruiser"],
+  "Dr. Mundo": ["Street Demon", "Bruiser"],
+  "Draven": ["Cypher", "Rapidfire"],
+  "Ekko": ["Street Demon", "Strategist"],
+  "Elise": ["Nitro", "Dynamo"],
+  "Fiddlesticks": ["BoomBots", "Techie"],
+  "Galio": ["Cypher", "Bastion"],
+  "Gragas": ["Divinicorp", "Bruiser"],
+  "Graves": ["Golden Ox", "Executioner"],
+  "Illaoi": ["Anima Squad", "Bastion"],
+  "Jarvan IV": ["Golden Ox", "Vanguard"],
+  "Jax": ["Exotech", "Bastion"],
+  "Jhin": ["Exotech", "Dynamo"],
+  "Jinx": ["Street Demon", "Marksman"],
+  "Kindred": ["Nitro", "Rapidfire"],
+  "Kobuko": ["Cyberboss", "Bruiser"],
+  "Kog'Maw": ["BoomBots", "Rapidfire"],
+  "LeBlanc": ["Cypher", "Strategist"],
+  "Leona": ["Anima Squad", "Vanguard"],
+  "Miss Fortune": ["Syndicate", "Dynamo"],
+  "Mordekaiser": ["Exotech", "Techie"],
+  "Morgana": ["Divinicorp", "Dynamo"],
+  "Naafiri": ["Exotech", "A.M.P."],
+  "Neeko": ["Street Demon", "Strategist"],
+  "Nidalee": ["Nitro", "A.M.P."],
+  "Poppy": ["Cyberboss", "Bastion"],
+  "Rengar": ["Street Demon", "Executioner"],
+  "Renekton": ["Overlord", "Divinicorp", "Bastion"],
+  "Rhaast": ["Divinicorp", "Vanguard"],
+  "Samira": ["Street Demon", "A.M.P."],
+  "Sejuani": ["Exotech", "Bastion"],
+  "Senna": ["Divinicorp", "Slayer"],
+  "Seraphine": ["Anima Squad", "Techie"],
+  "Shaco": ["Syndicate", "Slayer"],
+  "Shyvana": ["BoomBots", "Bastion"],
+  "Skarner": ["BoomBots", "Vanguard"],
+  "Sylas": ["Anima Squad", "Vanguard"],
+  "Twisted Fate": ["Syndicate", "Rapidfire"],
+  "Urgot": ["BoomBots", "Executioner"],
+  "Varus": ["Exotech", "Executioner"],
+  "Vayne": ["Anima Squad", "Slayer"],
+  "Veigar": ["Cyberboss", "Techie"],
+  "Vex": ["Divinicorp", "Executioner"],
+  "Vi": ["Cypher", "Vanguard"],
+  "Viego": ["Soul Killer", "Golden Ox", "Techie"],
+  "Xayah": ["Anima Squad", "Marksman"],
+  "Yuumi": ["Anima Squad", "A.M.P.", "Strategist"],
+  "Zac": ["Virus", "Cypher", "Slayer"],
+  "Zed": ["Cypher", "Slayer"],
+  "Zeri": ["Exotech", "Rapidfire"],
+  "Ziggs": ["Cyberboss", "Strategist"],
+  "Zyra": ["Street Demon", "Techie"]
+};
+
 /**
  * Classe utilitaire pour lier les différentes sources de données TFT
  */
@@ -28,7 +91,15 @@ export class TFTDataConnector {
    */
   private initializeData(): void {
     // Initialise les champions
-    this.champions = generatedChampions;
+    this.champions = generatedChampions.map(champion => {
+      // Utilise le mapping correct des traits pour chaque champion
+      const correctTraits = championTraitsMapping[champion.name] || champion.traits || [];
+      return {
+        ...champion,
+        traits: correctTraits
+      };
+    });
+    
     this.champions.forEach(champion => {
       this.championsByName.set(champion.name, champion);
       
