@@ -1,0 +1,1142 @@
+{
+  "TFT14_Divinicorp_6": {
+    "apiName": "TFT14_Divinicorp",
+    "displayName": "Divinicorp",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 39289,
+      "nbBoards": 40908,
+      "avgPlacement": 4.127530067468466,
+      "top4Percent": 0.564217268016036,
+      "top1Percent": 0.15312408330888824,
+      "pickRate": 0.013261181544434262
+    },
+    "tier": "C"
+  },
+  "TFT14_Vanguard_6": {
+    "apiName": "TFT14_Vanguard",
+    "displayName": "Vanguard",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 166544,
+      "nbBoards": 202041,
+      "avgPlacement": 4.003291411149222,
+      "top4Percent": 0.6102771219702932,
+      "top1Percent": 0.11050232378576626,
+      "pickRate": 0.06549580474281419
+    },
+    "tier": "A"
+  },
+  "TFT14_StreetDemon_3": {
+    "apiName": "TFT14_StreetDemon",
+    "displayName": "Street Demon",
+    "count": 3,
+    "style": "1",
+    "stats": {
+      "nbGames": 161328,
+      "nbBoards": 197068,
+      "avgPlacement": 4.248081880366168,
+      "top4Percent": 0.5464103761138287,
+      "top1Percent": 0.1376073233604644,
+      "pickRate": 0.0638837030556021
+    },
+    "tier": "A"
+  },
+  "TFT14_BallisTek_2": {
+    "apiName": "TFT14_BallisTek",
+    "displayName": "Ballis Tek",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 199814,
+      "nbBoards": 261615,
+      "avgPlacement": 4.471425568105804,
+      "top4Percent": 0.5106626149112246,
+      "top1Percent": 0.11273053915104256,
+      "pickRate": 0.08480795956163023
+    },
+    "tier": "S"
+  },
+  "TFT14_Thirsty_3": {
+    "apiName": "TFT14_Thirsty",
+    "displayName": "Thirsty",
+    "count": 3,
+    "style": "2",
+    "stats": {
+      "nbGames": 97863,
+      "nbBoards": 110329,
+      "avgPlacement": 4.497466667875173,
+      "top4Percent": 0.5043732835428582,
+      "top1Percent": 0.10421557342131262,
+      "pickRate": 0.03576544682252585
+    },
+    "tier": "C"
+  },
+  "TFT14_StreetDemon_10": {
+    "apiName": "TFT14_StreetDemon",
+    "displayName": "Street Demon",
+    "count": 10,
+    "style": "5",
+    "stats": {
+      "nbGames": 5280,
+      "nbBoards": 5372,
+      "avgPlacement": 1.3293000744601637,
+      "top4Percent": 0.9744973938942666,
+      "top1Percent": 0.827066269545793,
+      "pickRate": 0.0017414458603867424
+    },
+    "tier": "C"
+  },
+  "TFT14_Bruiser_4": {
+    "apiName": "TFT14_Bruiser",
+    "displayName": "Bruiser",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 105470,
+      "nbBoards": 118690,
+      "avgPlacement": 4.3790378296402395,
+      "top4Percent": 0.5187631645462971,
+      "top1Percent": 0.1339792737383099,
+      "pickRate": 0.038475839383712296
+    },
+    "tier": "B"
+  },
+  "TFT14_StreetDemon_7": {
+    "apiName": "TFT14_StreetDemon",
+    "displayName": "Street Demon",
+    "count": 7,
+    "style": "4",
+    "stats": {
+      "nbGames": 116539,
+      "nbBoards": 129227,
+      "avgPlacement": 4.330782266863736,
+      "top4Percent": 0.5312589474335858,
+      "top1Percent": 0.11648494509661293,
+      "pickRate": 0.04189162773644779
+    },
+    "tier": "B"
+  },
+  "TFT14_Supercharge_5": {
+    "apiName": "TFT14_Supercharge",
+    "displayName": "Supercharge",
+    "count": 5,
+    "style": "4",
+    "stats": {
+      "nbGames": 67504,
+      "nbBoards": 71582,
+      "avgPlacement": 3.838451007236456,
+      "top4Percent": 0.6275739711100556,
+      "top1Percent": 0.16555838059847447,
+      "pickRate": 0.02320479850673935
+    },
+    "tier": "C"
+  },
+  "TFT14_Cyberboss_3": {
+    "apiName": "TFT14_Cyberboss",
+    "displayName": "Cyberboss",
+    "count": 3,
+    "style": "2",
+    "stats": {
+      "nbGames": 51932,
+      "nbBoards": 54693,
+      "avgPlacement": 5.203243559504872,
+      "top4Percent": 0.3522754282997824,
+      "top1Percent": 0.045270875614795314,
+      "pickRate": 0.017729876850731963
+    },
+    "tier": "C"
+  },
+  "TFT14_Virus_1": {
+    "apiName": "TFT14_Virus",
+    "displayName": "Virus",
+    "count": 1,
+    "style": "3",
+    "stats": {
+      "nbGames": 322748,
+      "nbBoards": 632139,
+      "avgPlacement": 4.085065151809966,
+      "top4Percent": 0.5659309107648792,
+      "top1Percent": 0.20110450391448717,
+      "pickRate": 0.20492104332446293
+    },
+    "tier": "S"
+  },
+  "TFT14_Strong_2": {
+    "apiName": "TFT14_Strong",
+    "displayName": "Strong",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 266531,
+      "nbBoards": 397880,
+      "avgPlacement": 4.4341359203780035,
+      "top4Percent": 0.5103247210214135,
+      "top1Percent": 0.15534080627324823,
+      "pickRate": 0.12898110181136951
+    },
+    "tier": "S"
+  },
+  "TFT14_Vanguard_2": {
+    "apiName": "TFT14_Vanguard",
+    "displayName": "Vanguard",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 368131,
+      "nbBoards": 871624,
+      "avgPlacement": 4.497906207263682,
+      "top4Percent": 0.5001273484897157,
+      "top1Percent": 0.13145691261369583,
+      "pickRate": 0.2825551017523704
+    },
+    "tier": "S"
+  },
+  "TFT14_HotRod_3": {
+    "apiName": "TFT14_HotRod",
+    "displayName": "Hot Rod",
+    "count": 3,
+    "style": "1",
+    "stats": {
+      "nbGames": 9181,
+      "nbBoards": 9282,
+      "avgPlacement": 5.10213316095669,
+      "top4Percent": 0.3949579831932773,
+      "top1Percent": 0.06668821374703728,
+      "pickRate": 0.00300895392332646
+    },
+    "tier": "C"
+  },
+  "TFT14_BallisTek_6": {
+    "apiName": "TFT14_BallisTek",
+    "displayName": "Ballis Tek",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 60115,
+      "nbBoards": 65227,
+      "avgPlacement": 3.7051987673816056,
+      "top4Percent": 0.6285127324574179,
+      "top1Percent": 0.25087770401827464,
+      "pickRate": 0.0211446926908872
+    },
+    "tier": "C"
+  },
+  "TFT14_Controller_3": {
+    "apiName": "TFT14_Controller",
+    "displayName": "Controller",
+    "count": 3,
+    "style": "2",
+    "stats": {
+      "nbGames": 118342,
+      "nbBoards": 136153,
+      "avgPlacement": 4.420203741379184,
+      "top4Percent": 0.5119240854039205,
+      "top1Percent": 0.13755113732345228,
+      "pickRate": 0.04413683511340955
+    },
+    "tier": "B"
+  },
+  "TFT14_Divinicorp_5": {
+    "apiName": "TFT14_Divinicorp",
+    "displayName": "Divinicorp",
+    "count": 5,
+    "style": "4",
+    "stats": {
+      "nbGames": 51385,
+      "nbBoards": 54345,
+      "avgPlacement": 4.129413929524335,
+      "top4Percent": 0.5618548164504554,
+      "top1Percent": 0.17088968626368573,
+      "pickRate": 0.017617065391421726
+    },
+    "tier": "C"
+  },
+  "TFT14_Bruiser_6": {
+    "apiName": "TFT14_Bruiser",
+    "displayName": "Bruiser",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 55110,
+      "nbBoards": 58427,
+      "avgPlacement": 4.148818183374125,
+      "top4Percent": 0.5598781385318432,
+      "top1Percent": 0.16182586817738373,
+      "pickRate": 0.018940330842296387
+    },
+    "tier": "C"
+  },
+  "TFT14_EdgeRunner_10": {
+    "apiName": "TFT14_EdgeRunner",
+    "displayName": "Edge Runner",
+    "count": 10,
+    "style": "5",
+    "stats": {
+      "nbGames": 986,
+      "nbBoards": 988,
+      "avgPlacement": 1.0495951417004048,
+      "top4Percent": 1,
+      "top1Percent": 0.9635627530364372,
+      "pickRate": 0.00032028080976584166
+    },
+    "tier": "C"
+  },
+  "TFT14_Divinicorp_1": {
+    "apiName": "TFT14_Divinicorp",
+    "displayName": "Divinicorp",
+    "count": 1,
+    "style": "1",
+    "stats": {
+      "nbGames": 372456,
+      "nbBoards": 932848,
+      "avgPlacement": 4.40532541207142,
+      "top4Percent": 0.5197341903504108,
+      "top1Percent": 0.12862116872202117,
+      "pickRate": 0.3024021384903298
+    },
+    "tier": "S"
+  },
+  "TFT14_Divinicorp_2": {
+    "apiName": "TFT14_Divinicorp",
+    "displayName": "Divinicorp",
+    "count": 2,
+    "style": "2",
+    "stats": {
+      "nbGames": 231062,
+      "nbBoards": 329946,
+      "avgPlacement": 4.531774896498215,
+      "top4Percent": 0.49518102962302923,
+      "top1Percent": 0.11778290993071594,
+      "pickRate": 0.10695887860222712
+    },
+    "tier": "S"
+  },
+  "TFT14_Strong_4": {
+    "apiName": "TFT14_Strong",
+    "displayName": "Strong",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 58843,
+      "nbBoards": 63086,
+      "avgPlacement": 4.599594204736392,
+      "top4Percent": 0.4816441048727134,
+      "top1Percent": 0.10249500681609232,
+      "pickRate": 0.02045064287944118
+    },
+    "tier": "C"
+  },
+  "TFT14_ViegoUniqueTrait_1": {
+    "apiName": "TFT14_ViegoUniqueTrait",
+    "displayName": "Viego Unique Trait",
+    "count": 1,
+    "style": "3",
+    "stats": {
+      "nbGames": 294305,
+      "nbBoards": 487629,
+      "avgPlacement": 4.0683265351322415,
+      "top4Percent": 0.567355510029141,
+      "top1Percent": 0.2016676612752728,
+      "pickRate": 0.1580751123333073
+    },
+    "tier": "S"
+  },
+  "TFT14_Cutter_2": {
+    "apiName": "TFT14_Cutter",
+    "displayName": "Cutter",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 273264,
+      "nbBoards": 431932,
+      "avgPlacement": 4.206951557189558,
+      "top4Percent": 0.5434952724039895,
+      "top1Percent": 0.17756267190205866,
+      "pickRate": 0.1400197679390481
+    },
+    "tier": "S"
+  },
+  "TFT14_Divinicorp_4": {
+    "apiName": "TFT14_Divinicorp",
+    "displayName": "Divinicorp",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 110618,
+      "nbBoards": 124597,
+      "avgPlacement": 4.132218271707987,
+      "top4Percent": 0.566570623690779,
+      "top1Percent": 0.1480693756671509,
+      "pickRate": 0.04039071665424552
+    },
+    "tier": "B"
+  },
+  "TFT14_AnimaSquad_3": {
+    "apiName": "TFT14_AnimaSquad",
+    "displayName": "Anima Squad",
+    "count": 3,
+    "style": "1",
+    "stats": {
+      "nbGames": 175963,
+      "nbBoards": 220919,
+      "avgPlacement": 4.118052317817843,
+      "top4Percent": 0.5814846165336617,
+      "top1Percent": 0.12419484064295058,
+      "pickRate": 0.07161550223953439
+    },
+    "tier": "A"
+  },
+  "TFT14_Immortal_4": {
+    "apiName": "TFT14_Immortal",
+    "displayName": "Immortal",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 136542,
+      "nbBoards": 156007,
+      "avgPlacement": 4.68895626478299,
+      "top4Percent": 0.45796662970251334,
+      "top1Percent": 0.12360342805130539,
+      "pickRate": 0.05057292336957456
+    },
+    "tier": "B"
+  },
+  "TFT14_Techie_2": {
+    "apiName": "TFT14_Techie",
+    "displayName": "Techie",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 292018,
+      "nbBoards": 482364,
+      "avgPlacement": 4.369679329303182,
+      "top4Percent": 0.5159360980504349,
+      "top1Percent": 0.15773565191432196,
+      "pickRate": 0.15636835275494984
+    },
+    "tier": "S"
+  },
+  "TFT14_StreetDemon_5": {
+    "apiName": "TFT14_StreetDemon",
+    "displayName": "Street Demon",
+    "count": 5,
+    "style": "2",
+    "stats": {
+      "nbGames": 28793,
+      "nbBoards": 29794,
+      "avgPlacement": 4.976975229912063,
+      "top4Percent": 0.4116936295898503,
+      "top1Percent": 0.07753238907162516,
+      "pickRate": 0.00965834660542863
+    },
+    "tier": "C"
+  },
+  "TFT14_Cutter_5": {
+    "apiName": "TFT14_Cutter",
+    "displayName": "Cutter",
+    "count": 5,
+    "style": "4",
+    "stats": {
+      "nbGames": 20018,
+      "nbBoards": 20457,
+      "avgPlacement": 4.523243877401378,
+      "top4Percent": 0.4898078897199003,
+      "top1Percent": 0.11267536784474752,
+      "pickRate": 0.0066315632847973914
+    },
+    "tier": "C"
+  },
+  "TFT14_Suits_5": {
+    "apiName": "TFT14_Suits",
+    "displayName": "Suits",
+    "count": 5,
+    "style": "4",
+    "stats": {
+      "nbGames": 130853,
+      "nbBoards": 146130,
+      "avgPlacement": 4.730274413193731,
+      "top4Percent": 0.46270444125094096,
+      "top1Percent": 0.17732156299185656,
+      "pickRate": 0.0473710877844964
+    },
+    "tier": "B"
+  },
+  "TFT14_EdgeRunner_3": {
+    "apiName": "TFT14_EdgeRunner",
+    "displayName": "Edge Runner",
+    "count": 3,
+    "style": "1",
+    "stats": {
+      "nbGames": 142156,
+      "nbBoards": 170547,
+      "avgPlacement": 4.615830240344304,
+      "top4Percent": 0.47821421660891134,
+      "top1Percent": 0.11815511266688948,
+      "pickRate": 0.055286367675237855
+    },
+    "tier": "B"
+  },
+  "TFT14_Swift_2": {
+    "apiName": "TFT14_Swift",
+    "displayName": "Swift",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 329145,
+      "nbBoards": 616581,
+      "avgPlacement": 4.27094088205767,
+      "top4Percent": 0.5546262372664743,
+      "top1Percent": 0.12387180273151459,
+      "pickRate": 0.1998775930832312
+    },
+    "tier": "S"
+  },
+  "TFT14_Suits_3": {
+    "apiName": "TFT14_Suits",
+    "displayName": "Suits",
+    "count": 3,
+    "style": "1",
+    "stats": {
+      "nbGames": 29432,
+      "nbBoards": 30611,
+      "avgPlacement": 5.31785959295678,
+      "top4Percent": 0.3579758910195681,
+      "top1Percent": 0.10744503609813466,
+      "pickRate": 0.009923194198119614
+    },
+    "tier": "C"
+  },
+  "TFT14_Immortal_6": {
+    "apiName": "TFT14_Immortal",
+    "displayName": "Immortal",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 158400,
+      "nbBoards": 191273,
+      "avgPlacement": 4.417575925509612,
+      "top4Percent": 0.48948884578586627,
+      "top1Percent": 0.19884144651885002,
+      "pickRate": 0.062005132921398615
+    },
+    "tier": "A"
+  },
+  "TFT14_AnimaSquad_5": {
+    "apiName": "TFT14_AnimaSquad",
+    "displayName": "Anima Squad",
+    "count": 5,
+    "style": "2",
+    "stats": {
+      "nbGames": 22506,
+      "nbBoards": 23274,
+      "avgPlacement": 5.246970868780614,
+      "top4Percent": 0.36615966314342185,
+      "top1Percent": 0.07050786285125032,
+      "pickRate": 0.007544752597662145
+    },
+    "tier": "C"
+  },
+  "TFT14_Vanguard_4": {
+    "apiName": "TFT14_Vanguard",
+    "displayName": "Vanguard",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 140271,
+      "nbBoards": 168857,
+      "avgPlacement": 4.588503881982979,
+      "top4Percent": 0.4849606471748284,
+      "top1Percent": 0.09535879471979249,
+      "pickRate": 0.054738518921691015
+    },
+    "tier": "B"
+  },
+  "TFT14_Mob_3": {
+    "apiName": "TFT14_Mob",
+    "displayName": "Mob",
+    "count": 3,
+    "style": "1",
+    "stats": {
+      "nbGames": 127189,
+      "nbBoards": 148287,
+      "avgPlacement": 4.559266827166239,
+      "top4Percent": 0.49475004551983653,
+      "top1Percent": 0.08874007836155563,
+      "pickRate": 0.04807032432970381
+    },
+    "tier": "B"
+  },
+  "TFT14_Armorclad_4": {
+    "apiName": "TFT14_Armorclad",
+    "displayName": "Armorclad",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 94130,
+      "nbBoards": 105470,
+      "avgPlacement": 4.535033658860339,
+      "top4Percent": 0.49111595714421163,
+      "top1Percent": 0.12286906229259505,
+      "pickRate": 0.034190300613363686
+    },
+    "tier": "C"
+  },
+  "TFT14_Marksman_2": {
+    "apiName": "TFT14_Marksman",
+    "displayName": "Marksman",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 324416,
+      "nbBoards": 610152,
+      "avgPlacement": 4.2299312302508225,
+      "top4Percent": 0.5540930784460265,
+      "top1Percent": 0.13228998675739817,
+      "pickRate": 0.1977934986237326
+    },
+    "tier": "S"
+  },
+  "TFT14_Netgod_1": {
+    "apiName": "TFT14_Netgod",
+    "displayName": "Netgod",
+    "count": 1,
+    "style": "3",
+    "stats": {
+      "nbGames": 286722,
+      "nbBoards": 500026,
+      "avgPlacement": 3.9982360917232302,
+      "top4Percent": 0.5833496658173775,
+      "top1Percent": 0.21032506309671897,
+      "pickRate": 0.1620938584858044
+    },
+    "tier": "S"
+  },
+  "TFT14_Bruiser_2": {
+    "apiName": "TFT14_Bruiser",
+    "displayName": "Bruiser",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 386788,
+      "nbBoards": 1191790,
+      "avgPlacement": 4.211195764354459,
+      "top4Percent": 0.5518438651104641,
+      "top1Percent": 0.15434011025432331,
+      "pickRate": 0.3863435893429478
+    },
+    "tier": "S"
+  },
+  "TFT14_AnimaSquad_7": {
+    "apiName": "TFT14_AnimaSquad",
+    "displayName": "Anima Squad",
+    "count": 7,
+    "style": "4",
+    "stats": {
+      "nbGames": 159717,
+      "nbBoards": 184855,
+      "avgPlacement": 4.3267263530875555,
+      "top4Percent": 0.5315950339455249,
+      "top1Percent": 0.11204457547807742,
+      "pickRate": 0.059924604341360994
+    },
+    "tier": "A"
+  },
+  "TFT14_Immortal_2": {
+    "apiName": "TFT14_Immortal",
+    "displayName": "Immortal",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 206257,
+      "nbBoards": 277573,
+      "avgPlacement": 4.331112896427246,
+      "top4Percent": 0.5385898484362672,
+      "top1Percent": 0.12325406289516631,
+      "pickRate": 0.08998107814689672
+    },
+    "tier": "S"
+  },
+  "TFT14_Cutter_4": {
+    "apiName": "TFT14_Cutter",
+    "displayName": "Cutter",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 18054,
+      "nbBoards": 18447,
+      "avgPlacement": 4.778554778554779,
+      "top4Percent": 0.435789017184366,
+      "top1Percent": 0.11194232124464683,
+      "pickRate": 0.005979979856022754
+    },
+    "tier": "C"
+  },
+  "TFT14_HotRod_4": {
+    "apiName": "TFT14_HotRod",
+    "displayName": "Hot Rod",
+    "count": 4,
+    "style": "4",
+    "stats": {
+      "nbGames": 116950,
+      "nbBoards": 129999,
+      "avgPlacement": 4.396172278248295,
+      "top4Percent": 0.5121962476634435,
+      "top1Percent": 0.12178555219655536,
+      "pickRate": 0.04214188764043487
+    },
+    "tier": "B"
+  },
+  "TFT14_Marksman_4": {
+    "apiName": "TFT14_Marksman",
+    "displayName": "Marksman",
+    "count": 4,
+    "style": "4",
+    "stats": {
+      "nbGames": 72081,
+      "nbBoards": 77872,
+      "avgPlacement": 4.306682761454695,
+      "top4Percent": 0.545035442777892,
+      "top1Percent": 0.09877748099445244,
+      "pickRate": 0.025243833216685854
+    },
+    "tier": "C"
+  },
+  "TFT14_Controller_5": {
+    "apiName": "TFT14_Controller",
+    "displayName": "Controller",
+    "count": 5,
+    "style": "4",
+    "stats": {
+      "nbGames": 59498,
+      "nbBoards": 63107,
+      "avgPlacement": 4.256976246692126,
+      "top4Percent": 0.545914082431426,
+      "top1Percent": 0.13958831825312565,
+      "pickRate": 0.020457450467503007
+    },
+    "tier": "C"
+  },
+  "TFT14_Cyberboss_2": {
+    "apiName": "TFT14_Cyberboss",
+    "displayName": "Cyberboss",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 182900,
+      "nbBoards": 236144,
+      "avgPlacement": 3.8924088691645777,
+      "top4Percent": 0.6107036384578901,
+      "top1Percent": 0.18611525171082052,
+      "pickRate": 0.0765510035843572
+    },
+    "tier": "S"
+  },
+  "TFT14_EdgeRunner_7": {
+    "apiName": "TFT14_EdgeRunner",
+    "displayName": "Edge Runner",
+    "count": 7,
+    "style": "4",
+    "stats": {
+      "nbGames": 223678,
+      "nbBoards": 292039,
+      "avgPlacement": 4.030947921339274,
+      "top4Percent": 0.5997897541081841,
+      "top1Percent": 0.12070648098370423,
+      "pickRate": 0.09467053380891359
+    },
+    "tier": "S"
+  },
+  "TFT14_Controller_2": {
+    "apiName": "TFT14_Controller",
+    "displayName": "Controller",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 105034,
+      "nbBoards": 119191,
+      "avgPlacement": 4.586344606555864,
+      "top4Percent": 0.47962513948200786,
+      "top1Percent": 0.1388947152050071,
+      "pickRate": 0.038638248984615826
+    },
+    "tier": "B"
+  },
+  "TFT14_EdgeRunner_5": {
+    "apiName": "TFT14_EdgeRunner",
+    "displayName": "Edge Runner",
+    "count": 5,
+    "style": "2",
+    "stats": {
+      "nbGames": 78272,
+      "nbBoards": 86410,
+      "avgPlacement": 4.748073139682907,
+      "top4Percent": 0.46187941210508043,
+      "top1Percent": 0.08681865524823516,
+      "pickRate": 0.02801160402010767
+    },
+    "tier": "C"
+  },
+  "TFT14_AnimaSquad_10": {
+    "apiName": "TFT14_AnimaSquad",
+    "displayName": "Anima Squad",
+    "count": 10,
+    "style": "5",
+    "stats": {
+      "nbGames": 6848,
+      "nbBoards": 7027,
+      "avgPlacement": 1.2385086096484987,
+      "top4Percent": 0.9863384089938807,
+      "top1Percent": 0.8615340828233955,
+      "pickRate": 0.002277948633830536
+    },
+    "tier": "C"
+  },
+  "TFT14_Swift_6": {
+    "apiName": "TFT14_Swift",
+    "displayName": "Swift",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 20689,
+      "nbBoards": 21195,
+      "avgPlacement": 4.743665958952583,
+      "top4Percent": 0.4496815286624204,
+      "top1Percent": 0.11153573956121726,
+      "pickRate": 0.006870801379541512
+    },
+    "tier": "C"
+  },
+  "TFT14_Techie_6": {
+    "apiName": "TFT14_Techie",
+    "displayName": "Techie",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 59702,
+      "nbBoards": 62844,
+      "avgPlacement": 4.092594360639043,
+      "top4Percent": 0.5758067595951881,
+      "top1Percent": 0.13788110241232257,
+      "pickRate": 0.020372193531300157
+    },
+    "tier": "C"
+  },
+  "TFT14_Armorclad_6": {
+    "apiName": "TFT14_Armorclad",
+    "displayName": "Armorclad",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 46795,
+      "nbBoards": 48707,
+      "avgPlacement": 4.163610979941281,
+      "top4Percent": 0.5642720758823168,
+      "top1Percent": 0.12696327016650585,
+      "pickRate": 0.015789390082251872
+    },
+    "tier": "C"
+  },
+  "TFT14_Techie_8": {
+    "apiName": "TFT14_Techie",
+    "displayName": "Techie",
+    "count": 8,
+    "style": "4",
+    "stats": {
+      "nbGames": 25729,
+      "nbBoards": 26328,
+      "avgPlacement": 3.7156639319355818,
+      "top4Percent": 0.6470297781829232,
+      "top1Percent": 0.18003646308113036,
+      "pickRate": 0.00853477040436749
+    },
+    "tier": "C"
+  },
+  "TFT14_Thirsty_4": {
+    "apiName": "TFT14_Thirsty",
+    "displayName": "Thirsty",
+    "count": 4,
+    "style": "4",
+    "stats": {
+      "nbGames": 193534,
+      "nbBoards": 245761,
+      "avgPlacement": 3.9682903308498907,
+      "top4Percent": 0.5959651856885348,
+      "top1Percent": 0.16745537330984167,
+      "pickRate": 0.07966855474581276
+    },
+    "tier": "S"
+  },
+  "TFT14_Techie_4": {
+    "apiName": "TFT14_Techie",
+    "displayName": "Techie",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 73792,
+      "nbBoards": 80055,
+      "avgPlacement": 4.838610954968459,
+      "top4Percent": 0.42849291112360255,
+      "top1Percent": 0.09070014365123977,
+      "pickRate": 0.025951498204255522
+    },
+    "tier": "C"
+  },
+  "TFT14_Cutter_3": {
+    "apiName": "TFT14_Cutter",
+    "displayName": "Cutter",
+    "count": 3,
+    "style": "2",
+    "stats": {
+      "nbGames": 56293,
+      "nbBoards": 60172,
+      "avgPlacement": 4.179718141328192,
+      "top4Percent": 0.5507711227813601,
+      "top1Percent": 0.1719404374127501,
+      "pickRate": 0.019506008993148
+    },
+    "tier": "C"
+  },
+  "TFT14_Strong_6": {
+    "apiName": "TFT14_Strong",
+    "displayName": "Strong",
+    "count": 6,
+    "style": "4",
+    "stats": {
+      "nbGames": 80798,
+      "nbBoards": 86439,
+      "avgPlacement": 4.132995522854267,
+      "top4Percent": 0.5791483011140804,
+      "top1Percent": 0.10070685685859392,
+      "pickRate": 0.02802100497505019
+    },
+    "tier": "C"
+  },
+  "TFT14_Divinicorp_3": {
+    "apiName": "TFT14_Divinicorp",
+    "displayName": "Divinicorp",
+    "count": 3,
+    "style": "2",
+    "stats": {
+      "nbGames": 176725,
+      "nbBoards": 228373,
+      "avgPlacement": 4.329837590258043,
+      "top4Percent": 0.5249088114619505,
+      "top1Percent": 0.14832751682554418,
+      "pickRate": 0.07403187183062203
+    },
+    "tier": "A"
+  },
+  "TFT14_Mob_7": {
+    "apiName": "TFT14_Mob",
+    "displayName": "Mob",
+    "count": 7,
+    "style": "4",
+    "stats": {
+      "nbGames": 9373,
+      "nbBoards": 9615,
+      "avgPlacement": 2.781591263650546,
+      "top4Percent": 0.8180967238689547,
+      "top1Percent": 0.3152366094643786,
+      "pickRate": 0.0031169028197353924
+    },
+    "tier": "C"
+  },
+  "TFT14_Armorclad_2": {
+    "apiName": "TFT14_Armorclad",
+    "displayName": "Armorclad",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 372191,
+      "nbBoards": 918947,
+      "avgPlacement": 4.271881838669695,
+      "top4Percent": 0.5453709517523861,
+      "top1Percent": 0.1413128287050287,
+      "pickRate": 0.29789583936426206
+    },
+    "tier": "S"
+  },
+  "TFT14_Swift_4": {
+    "apiName": "TFT14_Swift",
+    "displayName": "Swift",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 31467,
+      "nbBoards": 32684,
+      "avgPlacement": 4.745532982499082,
+      "top4Percent": 0.4631929996328479,
+      "top1Percent": 0.08982988618284175,
+      "pickRate": 0.010595200391079725
+    },
+    "tier": "C"
+  },
+  "TFT14_Mob_5": {
+    "apiName": "TFT14_Mob",
+    "displayName": "Mob",
+    "count": 5,
+    "style": "2",
+    "stats": {
+      "nbGames": 115588,
+      "nbBoards": 127043,
+      "avgPlacement": 4.100816259061893,
+      "top4Percent": 0.592287650637973,
+      "top1Percent": 0.09359035916972994,
+      "pickRate": 0.04118363857801804
+    },
+    "tier": "B"
+  },
+  "TFT14_BallisTek_4": {
+    "apiName": "TFT14_BallisTek",
+    "displayName": "Ballis Tek",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 147575,
+      "nbBoards": 176752,
+      "avgPlacement": 4.6225955010410065,
+      "top4Percent": 0.46461709061283607,
+      "top1Percent": 0.1568355662170725,
+      "pickRate": 0.05729784786207697
+    },
+    "tier": "B"
+  },
+  "TFT14_Supercharge_3": {
+    "apiName": "TFT14_Supercharge",
+    "displayName": "Supercharge",
+    "count": 3,
+    "style": "2",
+    "stats": {
+      "nbGames": 14765,
+      "nbBoards": 15045,
+      "avgPlacement": 5.4428049185776,
+      "top4Percent": 0.32715187770023263,
+      "top1Percent": 0.06959122632103688,
+      "pickRate": 0.0048771505900071736
+    },
+    "tier": "C"
+  },
+  "TFT14_Thirsty_2": {
+    "apiName": "TFT14_Thirsty",
+    "displayName": "Thirsty",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 223993,
+      "nbBoards": 312334,
+      "avgPlacement": 4.012012781189368,
+      "top4Percent": 0.6008663802211734,
+      "top1Percent": 0.13927078063867526,
+      "pickRate": 0.10124958141437691
+    },
+    "tier": "S"
+  },
+  "TFT14_Supercharge_4": {
+    "apiName": "TFT14_Supercharge",
+    "displayName": "Supercharge",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 30164,
+      "nbBoards": 31149,
+      "avgPlacement": 5.742688368807987,
+      "top4Percent": 0.2546149154065941,
+      "top1Percent": 0.0357956916754952,
+      "pickRate": 0.010097598120846358
+    },
+    "tier": "C"
+  },
+  "TFT14_Overlord_1": {
+    "apiName": "TFT14_Overlord",
+    "displayName": "Overlord",
+    "count": 1,
+    "style": "3",
+    "stats": {
+      "nbGames": 324046,
+      "nbBoards": 589782,
+      "avgPlacement": 3.8699994235158077,
+      "top4Percent": 0.6163446832897579,
+      "top1Percent": 0.184919173525133,
+      "pickRate": 0.1911901382037628
+    },
+    "tier": "S"
+  },
+  "TFT14_Cyberboss_4": {
+    "apiName": "TFT14_Cyberboss",
+    "displayName": "Cyberboss",
+    "count": 4,
+    "style": "4",
+    "stats": {
+      "nbGames": 60249,
+      "nbBoards": 62664,
+      "avgPlacement": 3.4030543852929913,
+      "top4Percent": 0.7103919315715562,
+      "top1Percent": 0.20735988765479382,
+      "pickRate": 0.020313842776484518
+    },
+    "tier": "C"
+  },
+  "TFT14_Divinicorp_7": {
+    "apiName": "TFT14_Divinicorp",
+    "displayName": "Divinicorp",
+    "count": 7,
+    "style": "4",
+    "stats": {
+      "nbGames": 25502,
+      "nbBoards": 26285,
+      "avgPlacement": 3.376830892143808,
+      "top4Percent": 0.7078181472322618,
+      "top1Percent": 0.23534335172151416,
+      "pickRate": 0.008520831057383754
+    },
+    "tier": "C"
+  },
+  "TFT14_Suits_4": {
+    "apiName": "TFT14_Suits",
+    "displayName": "Suits",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 28526,
+      "nbBoards": 29588,
+      "avgPlacement": 6.157901852102204,
+      "top4Percent": 0.2251588481816953,
+      "top1Percent": 0.06499256455319724,
+      "pickRate": 0.009591567408250732
+    },
+    "tier": "C"
+  },
+  "TFT14_Controller_4": {
+    "apiName": "TFT14_Controller",
+    "displayName": "Controller",
+    "count": 4,
+    "style": "2",
+    "stats": {
+      "nbGames": 68833,
+      "nbBoards": 74121,
+      "avgPlacement": 4.435274753443694,
+      "top4Percent": 0.5121760364808894,
+      "top1Percent": 0.13147421108727622,
+      "pickRate": 0.02402786832049995
+    },
+    "tier": "C"
+  },
+  "TFT14_Supercharge_2": {
+    "apiName": "TFT14_Supercharge",
+    "displayName": "Supercharge",
+    "count": 2,
+    "style": "1",
+    "stats": {
+      "nbGames": 81645,
+      "nbBoards": 90294,
+      "avgPlacement": 4.314849270161916,
+      "top4Percent": 0.5322280550202672,
+      "top1Percent": 0.14536957051409838,
+      "pickRate": 0.02927068364068513
+    },
+    "tier": "C"
+  }
+}
