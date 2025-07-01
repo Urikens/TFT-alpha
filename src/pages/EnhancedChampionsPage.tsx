@@ -408,19 +408,33 @@ export default function EnhancedChampionsPage() {
     );
   }
 
-  // Filtrage selon l'onglet actif
+  // Fonction de recherche améliorée
+  const searchInText = (text: string, searchTerms: string[]): boolean => {
+    if (searchTerms.length === 0) return true;
+    
+    const normalizedText = text.toLowerCase();
+    return searchTerms.some(term => 
+      normalizedText.includes(term.toLowerCase())
+    );
+  };
+
+  // Filtrage selon l'onglet actif avec recherche améliorée
   const getFilteredData = () => {
+    const searchTerms = [
+      ...filters.selectedTags,
+      ...(inputValue.trim() ? [inputValue.trim()] : [])
+    ];
+
     switch (activeTab) {
       case 'champions':
         return champions.filter((champion) => {
-          const matchesTags =
-            filters.selectedTags.length === 0 ||
-            filters.selectedTags.some((tag) =>
-              champion.name.toLowerCase().includes(tag.toLowerCase())
-            );
-          const matchesInput =
-            inputValue === '' ||
-            champion.name.toLowerCase().includes(inputValue.toLowerCase());
+          // Recherche dans le nom et les traits
+          const matchesSearch = searchTerms.length === 0 || 
+            searchInText(champion.name, searchTerms) ||
+            (champion.traits && champion.traits.some(trait => 
+              searchInText(trait, searchTerms)
+            ));
+
           const matchesFavorites =
             !filters.showOnlyFavorites || favorites.includes(champion.name);
           const matchesMeta = !filters.showOnlyMeta || champion.isMeta;
@@ -429,54 +443,41 @@ export default function EnhancedChampionsPage() {
             (champion.traits &&
               filters.selectedSynergies.some((s) => champion.traits?.includes(s)));
 
-          return (
-            (matchesTags || matchesInput) &&
-            matchesFavorites &&
-            matchesMeta &&
-            matchesSynergies
-          );
+          return matchesSearch && matchesFavorites && matchesMeta && matchesSynergies;
         });
 
       case 'items':
         return items.filter((item) => {
-          const matchesTags =
-            filters.selectedTags.length === 0 ||
-            filters.selectedTags.some((tag) =>
-              item.name.toLowerCase().includes(tag.toLowerCase())
-            );
-          const matchesInput =
-            inputValue === '' ||
-            item.name.toLowerCase().includes(inputValue.toLowerCase());
+          // Recherche dans le nom, description courte et description
+          const matchesSearch = searchTerms.length === 0 ||
+            searchInText(item.name, searchTerms) ||
+            searchInText(item.shortDesc || '', searchTerms) ||
+            searchInText(item.desc || '', searchTerms) ||
+            (item.tags && item.tags.some(tag => searchInText(tag, searchTerms)));
 
-          return matchesTags || matchesInput;
+          return matchesSearch;
         });
 
       case 'synergies':
         return commonSynergies.filter((synergy) => {
-          const matchesTags =
-            filters.selectedTags.length === 0 ||
-            filters.selectedTags.some((tag) =>
-              synergy.name.toLowerCase().includes(tag.toLowerCase())
-            );
-          const matchesInput =
-            inputValue === '' ||
-            synergy.name.toLowerCase().includes(inputValue.toLowerCase());
+          // Recherche dans le nom
+          const matchesSearch = searchTerms.length === 0 ||
+            searchInText(synergy.name, searchTerms);
 
-          return matchesTags || matchesInput;
+          return matchesSearch;
         });
 
       case 'optimizations':
         return optimizations.filter((optimization) => {
-          const matchesTags =
-            filters.selectedTags.length === 0 ||
-            filters.selectedTags.some((tag) =>
-              optimization.name.toLowerCase().includes(tag.toLowerCase())
-            );
-          const matchesInput =
-            inputValue === '' ||
-            optimization.name.toLowerCase().includes(inputValue.toLowerCase());
+          // Recherche dans le nom, description et type
+          const matchesSearch = searchTerms.length === 0 ||
+            searchInText(optimization.name, searchTerms) ||
+            searchInText(optimization.description, searchTerms) ||
+            searchInText(optimization.type, searchTerms) ||
+            searchInText(optimization.difficulty, searchTerms) ||
+            searchInText(optimization.gamePhase, searchTerms);
 
-          return matchesTags || matchesInput;
+          return matchesSearch;
         });
 
       default:
@@ -485,6 +486,26 @@ export default function EnhancedChampionsPage() {
   };
 
   const filteredData = getFilteredData();
+
+  // Tri des données filtrées
+  const sortedData = [...filteredData].sort((a: any, b: any) => {
+    switch (filters.sortBy) {
+      case 'name':
+        return a.name.localeCompare(b.name);
+      case 'cost':
+        if (activeTab === 'champions') {
+          return (a as Champion).cost[0] - (b as Champion).cost[0];
+        }
+        return 0;
+      case 'winrate':
+        if (activeTab === 'champions') {
+          return ((b as Champion).winRate || 0) - ((a as Champion).winRate || 0);
+        }
+        return 0;
+      default:
+        return 0;
+    }
+  });
 
   return (
     <>
@@ -587,7 +608,7 @@ export default function EnhancedChampionsPage() {
               </select>
             </div>
             <div className="text-xs text-slate-500 bg-slate-800/50 px-3 py-1.5 rounded-full font-medium">
-              {filteredData.length} résultats
+              {sortedData.length} résultats
             </div>
           </div>
         </div>
@@ -609,7 +630,7 @@ export default function EnhancedChampionsPage() {
                 Chargement des données...
               </p>
             </div>
-          ) : filteredData.length === 0 ? (
+          ) : sortedData.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 space-y-4">
               <div className="w-20 h-20 bg-slate-700/50 rounded-full flex items-center justify-center">
                 <Search className="w-10 h-10 text-slate-500" />
@@ -619,7 +640,7 @@ export default function EnhancedChampionsPage() {
                   Aucun résultat trouvé
                 </p>
                 <p className="text-slate-500 text-sm">
-                  Essayez d'ajuster vos filtres
+                  Essayez d'ajuster votre recherche
                 </p>
                 <button
                   onClick={clearAllFilters}
@@ -631,7 +652,7 @@ export default function EnhancedChampionsPage() {
             </div>
           ) : filters.viewMode === 'grid' ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
-              {filteredData.map((item: any) => {
+              {sortedData.map((item: any) => {
                 if (activeTab === 'champions') {
                   return (
                     <ChampionCard
@@ -684,7 +705,7 @@ export default function EnhancedChampionsPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {filteredData.map((item: any) => {
+              {sortedData.map((item: any) => {
                 if (activeTab === 'champions') {
                   return (
                     <ChampionCard
@@ -752,7 +773,7 @@ export default function EnhancedChampionsPage() {
           setFilters((prev) => ({ ...prev, showOnlyMeta: value }))
         }
         onClearAllFilters={clearAllFilters}
-        championsCount={filteredData.length}
+        championsCount={sortedData.length}
         favoritesCount={favoritesCount}
         metaCount={metaCount}
       />
