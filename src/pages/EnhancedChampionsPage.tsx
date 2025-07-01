@@ -85,14 +85,11 @@ export default function EnhancedChampionsPage() {
     viewMode: 'grid',
   });
 
-  // États de sélection - NOUVEAU SYSTÈME
+  // États de sélection
   const [selectedChampions, setSelectedChampions] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedSynergies, setSelectedSynergies] = useState<string[]>([]);
   const [selectedOptimizations, setSelectedOptimizations] = useState<string[]>([]);
-
-  // État pour contrôler l'affichage filtré ou complet
-  const [showFilteredResults, setShowFilteredResults] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -204,51 +201,7 @@ export default function EnhancedChampionsPage() {
     fetchData();
   }, []);
 
-  // FONCTION CORRIGÉE : Détection automatique du bon onglet
-  const detectBestTab = (searchTerm: string): 'champions' | 'items' | 'synergies' | 'optimizations' => {
-    const term = searchTerm.toLowerCase().trim();
-    if (term.length < 2) return activeTab;
-
-    // Recherche dans les champions
-    const championMatches = champions.filter(champion => 
-      champion.name.toLowerCase().includes(term) ||
-      (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(term))) ||
-      (champion.skill && champion.skill.name.toLowerCase().includes(term))
-    ).length;
-
-    // Recherche dans les items
-    const itemMatches = items.filter(item =>
-      item.name.toLowerCase().includes(term) ||
-      (item.shortDesc && item.shortDesc.toLowerCase().includes(term)) ||
-      (item.desc && item.desc.toLowerCase().includes(term)) ||
-      (item.affectedTraitKey && item.affectedTraitKey.toLowerCase().includes(term))
-    ).length;
-
-    // Recherche dans les synergies
-    const synergyMatches = commonSynergies.filter(synergy =>
-      synergy.name.toLowerCase().includes(term)
-    ).length;
-
-    // Recherche dans les optimisations
-    const optimizationMatches = optimizations.filter(optimization =>
-      optimization.name.toLowerCase().includes(term) ||
-      optimization.description.toLowerCase().includes(term) ||
-      optimization.type.toLowerCase().includes(term) ||
-      optimization.difficulty.toLowerCase().includes(term)
-    ).length;
-
-    // Retourne l'onglet avec le plus de résultats
-    const maxMatches = Math.max(championMatches, itemMatches, synergyMatches, optimizationMatches);
-    
-    if (maxMatches === 0) return activeTab;
-    
-    if (championMatches === maxMatches) return 'champions';
-    if (itemMatches === maxMatches) return 'items';
-    if (synergyMatches === maxMatches) return 'synergies';
-    return 'optimizations';
-  };
-  
-  // Gestion de la recherche avec changement automatique d'onglet
+  // Gestion de la recherche SANS changement automatique d'onglet
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
@@ -262,36 +215,19 @@ export default function EnhancedChampionsPage() {
     }
   };
 
-  // FONCTION CORRIGÉE : Gestion de la saisie avec changement automatique d'onglet
+  // Gestion simple de la saisie SANS changement d'onglet
   const handleInputChange = (value: string) => {
     setInputValue(value);
-    
-    // Si on tape quelque chose, détecter le meilleur onglet et changer automatiquement
-    if (value.trim().length >= 2) {
-      const bestTab = detectBestTab(value);
-      
-      if (bestTab !== activeTab) {
-        setActiveTab(bestTab);
-      }
-      setShowFilteredResults(true);
-    } else {
-      setShowFilteredResults(false);
-    }
   };
 
   const addTag = () => {
     const trimmedValue = inputValue.trim();
     if (trimmedValue && !filters.selectedTags.includes(trimmedValue)) {
-      // Détecter le meilleur onglet avant d'ajouter le tag
-      const bestTab = detectBestTab(trimmedValue);
-      setActiveTab(bestTab);
-      
       setFilters((prev) => ({
         ...prev,
         selectedTags: [...prev.selectedTags, trimmedValue],
       }));
       setInputValue('');
-      setShowFilteredResults(true);
     }
   };
 
@@ -300,14 +236,9 @@ export default function EnhancedChampionsPage() {
       ...prev,
       selectedTags: prev.selectedTags.filter((_, i) => i !== index),
     }));
-    
-    // Si plus de tags, reset l'affichage
-    if (filters.selectedTags.length === 1) {
-      setShowFilteredResults(false);
-    }
   };
 
-  // NOUVEAU : Fonction pour ajouter à la sélection et reset l'affichage
+  // Fonction pour ajouter à la sélection et reset l'affichage
   const addToSelection = (name: string, type: 'champion' | 'item' | 'synergy' | 'optimization', id?: string) => {
     switch (type) {
       case 'champion':
@@ -333,7 +264,6 @@ export default function EnhancedChampionsPage() {
     }
 
     // Reset l'affichage pour montrer tous les éléments
-    setShowFilteredResults(false);
     setInputValue('');
     setFilters(prev => ({
       ...prev,
@@ -341,7 +271,7 @@ export default function EnhancedChampionsPage() {
     }));
   };
 
-  // NOUVEAU : Fonctions pour supprimer de la sélection
+  // Fonctions pour supprimer de la sélection
   const removeFromChampions = (name: string) => {
     setSelectedChampions(prev => prev.filter(n => n !== name));
   };
@@ -364,16 +294,14 @@ export default function EnhancedChampionsPage() {
       ...prev,
       selectedTags: [],
     }));
-    setShowFilteredResults(false);
   };
 
-  // NOUVEAU : Reset complet de toutes les sélections
+  // Reset complet de toutes les sélections
   const resetAllSelections = () => {
     setSelectedChampions([]);
     setSelectedItems([]);
     setSelectedSynergies([]);
     setSelectedOptimizations([]);
-    setShowFilteredResults(false);
     setInputValue('');
     setFilters(prev => ({
       ...prev,
@@ -470,7 +398,6 @@ export default function EnhancedChampionsPage() {
       viewMode: 'grid',
     });
     setInputValue('');
-    setShowFilteredResults(false);
     resetAllSelections();
   };
 
@@ -497,7 +424,7 @@ export default function EnhancedChampionsPage() {
     ).length;
   };
 
-  // FONCTION CORRIGÉE : Recherche universelle dans le texte
+  // Recherche universelle dans le texte
   const searchInText = (text: string, searchTerms: string[]): boolean => {
     if (searchTerms.length === 0) return true;
     
@@ -507,19 +434,8 @@ export default function EnhancedChampionsPage() {
     );
   };
 
-  // FONCTION CORRIGÉE : Filtrage selon l'onglet actif avec recherche universelle
+  // Filtrage selon l'onglet actif UNIQUEMENT
   const getFilteredData = () => {
-    // Si on n'affiche pas les résultats filtrés, retourner toutes les données
-    if (!showFilteredResults && inputValue.trim() === '' && filters.selectedTags.length === 0) {
-      switch (activeTab) {
-        case 'champions': return champions;
-        case 'items': return items;
-        case 'synergies': return commonSynergies;
-        case 'optimizations': return optimizations;
-        default: return [];
-      }
-    }
-
     const searchTerms = [
       ...filters.selectedTags,
       ...(inputValue.trim() ? [inputValue.trim()] : [])
@@ -710,7 +626,7 @@ export default function EnhancedChampionsPage() {
         />
       </div>
 
-      {/* NOUVEAU : Panneau des sélections */}
+      {/* Panneau des sélections */}
       <SelectionPanel
         selectedChampions={selectedChampions}
         selectedItems={selectedItems}
