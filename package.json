@@ -20,7 +20,11 @@
     "scrape:individual": "tsx src/script/scrape/individual_champion_stats.ts",
     "scrape:individual:report": "tsx src/script/scrape/individual_champion_stats.ts --report --by-tier",
     "scrape:individual:no-images": "tsx src/script/scrape/individual_champion_stats.ts --no-images",
-    "scrape:all": "npm run scrape:traits && npm run scrape:champions && npm run scrape:individual && npm run scrape:leveling && npm run scrape:update",
+    "scrape:items": "tsx src/script/scrape/items.ts",
+    "scrape:items:watch": "tsx src/script/scrape/items.ts --continuous",
+    "scrape:items:report": "tsx src/script/scrape/items.ts --report --by-tier --by-type",
+    "scrape:items:no-images": "tsx src/script/scrape/items.ts --no-images",
+    "scrape:all": "npm run scrape:traits && npm run scrape:champions && npm run scrape:individual && npm run scrape:items && npm run scrape:leveling && npm run scrape:update",
     "scrape:leveling": "tsx src/script/scrape/leveling_method.ts",
     "scrape:update": "tsx src/script/scrape/update.ts"
   },

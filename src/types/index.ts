@@ -41,6 +41,23 @@ export interface Item {
   tags?: string[];
 }
 
+export interface ItemStats {
+  key: string;
+  ingameKey: string;
+  name: string;
+  imageUrl: string;
+  stats: {
+    tier: number;
+    score: number;
+    pickRate: number;
+    avgPlacement: number;
+    top4Percent: number;
+    top1Percent: number;
+    itemType: string;
+    craftable: boolean;
+  };
+}
+
 export interface Synergy {
   name: string;
   icon: string;
