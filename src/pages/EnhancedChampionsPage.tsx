@@ -204,59 +204,43 @@ export default function EnhancedChampionsPage() {
     fetchData();
   }, []);
 
-  // CORRIGÉ : Fonction pour détecter automatiquement le bon onglet avec recherche universelle COMPLÈTE
+  // FONCTION CORRIGÉE : Détection automatique du bon onglet
   const detectBestTab = (searchTerm: string): 'champions' | 'items' | 'synergies' | 'optimizations' => {
     const term = searchTerm.toLowerCase().trim();
-    
-    // RECHERCHE COMPLÈTE dans TOUTES les données, pas seulement l'onglet actuel
-    
-    // Recherche dans les champions (nom + traits + skill + description)
+    if (term.length < 2) return activeTab;
+
+    // Recherche dans les champions
     const championMatches = champions.filter(champion => 
       champion.name.toLowerCase().includes(term) ||
       (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(term))) ||
-      (champion.skill && champion.skill.name.toLowerCase().includes(term)) ||
-      (champion.skill && champion.skill.desc.toLowerCase().includes(term))
+      (champion.skill && champion.skill.name.toLowerCase().includes(term))
     ).length;
 
-    // Recherche dans les items (nom + descriptions + tags + trait affecté + compositions)
+    // Recherche dans les items
     const itemMatches = items.filter(item =>
       item.name.toLowerCase().includes(term) ||
       (item.shortDesc && item.shortDesc.toLowerCase().includes(term)) ||
       (item.desc && item.desc.toLowerCase().includes(term)) ||
-      (item.fromDesc && item.fromDesc.toLowerCase().includes(term)) ||
-      (item.affectedTraitKey && item.affectedTraitKey.toLowerCase().includes(term)) ||
-      (item.tags && item.tags.some(tag => tag.toLowerCase().includes(term))) ||
-      (item.compositions && item.compositions.some(comp => comp.toLowerCase().includes(term)))
+      (item.affectedTraitKey && item.affectedTraitKey.toLowerCase().includes(term))
     ).length;
 
-    // Recherche dans les synergies (nom + icône)
+    // Recherche dans les synergies
     const synergyMatches = commonSynergies.filter(synergy =>
-      synergy.name.toLowerCase().includes(term) ||
-      synergy.icon.toLowerCase().includes(term)
+      synergy.name.toLowerCase().includes(term)
     ).length;
 
-    // Recherche dans les optimisations (nom + description + type + difficulté + phase + impact + tips)
+    // Recherche dans les optimisations
     const optimizationMatches = optimizations.filter(optimization =>
       optimization.name.toLowerCase().includes(term) ||
       optimization.description.toLowerCase().includes(term) ||
       optimization.type.toLowerCase().includes(term) ||
-      optimization.difficulty.toLowerCase().includes(term) ||
-      optimization.gamePhase.toLowerCase().includes(term) ||
-      optimization.impact.toLowerCase().includes(term) ||
-      (optimization.tips && optimization.tips.some(tip => tip.toLowerCase().includes(term)))
+      optimization.difficulty.toLowerCase().includes(term)
     ).length;
-
-    console.log(`🔍 Recherche pour "${term}":`, {
-      champions: championMatches,
-      items: itemMatches,
-      synergies: synergyMatches,
-      optimizations: optimizationMatches
-    });
 
     // Retourne l'onglet avec le plus de résultats
     const maxMatches = Math.max(championMatches, itemMatches, synergyMatches, optimizationMatches);
     
-    if (maxMatches === 0) return activeTab; // Garde l'onglet actuel si aucun résultat
+    if (maxMatches === 0) return activeTab;
     
     if (championMatches === maxMatches) return 'champions';
     if (itemMatches === maxMatches) return 'items';
@@ -278,17 +262,15 @@ export default function EnhancedChampionsPage() {
     }
   };
 
-  // CORRIGÉ : Gestion de la saisie avec changement automatique d'onglet AMÉLIORÉ
+  // FONCTION CORRIGÉE : Gestion de la saisie avec changement automatique d'onglet
   const handleInputChange = (value: string) => {
     setInputValue(value);
     
     // Si on tape quelque chose, détecter le meilleur onglet et changer automatiquement
-    if (value.trim().length >= 2) { // Seuil à 2 caractères pour éviter les changements trop fréquents
+    if (value.trim().length >= 2) {
       const bestTab = detectBestTab(value);
-      console.log(`🎯 Meilleur onglet détecté pour "${value}": ${bestTab} (actuel: ${activeTab})`);
       
       if (bestTab !== activeTab) {
-        console.log(`🔄 Changement d'onglet: ${activeTab} → ${bestTab}`);
         setActiveTab(bestTab);
       }
       setShowFilteredResults(true);
@@ -302,7 +284,6 @@ export default function EnhancedChampionsPage() {
     if (trimmedValue && !filters.selectedTags.includes(trimmedValue)) {
       // Détecter le meilleur onglet avant d'ajouter le tag
       const bestTab = detectBestTab(trimmedValue);
-      console.log(`🏷️ Ajout du tag "${trimmedValue}" - Meilleur onglet: ${bestTab}`);
       setActiveTab(bestTab);
       
       setFilters((prev) => ({
@@ -328,8 +309,6 @@ export default function EnhancedChampionsPage() {
 
   // NOUVEAU : Fonction pour ajouter à la sélection et reset l'affichage
   const addToSelection = (name: string, type: 'champion' | 'item' | 'synergy' | 'optimization', id?: string) => {
-    console.log(`➕ Ajout à la sélection: ${name} (${type})`);
-    
     switch (type) {
       case 'champion':
         if (!selectedChampions.includes(name)) {
@@ -518,7 +497,7 @@ export default function EnhancedChampionsPage() {
     ).length;
   };
 
-  // AMÉLIORÉ : Fonction de recherche universelle
+  // FONCTION CORRIGÉE : Recherche universelle dans le texte
   const searchInText = (text: string, searchTerms: string[]): boolean => {
     if (searchTerms.length === 0) return true;
     
@@ -528,7 +507,7 @@ export default function EnhancedChampionsPage() {
     );
   };
 
-  // AMÉLIORÉ : Filtrage selon l'onglet actif avec recherche universelle
+  // FONCTION CORRIGÉE : Filtrage selon l'onglet actif avec recherche universelle
   const getFilteredData = () => {
     // Si on n'affiche pas les résultats filtrés, retourner toutes les données
     if (!showFilteredResults && inputValue.trim() === '' && filters.selectedTags.length === 0) {
@@ -549,7 +528,6 @@ export default function EnhancedChampionsPage() {
     switch (activeTab) {
       case 'champions':
         return champions.filter((champion) => {
-          // Recherche dans le nom, traits, et skill
           const matchesSearch = searchTerms.length === 0 || 
             searchInText(champion.name, searchTerms) ||
             (champion.traits && champion.traits.some(trait => 
@@ -571,7 +549,6 @@ export default function EnhancedChampionsPage() {
 
       case 'items':
         return items.filter((item) => {
-          // Recherche dans le nom, descriptions, tags, et trait affecté
           const matchesSearch = searchTerms.length === 0 ||
             searchInText(item.name, searchTerms) ||
             searchInText(item.shortDesc || '', searchTerms) ||
@@ -586,7 +563,6 @@ export default function EnhancedChampionsPage() {
 
       case 'synergies':
         return commonSynergies.filter((synergy) => {
-          // Recherche dans le nom et l'icône
           const matchesSearch = searchTerms.length === 0 ||
             searchInText(synergy.name, searchTerms) ||
             searchInText(synergy.icon, searchTerms);
@@ -596,7 +572,6 @@ export default function EnhancedChampionsPage() {
 
       case 'optimizations':
         return optimizations.filter((optimization) => {
-          // Recherche dans tous les champs de l'optimisation
           const matchesSearch = searchTerms.length === 0 ||
             searchInText(optimization.name, searchTerms) ||
             searchInText(optimization.description, searchTerms) ||
