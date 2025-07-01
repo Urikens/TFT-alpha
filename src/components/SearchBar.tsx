@@ -43,7 +43,7 @@ export default function SearchBar({
           ))}
           <input
             type="text"
-            placeholder={selectedTags.length === 0 ? "Rechercher des champions..." : "Ajouter un champion..."}
+            placeholder={selectedTags.length === 0 ? "Rechercher des champions, items, synergies..." : "Ajouter un élément..."}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={onKeyDown}

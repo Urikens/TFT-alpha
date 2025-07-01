@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowUpDown, Grid3X3, List, X, RotateCcw } from 'lucide-react';
+import { Search, ArrowUpDown, Grid3X3, List, X, RotateCcw, Crown, Package, Sparkles, Target } from 'lucide-react';
 import { Champion, Item, FilterState } from '../types';
 import { commonSynergies } from '../data/synergies';
 import SearchBar from '../components/SearchBar';
@@ -202,8 +202,48 @@ export default function EnhancedChampionsPage() {
     }
     fetchData();
   }, []);
+
+  // NOUVEAU : Fonction pour détecter automatiquement le bon onglet
+  const detectBestTab = (searchTerm: string): 'champions' | 'items' | 'synergies' | 'optimizations' => {
+    const term = searchTerm.toLowerCase().trim();
+    
+    // Recherche dans les champions
+    const championMatches = champions.filter(champion => 
+      champion.name.toLowerCase().includes(term) ||
+      (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(term)))
+    ).length;
+
+    // Recherche dans les items
+    const itemMatches = items.filter(item =>
+      item.name.toLowerCase().includes(term) ||
+      (item.shortDesc && item.shortDesc.toLowerCase().includes(term)) ||
+      (item.desc && item.desc.toLowerCase().includes(term))
+    ).length;
+
+    // Recherche dans les synergies
+    const synergyMatches = commonSynergies.filter(synergy =>
+      synergy.name.toLowerCase().includes(term)
+    ).length;
+
+    // Recherche dans les optimisations
+    const optimizationMatches = optimizations.filter(optimization =>
+      optimization.name.toLowerCase().includes(term) ||
+      optimization.description.toLowerCase().includes(term) ||
+      optimization.type.toLowerCase().includes(term)
+    ).length;
+
+    // Retourne l'onglet avec le plus de résultats
+    const maxMatches = Math.max(championMatches, itemMatches, synergyMatches, optimizationMatches);
+    
+    if (maxMatches === 0) return activeTab; // Garde l'onglet actuel si aucun résultat
+    
+    if (championMatches === maxMatches) return 'champions';
+    if (itemMatches === maxMatches) return 'items';
+    if (synergyMatches === maxMatches) return 'synergies';
+    return 'optimizations';
+  };
   
-  // Gestion de la recherche
+  // Gestion de la recherche avec changement automatique d'onglet
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
@@ -217,9 +257,29 @@ export default function EnhancedChampionsPage() {
     }
   };
 
+  // NOUVEAU : Gestion de la saisie avec changement automatique d'onglet
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+    
+    // Si on tape quelque chose, détecter le meilleur onglet et changer automatiquement
+    if (value.trim().length > 0) {
+      const bestTab = detectBestTab(value);
+      if (bestTab !== activeTab) {
+        setActiveTab(bestTab);
+      }
+      setShowFilteredResults(true);
+    } else {
+      setShowFilteredResults(false);
+    }
+  };
+
   const addTag = () => {
     const trimmedValue = inputValue.trim();
     if (trimmedValue && !filters.selectedTags.includes(trimmedValue)) {
+      // Détecter le meilleur onglet avant d'ajouter le tag
+      const bestTab = detectBestTab(trimmedValue);
+      setActiveTab(bestTab);
+      
       setFilters((prev) => ({
         ...prev,
         selectedTags: [...prev.selectedTags, trimmedValue],
@@ -585,14 +645,42 @@ export default function EnhancedChampionsPage() {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          {/* Affichage des sélections */}
+          {/* Affichage compact des sélections */}
           {totalSelections > 0 && (
-            <div className="flex items-center space-x-2 bg-slate-800/60 rounded-lg border border-slate-600/50 px-4 py-2">
-              <span className="text-sm text-slate-300">Sélectionnés:</span>
-              <span className="text-sm font-bold text-blue-400">{totalSelections}</span>
+            <div className="flex items-center space-x-3 bg-slate-800/60 rounded-lg border border-slate-600/50 px-4 py-2">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-slate-300">Sélections:</span>
+                <div className="flex items-center space-x-1">
+                  {selectedChampions.length > 0 && (
+                    <div className="flex items-center space-x-1 bg-blue-600/20 px-2 py-1 rounded text-xs">
+                      <Crown className="w-3 h-3 text-blue-400" />
+                      <span className="text-blue-300 font-medium">{selectedChampions.length}</span>
+                    </div>
+                  )}
+                  {selectedItems.length > 0 && (
+                    <div className="flex items-center space-x-1 bg-green-600/20 px-2 py-1 rounded text-xs">
+                      <Package className="w-3 h-3 text-green-400" />
+                      <span className="text-green-300 font-medium">{selectedItems.length}</span>
+                    </div>
+                  )}
+                  {selectedSynergies.length > 0 && (
+                    <div className="flex items-center space-x-1 bg-purple-600/20 px-2 py-1 rounded text-xs">
+                      <Sparkles className="w-3 h-3 text-purple-400" />
+                      <span className="text-purple-300 font-medium">{selectedSynergies.length}</span>
+                    </div>
+                  )}
+                  {selectedOptimizations.length > 0 && (
+                    <div className="flex items-center space-x-1 bg-orange-600/20 px-2 py-1 rounded text-xs">
+                      <Target className="w-3 h-3 text-orange-400" />
+                      <span className="text-orange-300 font-medium">{selectedOptimizations.length}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
               <button
                 onClick={resetAllSelections}
                 className="p-1 text-slate-400 hover:text-red-400 transition-colors rounded"
+                title="Effacer toutes les sélections"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
@@ -628,102 +716,78 @@ export default function EnhancedChampionsPage() {
         </div>
       </div>
 
-      {/* Affichage des sélections actuelles */}
+      {/* Panneau détaillé des sélections (affiché seulement si sélections) */}
       {totalSelections > 0 && (
-        <div className="mb-6 bg-slate-800/30 backdrop-blur rounded-xl border border-slate-700/30 p-4">
+        <div className="mb-6 bg-slate-800/20 backdrop-blur rounded-xl border border-slate-700/30 p-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-white font-semibold">Éléments sélectionnés ({totalSelections})</h3>
+            <h3 className="text-white font-medium text-sm">Éléments sélectionnés</h3>
             <button
               onClick={resetAllSelections}
-              className="text-slate-400 hover:text-red-400 transition-colors text-sm flex items-center space-x-1"
+              className="text-slate-400 hover:text-red-400 transition-colors text-xs flex items-center space-x-1"
             >
-              <RotateCcw className="w-4 h-4" />
-              <span>Tout effacer</span>
+              <RotateCcw className="w-3 h-3" />
+              <span>Effacer tout</span>
             </button>
           </div>
           
-          <div className="space-y-3">
-            {selectedChampions.length > 0 && (
-              <div>
-                <div className="text-xs text-slate-400 mb-2">Champions ({selectedChampions.length})</div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedChampions.map((name) => (
-                    <div key={name} className="flex items-center space-x-2 bg-blue-600/20 text-blue-300 px-3 py-1 rounded-lg text-sm border border-blue-500/30">
-                      <span>{name}</span>
-                      <button
-                        onClick={() => removeFromSelection(name, 'champion')}
-                        className="hover:text-blue-100 transition-colors"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
+          <div className="flex flex-wrap gap-2">
+            {selectedChampions.map((name) => (
+              <div key={name} className="flex items-center space-x-2 bg-blue-600/10 text-blue-300 px-2 py-1 rounded text-xs border border-blue-500/20">
+                <Crown className="w-3 h-3" />
+                <span>{name}</span>
+                <button
+                  onClick={() => removeFromSelection(name, 'champion')}
+                  className="hover:text-blue-100 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
               </div>
-            )}
+            ))}
 
-            {selectedItems.length > 0 && (
-              <div>
-                <div className="text-xs text-slate-400 mb-2">Items ({selectedItems.length})</div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedItems.map((id) => {
-                    const item = items.find(i => i.key === id);
-                    return item ? (
-                      <div key={id} className="flex items-center space-x-2 bg-green-600/20 text-green-300 px-3 py-1 rounded-lg text-sm border border-green-500/30">
-                        <span>{item.name}</span>
-                        <button
-                          onClick={() => removeFromSelection(id, 'item')}
-                          className="hover:text-green-100 transition-colors"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ) : null;
-                  })}
+            {selectedItems.map((id) => {
+              const item = items.find(i => i.key === id);
+              return item ? (
+                <div key={id} className="flex items-center space-x-2 bg-green-600/10 text-green-300 px-2 py-1 rounded text-xs border border-green-500/20">
+                  <Package className="w-3 h-3" />
+                  <span>{item.name}</span>
+                  <button
+                    onClick={() => removeFromSelection(id, 'item')}
+                    className="hover:text-green-100 transition-colors"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
                 </div>
-              </div>
-            )}
+              ) : null;
+            })}
 
-            {selectedSynergies.length > 0 && (
-              <div>
-                <div className="text-xs text-slate-400 mb-2">Synergies ({selectedSynergies.length})</div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedSynergies.map((name) => (
-                    <div key={name} className="flex items-center space-x-2 bg-purple-600/20 text-purple-300 px-3 py-1 rounded-lg text-sm border border-purple-500/30">
-                      <span>{name}</span>
-                      <button
-                        onClick={() => removeFromSelection(name, 'synergy')}
-                        className="hover:text-purple-100 transition-colors"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
+            {selectedSynergies.map((name) => (
+              <div key={name} className="flex items-center space-x-2 bg-purple-600/10 text-purple-300 px-2 py-1 rounded text-xs border border-purple-500/20">
+                <Sparkles className="w-3 h-3" />
+                <span>{name}</span>
+                <button
+                  onClick={() => removeFromSelection(name, 'synergy')}
+                  className="hover:text-purple-100 transition-colors"
+                >
+                  <X className="w-3 h-3" />
+                </button>
               </div>
-            )}
+            ))}
 
-            {selectedOptimizations.length > 0 && (
-              <div>
-                <div className="text-xs text-slate-400 mb-2">Optimisations ({selectedOptimizations.length})</div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedOptimizations.map((id) => {
-                    const optimization = optimizations.find(o => o.id === id);
-                    return optimization ? (
-                      <div key={id} className="flex items-center space-x-2 bg-orange-600/20 text-orange-300 px-3 py-1 rounded-lg text-sm border border-orange-500/30">
-                        <span>{optimization.name}</span>
-                        <button
-                          onClick={() => removeFromSelection(id, 'optimization')}
-                          className="hover:text-orange-100 transition-colors"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ) : null;
-                  })}
+            {selectedOptimizations.map((id) => {
+              const optimization = optimizations.find(o => o.id === id);
+              return optimization ? (
+                <div key={id} className="flex items-center space-x-2 bg-orange-600/10 text-orange-300 px-2 py-1 rounded text-xs border border-orange-500/20">
+                  <Target className="w-3 h-3" />
+                  <span>{optimization.name}</span>
+                  <button
+                    onClick={() => removeFromSelection(id, 'optimization')}
+                    className="hover:text-orange-100 transition-colors"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
                 </div>
-              </div>
-            )}
+              ) : null;
+            })}
           </div>
         </div>
       )}
@@ -740,7 +804,7 @@ export default function EnhancedChampionsPage() {
         <div className="flex-1">
           <SearchBar
             inputValue={inputValue}
-            setInputValue={setInputValue}
+            setInputValue={handleInputChange} // MODIFIÉ : utilise la nouvelle fonction
             selectedTags={filters.selectedTags}
             onAddTag={addTag}
             onRemoveTag={removeTag}
