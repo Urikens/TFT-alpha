@@ -32,12 +32,13 @@ export default function ItemCard({
     if (item.isEmblem) return { text: 'EMBLÈME', icon: Sparkles };
     if (item.isUnique) return { text: 'UNIQUE', icon: Star };
     if (item.itemType === 'ornn') return { text: 'ORNN', icon: Star };
-    return { text: `TIER ${item.tier}`, icon: Star };
+    return { text: `TIER ${item.tier || 0}`, icon: Star };
   };
 
   const getPlacementColor = () => {
-    if (item.avgPlacement <= 3.5) return 'text-green-400';
-    if (item.avgPlacement <= 4.2) return 'text-yellow-400';
+    const avgPlacement = item.avgPlacement || 5;
+    if (avgPlacement <= 3.5) return 'text-green-400';
+    if (avgPlacement <= 4.2) return 'text-yellow-400';
     return 'text-red-400';
   };
 
@@ -61,7 +62,7 @@ export default function ItemCard({
 
         {/* Badge stats */}
         <div className="absolute top-2 right-2 z-20 px-2 py-0.5 rounded-full bg-slate-800/80 border border-slate-600 text-[10px] font-bold text-white shadow-sm">
-          {item.avgPlacement.toFixed(1)}
+          {(item.avgPlacement || 5).toFixed(1)}
         </div>
 
         {/* Image floutée en fond au hover */}
@@ -95,11 +96,11 @@ export default function ItemCard({
             <div className="flex justify-center space-x-2 text-xs">
               <div className="flex items-center space-x-1">
                 <TrendingUp className="w-3 h-3 text-blue-400" />
-                <span className="text-slate-300">{(item.pickRate * 100).toFixed(1)}%</span>
+                <span className="text-slate-300">{((item.pickRate || 0) * 100).toFixed(1)}%</span>
               </div>
               <div className="flex items-center space-x-1">
                 <BarChart3 className="w-3 h-3 text-green-400" />
-                <span className={`${getPlacementColor()}`}>{item.avgPlacement.toFixed(2)}</span>
+                <span className={`${getPlacementColor()}`}>{(item.avgPlacement || 5).toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -153,7 +154,7 @@ export default function ItemCard({
           </div>
           <div className="flex items-center space-x-2">
             <Package className="w-4 h-4 text-slate-400" />
-            <span className="text-slate-400 text-sm capitalize">{item.itemType}</span>
+            <span className="text-slate-400 text-sm capitalize">{item.itemType || 'item'}</span>
             {item.craftable && (
               <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">Craftable</span>
             )}
@@ -177,13 +178,13 @@ export default function ItemCard({
         {/* Pick Rate */}
         <div className="text-center">
           <div className="text-sm font-medium text-white drop-shadow-sm">
-            {(item.pickRate * 100).toFixed(1)}%
+            {((item.pickRate || 0) * 100).toFixed(1)}%
           </div>
           <div className="text-xs text-slate-400">Pick Rate</div>
           <div className="w-full bg-slate-700/50 rounded-full h-1.5 mt-1">
             <div
               className="h-1.5 rounded-full bg-blue-500 transition-all"
-              style={{ width: `${Math.min((item.pickRate * 100) * 3, 100)}%` }}
+              style={{ width: `${Math.min(((item.pickRate || 0) * 100) * 3, 100)}%` }}
             ></div>
           </div>
         </div>
@@ -191,18 +192,18 @@ export default function ItemCard({
         {/* Placement moyen */}
         <div className="text-center">
           <div className={`text-sm font-medium ${getPlacementColor()} drop-shadow-sm`}>
-            {item.avgPlacement.toFixed(2)}
+            {(item.avgPlacement || 5).toFixed(2)}
           </div>
           <div className="text-xs text-slate-400">Avg Placement</div>
           <div className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium mt-1 ${
-            item.avgPlacement <= 3.5
+            (item.avgPlacement || 5) <= 3.5
               ? 'bg-green-500/20 text-green-400'
-              : item.avgPlacement <= 4.2
+              : (item.avgPlacement || 5) <= 4.2
               ? 'bg-yellow-500/20 text-yellow-400'
               : 'bg-red-500/20 text-red-400'
           }`}>
-            {item.avgPlacement <= 3.5 ? '↗' : 
-             item.avgPlacement <= 4.2 ? '→' : '↘'}
+            {(item.avgPlacement || 5) <= 3.5 ? '↗' : 
+             (item.avgPlacement || 5) <= 4.2 ? '→' : '↘'}
           </div>
         </div>
       </div>

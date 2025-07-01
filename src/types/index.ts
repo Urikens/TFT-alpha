@@ -39,6 +39,15 @@ export interface Item {
   isEmblem?: boolean;
   isNew?: boolean;
   tags?: string[];
+  // Statistical properties flattened from stats object
+  tier?: number;
+  score?: number;
+  pickRate?: number;
+  avgPlacement?: number;
+  top4Percent?: number;
+  top1Percent?: number;
+  itemType?: string;
+  craftable?: boolean;
 }
 
 export interface ItemStats {
