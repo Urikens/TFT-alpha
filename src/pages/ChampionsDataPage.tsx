@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowUpDown, Grid3X3, List, Heart, Flame, Filter, ChevronDown, ChevronUp, Download, RefreshCw, SlidersHorizontal, Eye, EyeOff, Star } from 'lucide-react';
+import { Search, ArrowUpDown, Grid3X3, List, Filter, ChevronDown, ChevronUp, Star, Crown, Download, SlidersHorizontal, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { Champion, Item } from '../types';
-import { commonSynergies } from '../data/synergies';
 import SearchBar from '../components/SearchBar';
 import FilterHub from '../components/FilterHub';
-import { generatedItemsStats } from '../data/items_stats_generated';
+import { tftDataConnector } from '../data/data_connector';
 
 export default function ChampionsDataPage() {
   const [inputValue, setInputValue] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [champions, setChampions] = useState<Champion[]>([]);
   const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [selectedChampions, setSelectedChampions] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<'grid' | 'compact' | 'table'>('table');
-  const [sortBy, setSortBy] = useState<'cost' | 'name' | 'winrate' | 'avgPlacement'>('winrate');
+  const [sortBy, setSortBy] = useState<'name' | 'cost' | 'winRate' | 'avgPlacement'>('winRate');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const [activeTab, setActiveTab] = useState<number | 'all'>('all');
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedSynergies, setSelectedSynergies] = useState<string[]>([]);
-  const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
-  const [showOnlyMeta, setShowOnlyMeta] = useState(false);
+  const [filterCost, setFilterCost] = useState<number | 'all'>('all');
+  const [filterTrait, setFilterTrait] = useState<string>('all');
   const [patchInfo, setPatchInfo] = useState({ version: '', set: '', lastUpdate: '' });
-  const [recommendedItemsMap, setRecommendedItemsMap] = useState<Record<string, Item[]>>({});
+  const [hoveredRow, setHoveredRow] = useState<string | null>(null);
   const [visibleColumns, setVisibleColumns] = useState({
     name: true,
     cost: true,
@@ -31,10 +28,9 @@ export default function ChampionsDataPage() {
     pickRate: true,
     tier: true,
     asCarry: true,
-    asCore: true,
-    items: true
+    asCore: true
   });
-  const [hoveredRow, setHoveredRow] = useState<string | null>(null);
+  const [availableTraits, setAvailableTraits] = useState<string[]>([]);
 
   // Chargement des données
   useEffect(() => {
@@ -42,10 +38,16 @@ export default function ChampionsDataPage() {
       try {
         setLoading(true);
         
-        // Charger les champions enrichis
-        const championsRes = await fetch('/data/tft/champions/tft_champions_enriched_1751380398183.json');
-        if (!championsRes.ok) throw new Error('Erreur lors du chargement des champions');
-        const championsData = await championsRes.json();
+        // Utiliser le connecteur de données
+        const championsData = tftDataConnector.getAllChampions();
+        
+        // Extraire tous les traits uniques
+        const allTraits = new Set<string>();
+        championsData.forEach(champion => {
+          if (champion.traits) {
+            champion.traits.forEach(trait => allTraits.add(trait));
+          }
+        });
         
         // Charger les infos de patch
         const patchRes = await fetch('/data/tft/update.json');
@@ -58,31 +60,8 @@ export default function ChampionsDataPage() {
           });
         }
         
-        // Transformer l'objet en tableau
-        const championsArray = Object.values(championsData).map((champion: any) => ({
-          key: champion.champName.replace(/\s+/g, ''),
-          name: champion.champName,
-          cost: [1], // Valeur par défaut, à remplacer par les vraies données si disponibles
-          imageUrl: champion.localImageUrl || `/images/champions/${champion.champName.replace(/\s+/g, '')}.webp`,
-          traits: getChampionTraits(champion.champName), // Assigne des traits basés sur le nom
-          isMeta: champion.meta,
-          winRate: champion.rawWinrate,
-          avgPlacement: champion.avgPlacement,
-          gamesPlayed: champion.gamesPlayed,
-          pickRate: champion.pickRate,
-          tier: champion.tier,
-          asCarry: champion.asCarry,
-          asCore: champion.asCore
-        }));
-        
-        // Générer des items recommandés pour chaque champion
-        const itemsMap: Record<string, Item[]> = {};
-        championsArray.forEach(champion => {
-          itemsMap[champion.name] = getRecommendedItemsForChampion(champion);
-        });
-        
-        setRecommendedItemsMap(itemsMap);
-        setChampions(championsArray);
+        setChampions(championsData);
+        setAvailableTraits(Array.from(allTraits).sort());
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
       } finally {
@@ -92,124 +71,6 @@ export default function ChampionsDataPage() {
     
     loadData();
   }, []);
-
-  // Fonction pour attribuer des traits aux champions basés sur leur nom
-  const getChampionTraits = (championName: string): string[] => {
-    // Mapping de champions à leurs traits (basé sur les données réelles du jeu)
-    const traitsMapping: Record<string, string[]> = {
-      'Alistar': ['Armorclad', 'Vanguard'],
-      'Annie': ['Divinicorp', 'Controller'],
-      'Aphelios': ['Divinicorp', 'Marksman'],
-      'Aurora': ['Anima Squad', 'Marksman'],
-      'Brand': ['Divinicorp', 'Controller'],
-      'Braum': ['Ballistek', 'Vanguard'],
-      'Chogath': ['Mob', 'Bruiser'],
-      'Darius': ['Street Demon', 'Bruiser'],
-      'Dr. Mundo': ['Street Demon', 'Bruiser'],
-      'Draven': ['Street Demon', 'Marksman'],
-      'Ekko': ['Anima Squad', 'Swift'],
-      'Elise': ['Mob', 'Controller'],
-      'Fiddlesticks': ['Mob', 'Controller'],
-      'Galio': ['Divinicorp', 'Vanguard'],
-      'Gragas': ['Ballistek', 'Bruiser'],
-      'Graves': ['Ballistek', 'Marksman'],
-      'Illaoi': ['Divinicorp', 'Bruiser'],
-      'Jarvan IV': ['Divinicorp', 'Vanguard'],
-      'Jax': ['Anima Squad', 'Bruiser'],
-      'Jhin': ['Anima Squad', 'Marksman'],
-      'Jinx': ['Anima Squad', 'Marksman'],
-      'Kindred': ['Mob', 'Marksman'],
-      'Kobuko': ['Street Demon', 'Swift'],
-      'Kog\'Maw': ['Ballistek', 'Marksman'],
-      'LeBlanc': ['Anima Squad', 'Controller'],
-      'Leona': ['Anima Squad', 'Vanguard'],
-      'Miss Fortune': ['Ballistek', 'Marksman'],
-      'Mordekaiser': ['Street Demon', 'Vanguard'],
-      'Morgana': ['Divinicorp', 'Controller'],
-      'Naafiri': ['Street Demon', 'Swift'],
-      'Neeko': ['Anima Squad', 'Controller'],
-      'NidaleeCougar': ['Anima Squad', 'Swift'],
-      'Poppy': ['Ballistek', 'Vanguard'],
-      'Renekton': ['Street Demon', 'Bruiser'],
-      'Rengar': ['Mob', 'Swift'],
-      'Rhaast': ['Mob', 'Bruiser'],
-      'Samira': ['Street Demon', 'Marksman'],
-      'Sejuani': ['Ballistek', 'Vanguard'],
-      'Senna': ['Divinicorp', 'Marksman'],
-      'Seraphine': ['Divinicorp', 'Controller'],
-      'Shaco': ['Mob', 'Swift'],
-      'Shyvana': ['Street Demon', 'Bruiser'],
-      'Skarner': ['Ballistek', 'Bruiser'],
-      'Sylas': ['Anima Squad', 'Bruiser'],
-      'Twisted Fate': ['Ballistek', 'Controller'],
-      'Urgot': ['Ballistek', 'Bruiser'],
-      'Varus': ['Divinicorp', 'Marksman'],
-      'Vayne': ['Anima Squad', 'Marksman'],
-      'Veigar': ['Mob', 'Controller'],
-      'Vex': ['Mob', 'Controller'],
-      'Vi': ['Anima Squad', 'Bruiser'],
-      'Viego': ['Mob', 'Swift'],
-      'Xayah': ['Anima Squad', 'Marksman'],
-      'Yuumi': ['Divinicorp', 'Controller'],
-      'Zac': ['Street Demon', 'Vanguard'],
-      'Zed': ['Anima Squad', 'Swift'],
-      'Zeri': ['Ballistek', 'Marksman'],
-      'Ziggs': ['Ballistek', 'Controller'],
-      'Zyra': ['Divinicorp', 'Controller']
-    };
-    
-    return traitsMapping[championName] || [];
-  };
-
-  // Fonction pour générer des items recommandés pour chaque champion
-  const getRecommendedItemsForChampion = (champion: Champion): Item[] => {
-    // Mapping de classes à des items recommandés
-    const itemsByClass: Record<string, string[]> = {
-      'Marksman': ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade', 'RunaansHurricane', 'RapidFireCannon'],
-      'Controller': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
-      'Bruiser': ['WarmogsArmor', 'TitansResolve', 'SteraksGage', 'RedBuff', 'Bloodthirster'],
-      'Vanguard': ['BrambleVest', 'DragonsClaw', 'GargoyleStoneplate', 'WarmogsArmor', 'Redemption'],
-      'Swift': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper']
-    };
-    
-    // Sélectionne des items basés sur les traits du champion
-    let recommendedItemKeys: string[] = [];
-    
-    if (champion.traits) {
-      // Priorise la classe principale pour les items
-      const classTraits = champion.traits.filter(trait => 
-        ['Marksman', 'Controller', 'Bruiser', 'Vanguard', 'Swift'].includes(trait)
-      );
-      
-      if (classTraits.length > 0) {
-        const mainClass = classTraits[0];
-        recommendedItemKeys = itemsByClass[mainClass] || [];
-      }
-      
-      // Si c'est un carry, priorise les items offensifs
-      if (champion.asCarry > 0) {
-        if (champion.traits.includes('Marksman')) {
-          recommendedItemKeys = ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade'];
-        } else if (champion.traits.includes('Controller')) {
-          recommendedItemKeys = ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet'];
-        } else {
-          recommendedItemKeys = ['Bloodthirster', 'InfinityEdge', 'GuinsoosRageblade'];
-        }
-      }
-    }
-    
-    // Trouve les objets correspondants dans generatedItemsStats
-    const items = recommendedItemKeys
-      .map(key => generatedItemsStats.find(item => item.key.includes(key)))
-      .filter(Boolean) as Item[];
-    
-    // Si aucun item n'est trouvé, retourne des items par défaut
-    if (items.length === 0) {
-      return generatedItemsStats.slice(0, 3);
-    }
-    
-    return items.slice(0, 3);
-  };
 
   // Gestion de la recherche
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
@@ -250,29 +111,21 @@ export default function ChampionsDataPage() {
       selectedTags.length === 0 ||
       selectedTags.some((tag) =>
         champion.name.toLowerCase().includes(tag.toLowerCase()) ||
-        (champion.tier === tag) ||
-        (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(tag.toLowerCase())))
+        (champion.traits && champion.traits.some(t => t.toLowerCase().includes(tag.toLowerCase())))
       );
     const matchesInput =
       inputValue === '' ||
       champion.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-      (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(inputValue.toLowerCase())));
+      (champion.traits && champion.traits.some(t => t.toLowerCase().includes(inputValue.toLowerCase())));
     const matchesCost =
-      activeTab === 'all' || champion.cost[0] === activeTab;
-    const matchesFavorites =
-      !showOnlyFavorites || favorites.includes(champion.name);
-    const matchesMeta = !showOnlyMeta || champion.isMeta;
-    const matchesSynergies =
-      selectedSynergies.length === 0 ||
-      (champion.traits &&
-        selectedSynergies.some((s) => champion.traits?.includes(s)));
+      filterCost === 'all' || champion.cost[0] === filterCost;
+    const matchesTrait =
+      filterTrait === 'all' || (champion.traits && champion.traits.includes(filterTrait));
 
     return (
       (matchesTags || matchesInput) &&
       matchesCost &&
-      matchesFavorites &&
-      matchesMeta &&
-      matchesSynergies
+      matchesTrait
     );
   });
 
@@ -287,11 +140,11 @@ export default function ChampionsDataPage() {
       case 'cost':
         comparison = a.cost[0] - b.cost[0];
         break;
-      case 'winrate':
+      case 'winRate':
         comparison = (b.winRate || 0) - (a.winRate || 0);
         break;
       case 'avgPlacement':
-        comparison = (a.avgPlacement || 0) - (b.avgPlacement || 0);
+        comparison = (a.avgPlacement || 5) - (b.avgPlacement || 5);
         break;
       default:
         comparison = 0;
@@ -300,15 +153,9 @@ export default function ChampionsDataPage() {
     return sortDirection === 'asc' ? comparison : -comparison;
   });
 
-  // Compter les champions par coût
-  const championCounts = champions.reduce((acc, champion) => {
-    acc[champion.cost[0]] = (acc[champion.cost[0]] || 0) + 1;
-    return acc;
-  }, {} as Record<number, number>);
-
-  // Toggle favorite
-  const toggleFavorite = (championName: string) => {
-    setFavorites((prev) =>
+  // Toggle champion selection
+  const toggleChampionSelection = (championName: string) => {
+    setSelectedChampions((prev) =>
       prev.includes(championName)
         ? prev.filter((name) => name !== championName)
         : [...prev, championName]
@@ -316,26 +163,48 @@ export default function ChampionsDataPage() {
   };
 
   // Gestion des filtres
-  const toggleSynergy = (synergy: string) => {
-    setSelectedSynergies((prev) =>
-      prev.includes(synergy)
-        ? prev.filter((s) => s !== synergy)
-        : [...prev, synergy]
-    );
-  };
-
   const clearAllFilters = () => {
-    setActiveTab('all');
-    setSelectedSynergies([]);
-    setShowOnlyFavorites(false);
-    setShowOnlyMeta(false);
+    setFilterCost('all');
+    setFilterTrait('all');
     setSelectedTags([]);
     setInputValue('');
   };
 
-  // Statistiques pour le hub
-  const favoritesCount = favorites.length;
-  const metaCount = champions.filter((c) => c.isMeta).length;
+  // Gestion du tri des colonnes
+  const handleColumnSort = (column: 'name' | 'cost' | 'winRate' | 'avgPlacement') => {
+    if (sortBy === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(column);
+      setSortDirection('asc');
+    }
+  };
+
+  // Toggle visibilité des colonnes
+  const toggleColumnVisibility = (column: keyof typeof visibleColumns) => {
+    setVisibleColumns(prev => ({
+      ...prev,
+      [column]: !prev[column]
+    }));
+  };
+
+  // Obtenir l'icône de tri pour une colonne
+  const getSortIcon = (column: string) => {
+    if (sortBy !== column) return <ChevronDown className="w-4 h-4 opacity-50" />;
+    return sortDirection === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />;
+  };
+
+  // Fonction pour obtenir la couleur du coût
+  const getCostColor = (cost: number) => {
+    switch (cost) {
+      case 1: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+      case 2: return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 3: return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 4: return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
+      case 5: return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+    }
+  };
 
   // Fonction pour obtenir la couleur du tier
   const getTierColor = (tier: string) => {
@@ -355,42 +224,6 @@ export default function ChampionsDataPage() {
     return 'text-red-400';
   };
 
-  // Fonction pour obtenir la couleur du coût
-  const getCostColor = (cost: number) => {
-    const colors = {
-      1: 'bg-gray-500 text-white',
-      2: 'bg-green-500 text-white',
-      3: 'bg-blue-500 text-white',
-      4: 'bg-purple-500 text-white',
-      5: 'bg-yellow-500 text-white',
-    };
-    return colors[cost as keyof typeof colors] || 'bg-gray-500 text-white';
-  };
-
-  // Gestion du tri des colonnes
-  const handleColumnSort = (column: 'name' | 'cost' | 'winrate' | 'avgPlacement') => {
-    if (sortBy === column) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(column);
-      setSortDirection('desc');
-    }
-  };
-
-  // Toggle visibilité des colonnes
-  const toggleColumnVisibility = (column: keyof typeof visibleColumns) => {
-    setVisibleColumns(prev => ({
-      ...prev,
-      [column]: !prev[column]
-    }));
-  };
-
-  // Obtenir l'icône de tri pour une colonne
-  const getSortIcon = (column: string) => {
-    if (sortBy !== column) return <ChevronDown className="w-4 h-4 opacity-50" />;
-    return sortDirection === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />;
-  };
-
   // Exporter les données en CSV
   const exportToCSV = () => {
     // Définir les en-têtes
@@ -403,22 +236,20 @@ export default function ChampionsDataPage() {
       'Pick Rate',
       'Tier',
       'Carry',
-      'Core',
-      'Meta'
+      'Core'
     ].join(',');
     
     // Convertir les données en lignes CSV
     const rows = sortedChampions.map(champion => [
       champion.name,
       champion.cost[0],
-      champion.traits?.join(' | ') || '',
+      champion.traits ? champion.traits.join('|') : '',
       (champion.winRate || 0).toFixed(1) + '%',
-      (champion.avgPlacement || 0).toFixed(2),
+      (champion.avgPlacement || 5).toFixed(2),
       (champion.pickRate || 0).toFixed(1) + '%',
-      champion.tier || '',
+      champion.tier || 'C',
       champion.asCarry || 0,
-      champion.asCore || 0,
-      champion.isMeta ? 'Oui' : 'Non'
+      champion.asCore || 0
     ].join(','));
     
     // Combiner en-têtes et lignes
@@ -434,6 +265,11 @@ export default function ChampionsDataPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  // Obtenir les items recommandés pour un champion
+  const getRecommendedItems = (championName: string): Item[] => {
+    return tftDataConnector.getRecommendedItems(championName);
   };
 
   return (
@@ -508,33 +344,34 @@ export default function ChampionsDataPage() {
           <div className="flex items-center space-x-6 overflow-x-auto">
             {/* Onglet "Tous" */}
             <button
-              onClick={() => setActiveTab('all')}
+              onClick={() => setFilterCost('all')}
               className={`flex items-center space-x-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
-                activeTab === 'all'
+                filterCost === 'all'
                   ? 'border-blue-500 text-blue-400'
                   : 'border-transparent text-slate-400 hover:text-slate-300'
               }`}
             >
+              <Crown className="w-4 h-4" />
               <span className="font-medium">Tous</span>
               <span className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full">
                 {champions.length}
               </span>
             </button>
 
-            {/* Onglets par tier */}
-            {['S', 'A', 'B', 'C'].map((tier) => {
-              const count = champions.filter(c => c.tier === tier).length;
+            {/* Onglets par coût */}
+            {[1, 2, 3, 4, 5].map((cost) => {
+              const count = champions.filter(c => c.cost[0] === cost).length;
               return (
                 <button
-                  key={tier}
-                  onClick={() => setSelectedTags([tier])}
+                  key={cost}
+                  onClick={() => setFilterCost(cost)}
                   className={`flex items-center space-x-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
-                    selectedTags.includes(tier)
+                    filterCost === cost
                       ? 'border-blue-500 text-blue-400'
                       : 'border-transparent text-slate-400 hover:text-slate-300'
                   }`}
                 >
-                  <span className="font-medium">Tier {tier}</span>
+                  <span className="font-medium">{cost} Coût</span>
                   <span className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded-full">
                     {count}
                   </span>
@@ -570,7 +407,7 @@ export default function ChampionsDataPage() {
               </div>
               <div className="space-y-2">
                 {[
-                  { value: 'winrate', label: 'Winrate' },
+                  { value: 'winRate', label: 'Winrate' },
                   { value: 'avgPlacement', label: 'Placement moyen' },
                   { value: 'cost', label: 'Coût' },
                   { value: 'name', label: 'Nom' }
@@ -616,73 +453,79 @@ export default function ChampionsDataPage() {
               </div>
             </div>
 
-            {/* Synergies */}
+            {/* Traits */}
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
-                <ChevronDown className="w-4 h-4 text-purple-400" />
-                <h3 className="text-white font-medium">Synergies populaires</h3>
+                <Sparkles className="w-4 h-4 text-purple-400" />
+                <h3 className="text-white font-medium">Trait</h3>
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                {commonSynergies.slice(0, 6).map((synergy) => (
-                  <button
-                    key={synergy.name}
-                    onClick={() => toggleSynergy(synergy.name)}
-                    className={`p-2 rounded-lg text-xs transition-all flex items-center space-x-1 ${
-                      selectedSynergies.includes(synergy.name)
-                        ? `bg-gradient-to-r ${synergy.color} text-white shadow-lg`
-                        : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50'
-                    }`}
-                  >
-                    {synergy.imageUrl ? (
-                      <img 
-                        src={synergy.imageUrl} 
-                        alt={synergy.name}
-                        className="w-4 h-4 object-cover rounded"
+              <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="filterTrait"
+                    checked={filterTrait === 'all'}
+                    onChange={() => setFilterTrait('all')}
+                    className="sr-only"
+                  />
+                  <div className={`w-4 h-4 rounded-full border-2 ${
+                    filterTrait === 'all' ? 'bg-blue-500 border-blue-500' : 'border-slate-500'
+                  }`} />
+                  <span className="text-slate-300 text-sm">Tous</span>
+                </label>
+                {availableTraits.map(trait => {
+                  const count = tftDataConnector.getChampionCountByTrait(trait);
+                  return (
+                    <label key={trait} className="flex items-center space-x-3 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="filterTrait"
+                        checked={filterTrait === trait}
+                        onChange={() => setFilterTrait(trait)}
+                        className="sr-only"
                       />
-                    ) : (
-                      <span className="text-xs">{synergy.icon}</span>
-                    )}
-                    <span>{synergy.name}</span>
-                  </button>
-                ))}
+                      <div className={`w-4 h-4 rounded-full border-2 ${
+                        filterTrait === trait ? 'bg-blue-500 border-blue-500' : 'border-slate-500'
+                      }`} />
+                      <span className="text-slate-300 text-sm">{trait}</span>
+                      <span className="text-xs bg-slate-700/50 text-slate-400 px-1.5 py-0.5 rounded-full">
+                        {count}
+                      </span>
+                    </label>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Options rapides */}
+            {/* Statistiques et options de colonnes */}
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
-                <Filter className="w-4 h-4 text-green-400" />
-                <h3 className="text-white font-medium">Options</h3>
+                <Star className="w-4 h-4 text-yellow-400" />
+                <h3 className="text-white font-medium">Statistiques</h3>
               </div>
-              <div className="space-y-2">
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={showOnlyFavorites}
-                    onChange={(e) => setShowOnlyFavorites(e.target.checked)}
-                    className="sr-only"
-                  />
-                  <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                    showOnlyFavorites ? 'bg-pink-500 border-pink-500' : 'border-slate-500'
-                  }`}>
-                    {showOnlyFavorites && <Heart className="w-2.5 h-2.5 text-white" />}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-white">{champions.length}</div>
+                  <div className="text-xs text-slate-400">Total Champions</div>
+                </div>
+                <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-green-400">
+                    {champions.filter(c => c.tier === 'S').length}
                   </div>
-                  <span className="text-slate-300 text-sm">Favoris uniquement</span>
-                </label>
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={showOnlyMeta}
-                    onChange={(e) => setShowOnlyMeta(e.target.checked)}
-                    className="sr-only"
-                  />
-                  <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                    showOnlyMeta ? 'bg-orange-500 border-orange-500' : 'border-slate-500'
-                  }`}>
-                    {showOnlyMeta && <Flame className="w-2.5 h-2.5 text-white" />}
+                  <div className="text-xs text-slate-400">Tier S</div>
+                </div>
+                <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-purple-400">
+                    {champions.filter(c => c.asCarry > 0).length}
                   </div>
-                  <span className="text-slate-300 text-sm">Meta uniquement</span>
-                </label>
+                  <div className="text-xs text-slate-400">Carries</div>
+                </div>
+                <div className="bg-slate-700/30 rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-yellow-400">
+                    {champions.filter(c => c.isMeta).length}
+                  </div>
+                  <div className="text-xs text-slate-400">Meta</div>
+                </div>
               </div>
               
               {viewMode === 'table' && (
@@ -743,7 +586,7 @@ export default function ChampionsDataPage() {
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 font-medium"
               >
-                <option value="winrate">Winrate</option>
+                <option value="winRate">Winrate</option>
                 <option value="avgPlacement">Placement moyen</option>
                 <option value="cost">Coût</option>
                 <option value="name">Nom</option>
@@ -819,10 +662,10 @@ export default function ChampionsDataPage() {
                       </th>
                     )}
                     {visibleColumns.winRate && (
-                      <th scope="col" className="px-4 py-3 cursor-pointer hover:bg-slate-700/30" onClick={() => handleColumnSort('winrate')}>
+                      <th scope="col" className="px-4 py-3 cursor-pointer hover:bg-slate-700/30" onClick={() => handleColumnSort('winRate')}>
                         <div className="flex items-center space-x-1">
                           <span>Winrate</span>
-                          {getSortIcon('winrate')}
+                          {getSortIcon('winRate')}
                         </div>
                       </th>
                     )}
@@ -854,11 +697,9 @@ export default function ChampionsDataPage() {
                         <span>Core</span>
                       </th>
                     )}
-                    {visibleColumns.items && (
-                      <th scope="col" className="px-4 py-3">
-                        <span>Items recommandés</span>
-                      </th>
-                    )}
+                    <th scope="col" className="px-4 py-3">
+                      <span>Items</span>
+                    </th>
                     <th scope="col" className="px-4 py-3">
                       <span>Actions</span>
                     </th>
@@ -869,9 +710,9 @@ export default function ChampionsDataPage() {
                     <tr 
                       key={champion.key} 
                       className={`border-b border-slate-700/30 ${
-                        hoveredRow === champion.name ? 'bg-slate-700/30' : 'hover:bg-slate-700/20'
+                        hoveredRow === champion.key ? 'bg-slate-700/30' : 'hover:bg-slate-700/20'
                       } transition-colors`}
-                      onMouseEnter={() => setHoveredRow(champion.name)}
+                      onMouseEnter={() => setHoveredRow(champion.key)}
                       onMouseLeave={() => setHoveredRow(null)}
                     >
                       {visibleColumns.name && (
@@ -885,10 +726,7 @@ export default function ChampionsDataPage() {
                             <div>
                               <div className="font-medium text-white">{champion.name}</div>
                               {champion.isMeta && (
-                                <div className="text-xs text-orange-400 flex items-center">
-                                  <Flame className="w-3 h-3 mr-1" />
-                                  <span>META</span>
-                                </div>
+                                <div className="text-xs text-orange-400">Meta</div>
                               )}
                             </div>
                           </div>
@@ -896,7 +734,7 @@ export default function ChampionsDataPage() {
                       )}
                       {visibleColumns.cost && (
                         <td className="px-4 py-3">
-                          <span className={`px-2 py-1 rounded-full text-xs font-bold ${getCostColor(champion.cost[0])}`}>
+                          <span className={`px-2 py-1 rounded-md text-xs font-bold border ${getCostColor(champion.cost[0])}`}>
                             {champion.cost[0]}
                           </span>
                         </td>
@@ -905,20 +743,22 @@ export default function ChampionsDataPage() {
                         <td className="px-4 py-3">
                           <div className="flex flex-wrap gap-1">
                             {champion.traits?.map((trait, index) => {
-                              const synergyData = commonSynergies.find(s => s.name === trait);
+                              const synergy = tftDataConnector.getSynergyByName(trait);
                               return (
-                                <div
-                                  key={index}
-                                  className="px-2 py-0.5 rounded-md bg-slate-700/50 border border-slate-600/30 text-xs font-medium text-white flex items-center space-x-1"
+                                <div 
+                                  key={index} 
+                                  className="px-2 py-0.5 rounded-md bg-slate-700/50 text-xs text-slate-300 border border-slate-600/30 flex items-center space-x-1"
                                 >
-                                  {synergyData?.imageUrl ? (
-                                    <img 
-                                      src={synergyData.imageUrl} 
-                                      alt={trait}
-                                      className="w-3 h-3 object-cover rounded"
-                                    />
-                                  ) : (
-                                    <span className="text-[10px]">⚡</span>
+                                  {synergy?.imageUrl && (
+                                    <div className="relative">
+                                      {/* Hexagonal gold background */}
+                                      <div className="absolute inset-0 w-4 h-4 bg-gradient-to-br from-yellow-300 to-amber-600 rounded-md transform rotate-45 -z-10"></div>
+                                      <img 
+                                        src={synergy.imageUrl} 
+                                        alt={trait}
+                                        className="w-4 h-4 object-cover rounded relative z-10"
+                                      />
+                                    </div>
                                   )}
                                   <span>{trait}</span>
                                 </div>
@@ -934,11 +774,11 @@ export default function ChampionsDataPage() {
                             <div className="w-full bg-slate-700/50 rounded-full h-1.5 mt-1">
                               <div
                                 className={`h-1.5 rounded-full transition-all ${
-                                  (champion.winRate || 0) >= 60
-                                    ? 'bg-gradient-to-r from-green-500 to-green-400'
-                                    : (champion.winRate || 0) >= 50
-                                    ? 'bg-gradient-to-r from-yellow-500 to-yellow-400'
-                                    : 'bg-gradient-to-r from-red-500 to-red-400'
+                                  (champion.winRate || 0) >= 70
+                                    ? 'bg-green-500'
+                                    : (champion.winRate || 0) >= 60
+                                    ? 'bg-yellow-500'
+                                    : 'bg-red-500'
                                 }`}
                                 style={{ width: `${Math.min((champion.winRate || 0), 100)}%` }}
                               ></div>
@@ -948,8 +788,8 @@ export default function ChampionsDataPage() {
                       )}
                       {visibleColumns.avgPlacement && (
                         <td className="px-4 py-3">
-                          <span className={`font-medium ${getPlacementColor(champion.avgPlacement || 0)}`}>
-                            {(champion.avgPlacement || 0).toFixed(2)}
+                          <span className={`font-medium ${getPlacementColor(champion.avgPlacement || 5)}`}>
+                            {(champion.avgPlacement || 5).toFixed(2)}
                           </span>
                         </td>
                       )}
@@ -961,7 +801,7 @@ export default function ChampionsDataPage() {
                       {visibleColumns.tier && (
                         <td className="px-4 py-3">
                           <span className={`px-2 py-1 rounded-md text-xs font-bold border ${getTierColor(champion.tier || 'C')}`}>
-                            {champion.tier}
+                            {champion.tier || 'C'}
                           </span>
                         </td>
                       )}
@@ -969,9 +809,9 @@ export default function ChampionsDataPage() {
                         <td className="px-4 py-3">
                           <div className="flex items-center">
                             {champion.asCarry > 0 ? (
-                              <div className="flex items-center space-x-1">
-                                <Star className="w-4 h-4 text-yellow-400" />
-                                <span className="text-yellow-400 font-medium">{champion.asCarry}</span>
+                              <div className="px-2 py-0.5 rounded-md bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 text-xs font-medium flex items-center gap-1">
+                                <Star className="w-3 h-3" />
+                                <span>{champion.asCarry}</span>
                               </div>
                             ) : (
                               <span className="text-slate-500">-</span>
@@ -981,42 +821,45 @@ export default function ChampionsDataPage() {
                       )}
                       {visibleColumns.asCore && (
                         <td className="px-4 py-3">
-                          <span className="text-blue-400 font-medium">{champion.asCore || '-'}</span>
-                        </td>
-                      )}
-                      {visibleColumns.items && (
-                        <td className="px-4 py-3">
-                          <div className="flex space-x-1">
-                            {recommendedItemsMap[champion.name]?.map((item, index) => (
-                              <div key={index} className="relative group/item">
-                                <img
-                                  src={item.imageUrl}
-                                  alt={item.name}
-                                  className="w-8 h-8 rounded border border-slate-600/50 transition-all duration-200 hover:scale-110 hover:border-yellow-400/60"
-                                  title={item.name}
-                                />
-                                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity bg-slate-900/90 px-2 py-1 rounded text-xs text-white whitespace-nowrap z-20">
-                                  {item.name}
-                                </div>
+                          <div className="flex items-center">
+                            {champion.asCore > 0 ? (
+                              <div className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-medium">
+                                {champion.asCore}
                               </div>
-                            ))}
-                            {(!recommendedItemsMap[champion.name] || recommendedItemsMap[champion.name].length === 0) && (
-                              <span className="text-slate-500 text-xs">Aucun item</span>
+                            ) : (
+                              <span className="text-slate-500">-</span>
                             )}
                           </div>
                         </td>
                       )}
                       <td className="px-4 py-3">
+                        <div className="flex space-x-1">
+                          {getRecommendedItems(champion.name).map((item, index) => (
+                            <div key={index} className="relative group/item">
+                              <img
+                                src={item.imageUrl}
+                                alt={item.name}
+                                className="w-8 h-8 rounded border-2 border-slate-600/50 bg-slate-800/50 transition-all duration-200 hover:scale-110 hover:border-yellow-400/60"
+                                title={item.name}
+                              />
+                              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity bg-slate-900/90 px-2 py-1 rounded text-xs text-white whitespace-nowrap z-20">
+                                {item.name}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
                         <div className="flex items-center space-x-2">
                           <button
-                            onClick={() => toggleFavorite(champion.name)}
+                            onClick={() => toggleChampionSelection(champion.name)}
                             className={`p-1.5 rounded transition-colors ${
-                              favorites.includes(champion.name)
-                                ? 'text-pink-500 bg-pink-500/10'
-                                : 'text-slate-400 hover:text-pink-400 hover:bg-pink-500/10'
+                              selectedChampions.includes(champion.name)
+                                ? 'text-blue-500 bg-blue-500/10'
+                                : 'text-slate-400 hover:text-blue-400 hover:bg-blue-500/10'
                             }`}
                           >
-                            <Heart className="w-4 h-4" />
+                            <Star className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => addChampionAsTag(champion.name)}
@@ -1031,292 +874,17 @@ export default function ChampionsDataPage() {
                 </tbody>
               </table>
             </div>
-          ) : viewMode === 'grid' ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4 p-6">
-              {sortedChampions.map((champion) => (
-                <div
-                  key={champion.key}
-                  className="group relative overflow-hidden rounded-xl border border-slate-600/20 backdrop-blur bg-slate-700/40 p-4 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:border-blue-500/50"
-                >
-                  {/* Badge Meta */}
-                  {champion.isMeta && (
-                    <div className="absolute top-2 left-2 z-20 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center space-x-1">
-                      <Flame className="w-3 h-3" />
-                      <span>META</span>
-                    </div>
-                  )}
-
-                  {/* Badge avgPlacement */}
-                  <div className="absolute top-2 right-2 z-20 px-2 py-0.5 rounded-full bg-slate-800/80 border border-slate-600 text-[10px] font-bold text-white shadow-sm">
-                    {champion.avgPlacement?.toFixed(1)}
-                  </div>
-
-                  {/* Image floutée en fond au hover */}
-                  <div
-                    className="absolute inset-0 z-0 bg-cover bg-center opacity-15 blur-sm scale-110 transition-all duration-500 group-hover:opacity-60 group-hover:blur-md"
-                    style={{ backgroundImage: `url(${champion.imageUrl})` }}
-                  ></div>
-
-                  {/* Contenu */}
-                  <div className="relative z-10 flex flex-col items-center space-y-3">
-                    <div className="relative">
-                      <img
-                        src={champion.imageUrl}
-                        alt={champion.name}
-                        className="w-16 h-16 rounded-lg object-cover shadow-lg transition-transform duration-300 group-hover:scale-110"
-                      />
-                      {/* Badge de coût */}
-                      <div
-                        className={`absolute -bottom-2 -right-2 rounded-full w-6 h-6 flex items-center justify-center shadow-lg bg-gradient-to-r ${getCostColor(
-                          champion.cost[0]
-                        )}`}
-                      >
-                        <span className="text-white text-xs font-bold">
-                          {champion.cost[0]}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="text-center space-y-2">
-                      <h4 className="text-white font-semibold text-sm group-hover:text-blue-300 transition-colors duration-200">
-                        {champion.name}
-                      </h4>
-
-                      {/* Synergies avec images */}
-                      <div className="flex flex-wrap justify-center gap-1">
-                        {champion.traits?.slice(0, 3).map((trait, index) => {
-                          const synergyData = commonSynergies.find((s) => s.name === trait);
-                          return (
-                            <div
-                              key={index}
-                              className={`px-1 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1`}
-                            >
-                              {synergyData?.imageUrl ? (
-                                <img 
-                                  src={synergyData.imageUrl} 
-                                  alt={trait}
-                                  className="w-4 h-4 object-cover rounded"
-                                />
-                              ) : (
-                                <span className="text-xs">{synergyData?.icon || '⚡'}</span>
-                              )}
-                              <span className="text-[10px]">{trait}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Stats compactes avec badge */}
-                      <div className="flex items-center justify-center space-x-2 text-xs">
-                        <div className="flex items-center space-x-1">
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-700/60 text-slate-100 border border-slate-600">
-                            {(champion.winRate || 0).toFixed(1)}%
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Items recommandés */}
-                      {recommendedItemsMap[champion.name]?.length > 0 && (
-                        <div className="flex justify-center space-x-1 mt-2">
-                          {recommendedItemsMap[champion.name].map((item, index) => (
-                            <div key={index} className="relative group/item">
-                              <img
-                                src={item.imageUrl}
-                                alt={item.name}
-                                className="w-6 h-6 rounded border border-slate-600/50 transition-all duration-200 hover:scale-110 hover:border-yellow-400/60"
-                                title={item.name}
-                              />
-                              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity bg-slate-900/90 px-2 py-1 rounded text-xs text-white whitespace-nowrap z-20">
-                                {item.name}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
           ) : (
-            <div className="space-y-3 p-6">
-              {sortedChampions.map((champion) => (
-                <div
-                  key={champion.key}
-                  className="group relative overflow-hidden flex items-center space-x-4 p-4 bg-slate-700/20 backdrop-blur rounded-lg border border-slate-600/20 transition-all cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:border-blue-500/50 hover:bg-slate-600/30"
-                >
-                  {/* Fond flouté pour la ligne */}
-                  <div
-                    className="absolute inset-0 z-0 bg-cover bg-center opacity-30 blur-sm scale-100 transition-all duration-500 group-hover:opacity-60 group-hover:blur-md"
-                    style={{ backgroundImage: `url(${champion.imageUrl})` }}
-                  ></div>
-
-                  {/* Overlay pour améliorer la lisibilité */}
-                  <div className="absolute inset-0 z-[1] bg-gradient-to-r from-slate-900/90 via-slate-800/70 to-slate-900/50 group-hover:from-slate-900/80 group-hover:via-slate-800/50 group-hover:to-slate-900/30 transition-all duration-500"></div>
-
-                  {/* Image du champion */}
-                  <div className="relative z-10 flex-shrink-0">
-                    <img
-                      src={champion.imageUrl}
-                      alt={champion.name}
-                      className="w-16 h-16 rounded-lg object-cover transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl border-2 border-slate-600/50 group-hover:border-blue-400/60"
-                    />
-                    <div
-                      className={`absolute -bottom-1 -right-1 rounded-full w-6 h-6 flex items-center justify-center shadow-lg bg-gradient-to-r ${getCostColor(
-                        champion.cost[0]
-                      )}`}
-                    >
-                      <span className="text-white text-xs font-bold">{champion.cost[0]}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex-1 relative z-10 grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-                    {/* Nom et badges */}
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <h4 className="text-white font-semibold text-base group-hover:text-blue-300 transition-colors drop-shadow-sm">
-                          {champion.name}
-                        </h4>
-
-                        {/* Spacer */}
-                        <span className="w-2"></span>
-
-                        {champion.isMeta && (
-                          <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg flex items-center space-x-1">
-                            <Flame className="w-2.5 h-2.5" />
-                            <span>META</span>
-                          </div>
-                        )}
-
-                        {/* Spacer supplémentaire */}
-                        <span className="w-2"></span>
-
-                        {/* Badge avgPlacement */}
-                        <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800/90 border border-slate-600 text-[11px] font-semibold text-white shadow">
-                          {champion.avgPlacement?.toFixed(1)}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Synergies avec images */}
-                    <div className="space-y-0">
-                      <div className="text-xs text-slate-400 font-medium mb-1">Traits</div>
-                      <div className="flex flex-wrap gap-1">
-                        {champion.traits?.map((trait, index) => {
-                          const synergyData = commonSynergies.find((s) => s.name === trait);
-                          return (
-                            <div
-                              key={index}
-                              className="px-2 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1"
-                            >
-                              {synergyData?.imageUrl ? (
-                                <img 
-                                  src={synergyData.imageUrl} 
-                                  alt={trait}
-                                  className="w-4 h-4 object-cover rounded"
-                                />
-                              ) : (
-                                <span className="text-xs">{synergyData?.icon || '⚡'}</span>
-                              )}
-                              <span>{trait}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Items recommandés */}
-                    <div className="text-center">
-                      <div className="text-xs text-slate-400 mb-1">Items recommandés</div>
-                      <div className="flex justify-center space-x-1">
-                        {recommendedItemsMap[champion.name]?.map((item, index) => (
-                          <div key={index} className="relative group/item">
-                            <img
-                              src={item.imageUrl}
-                              alt={item.name}
-                              className="w-8 h-8 rounded border-2 border-slate-600/50 bg-slate-800/50 transition-all duration-200 hover:scale-110 hover:border-yellow-400/60"
-                              title={item.name}
-                            />
-                            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity bg-slate-900/90 px-2 py-1 rounded text-xs text-white whitespace-nowrap z-20">
-                              {item.name}
-                            </div>
-                          </div>
-                        ))}
-                        {(!recommendedItemsMap[champion.name] || recommendedItemsMap[champion.name].length === 0) && (
-                          <span className="text-xs text-slate-500">Aucun item recommandé</span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Winrate amélioré */}
-                    <div className="text-center space-y-3">
-                      {/* Badge du pourcentage */}
-                      <div className="inline-block px-2 py-0.5 rounded-full text-xs font-bold text-white bg-slate-700/80 border border-slate-600 shadow-sm">
-                        {(champion.winRate || 0).toFixed(1)}%
-                      </div>
-
-                      {/* Barre de progression */}
-                      <div className="w-full bg-slate-700/50 rounded-full h-2 overflow-hidden">
-                        <div
-                          className={`h-2 rounded-full transition-all ${
-                            (champion.winRate || 0) >= 60
-                              ? 'bg-gradient-to-r from-green-500 to-green-400'
-                              : (champion.winRate || 0) >= 50
-                              ? 'bg-gradient-to-r from-yellow-500 to-yellow-400'
-                              : 'bg-gradient-to-r from-red-500 to-red-400'
-                          }`}
-                          style={{ width: `${Math.min((champion.winRate || 0), 100)}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    {/* Tier et Rôle */}
-                    <div className="text-center">
-                      <div className="flex flex-col items-center gap-2">
-                        {/* Tier badge */}
-                        <div className={`px-3 py-1 rounded-md text-sm font-bold ${getTierColor(champion.tier || 'C')}`}>
-                          Tier {champion.tier}
-                        </div>
-                        
-                        {/* Rôle (Carry/Core) */}
-                        {(champion.asCarry > 0 || champion.asCore > 0) && (
-                          <div className="flex items-center gap-2">
-                            {champion.asCarry > 0 && (
-                              <div className="px-2 py-0.5 rounded-md bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 text-xs font-medium flex items-center gap-1">
-                                <Star className="w-3 h-3" />
-                                <span>Carry</span>
-                              </div>
-                            )}
-                            {champion.asCore > 0 && (
-                              <div className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-medium">
-                                Core
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="p-6">
+              <div className="text-center text-slate-400 py-10">
+                Les vues grille et compacte ne sont pas disponibles dans cette page.
+                <br />
+                Veuillez utiliser la vue tableau pour consulter les statistiques détaillées.
+              </div>
             </div>
           )}
         </div>
       </div>
-
-      {/* Hub de filtres flottant */}
-      <FilterHub
-        selectedSynergies={selectedSynergies}
-        onToggleSynergy={toggleSynergy}
-        showOnlyFavorites={showOnlyFavorites}
-        onToggleFavorites={setShowOnlyFavorites}
-        showOnlyMeta={showOnlyMeta}
-        onToggleMeta={setShowOnlyMeta}
-        onClearAllFilters={clearAllFilters}
-        championsCount={champions.length}
-        favoritesCount={favoritesCount}
-        metaCount={metaCount}
-      />
     </>
   );
 }
