@@ -36,12 +36,6 @@ export default function ChampionCard({
     return synergy || { name: synergyName, color: 'from-gray-500 to-gray-600', imageUrl: '' };
   };
 
-  // Récupérer les 3 meilleurs items recommandés
-  const topItems = recommendedItems.slice(0, 3);
-  
-  // Récupérer les traits du champion
-  const championTraits = champion.traits || [];
-
   const currentCost = champion.cost[0];
 
   if (viewMode === 'grid') {
@@ -96,12 +90,12 @@ export default function ChampionCard({
 
             {/* Synergies avec images */}
             <div className="flex flex-wrap justify-center gap-1">
-              {championTraits.map((trait, index) => {
+              {champion.traits?.slice(0, 3).map((trait, index) => {
                 const synergyData = getSynergyData(trait);
                 return (
                   <div
                     key={index}
-                    className="px-1 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1"
+                    className={`px-1 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1`}
                   >
                     {synergyData.imageUrl ? (
                       <img 
@@ -128,9 +122,9 @@ export default function ChampionCard({
             </div>
 
             {/* Items recommandés */}
-            {topItems.length > 0 && (
+            {recommendedItems.length > 0 && (
               <div className="flex justify-center space-x-1 mt-2">
-                {topItems.map((item, index) => (
+                {recommendedItems.map((item, index) => (
                   <div key={index} className="relative group/item">
                     <img
                       src={item.imageUrl}
@@ -214,7 +208,7 @@ export default function ChampionCard({
         <div className="space-y-0">
           <div className="text-xs text-slate-400 font-medium mb-1">Traits</div>
           <div className="flex flex-wrap gap-1">
-            {championTraits.map((trait, index) => {
+            {champion.traits?.map((trait, index) => {
               const synergyData = getSynergyData(trait);
               return (
                 <div
@@ -241,7 +235,7 @@ export default function ChampionCard({
         <div className="text-center">
           <div className="text-xs text-slate-400 mb-1">Items recommandés</div>
           <div className="flex justify-center space-x-1">
-            {topItems.map((item, index) => (
+            {recommendedItems.map((item, index) => (
               <div key={index} className="relative group/item">
                 <img
                   src={item.imageUrl}
@@ -254,7 +248,7 @@ export default function ChampionCard({
                 </div>
               </div>
             ))}
-            {topItems.length === 0 && (
+            {recommendedItems.length === 0 && (
               <span className="text-xs text-slate-500">Aucun item recommandé</span>
             )}
           </div>
