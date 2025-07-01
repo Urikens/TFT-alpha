@@ -1,0 +1,1118 @@
+[
+  {
+    "success": true,
+    "data": {
+      "TFT_Item_FrozenHeart": {
+        "key": "TFT_Item_FrozenHeart",
+        "apiName": "TFT_Item_FrozenHeart",
+        "stats": {
+          "tier": 2,
+          "score": 0.868899841044965,
+          "nb_games": 46660,
+          "pick_rate": 0.2624517226874689,
+          "avg_placement": 4.01772955808415,
+          "top_4_percent": 0.5912161636287222,
+          "top_1_percent": 0.16039879831265663,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/FrozenHeart.webp"
+      },
+      "TFT_Item_RunaansHurricane": {
+        "key": "TFT_Item_RunaansHurricane",
+        "apiName": "TFT_Item_RunaansHurricane",
+        "stats": {
+          "tier": 2,
+          "score": 0.7983455068352865,
+          "nb_games": 50858,
+          "pick_rate": 0.33272867194371153,
+          "avg_placement": 4.229615555381441,
+          "top_4_percent": 0.5513920447125806,
+          "top_1_percent": 0.1413656663793779,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/RunaansHurricane.webp"
+      },
+      "TFT14_Item_MobEmblemItem": {
+        "key": "TFT14_Item_MobEmblemItem",
+        "apiName": "TFT14_Item_MobEmblemItem",
+        "stats": {
+          "tier": 5,
+          "score": 0.08184952540019941,
+          "nb_games": 6980,
+          "pick_rate": 0.017757447133952813,
+          "avg_placement": 3.800187287837996,
+          "top_4_percent": 0.6394709118576613,
+          "top_1_percent": 0.16727145031019547,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_MobEmblemItem.webp"
+      },
+      "TFT_Item_IonicSpark": {
+        "key": "TFT_Item_IonicSpark",
+        "apiName": "TFT_Item_IonicSpark",
+        "stats": {
+          "tier": 4,
+          "score": 0.607305720080905,
+          "nb_games": 38285,
+          "pick_rate": 0.152262341784253,
+          "avg_placement": 3.960550377536574,
+          "top_4_percent": 0.5986314299197735,
+          "top_1_percent": 0.16841670599339312,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/IonicSpark.webp"
+      },
+      "TFT_Item_BrambleVest": {
+        "key": "TFT_Item_BrambleVest",
+        "apiName": "TFT_Item_BrambleVest",
+        "stats": {
+          "tier": 2,
+          "score": 0.8450347781392636,
+          "nb_games": 48739,
+          "pick_rate": 0.2776638560666896,
+          "avg_placement": 4.069101006272769,
+          "top_4_percent": 0.5824161374904284,
+          "top_1_percent": 0.15521815467673197,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/BrambleVest.webp"
+      },
+      "TFT_Item_AdaptiveHelm": {
+        "key": "TFT_Item_AdaptiveHelm",
+        "apiName": "TFT_Item_AdaptiveHelm",
+        "stats": {
+          "tier": 4,
+          "score": 0.5605669784548515,
+          "nb_games": 34627,
+          "pick_rate": 0.13038937325532485,
+          "avg_placement": 3.803046512812675,
+          "top_4_percent": 0.6355222714690849,
+          "top_1_percent": 0.17683020021396914,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/AdaptiveHelm.webp"
+      },
+      "TFT_Item_WarmogsArmor": {
+        "key": "TFT_Item_WarmogsArmor",
+        "apiName": "TFT_Item_WarmogsArmor",
+        "stats": {
+          "tier": 1,
+          "score": 1,
+          "nb_games": 53209,
+          "pick_rate": 0.46827559175557343,
+          "avg_placement": 4.170134623684473,
+          "top_4_percent": 0.5611201487334417,
+          "top_1_percent": 0.14851764549649746,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/WarmogsArmor.webp"
+      },
+      "TFT14_Item_BruiserEmblemItem": {
+        "key": "TFT14_Item_BruiserEmblemItem",
+        "apiName": "TFT14_Item_BruiserEmblemItem",
+        "stats": {
+          "tier": 2,
+          "score": 0.5000689790968618,
+          "nb_games": 8745,
+          "pick_rate": 0.023139650491377003,
+          "avg_placement": 4.093667157584683,
+          "top_4_percent": 0.5707412862052037,
+          "top_1_percent": 0.1771232204221895,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_BruiserEmblemItem.webp"
+      },
+      "TFT_Item_DragonsClaw": {
+        "key": "TFT_Item_DragonsClaw",
+        "apiName": "TFT_Item_DragonsClaw",
+        "stats": {
+          "tier": 4,
+          "score": 0.6375984449693646,
+          "nb_games": 46544,
+          "pick_rate": 0.2364082635463271,
+          "avg_placement": 4.183883850960861,
+          "top_4_percent": 0.5594136165014331,
+          "top_1_percent": 0.14355119109148146,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/DragonsClaw.webp"
+      },
+      "TFT_Item_LastWhisper": {
+        "key": "TFT_Item_LastWhisper",
+        "apiName": "TFT_Item_LastWhisper",
+        "stats": {
+          "tier": 3,
+          "score": 0.7760739272790965,
+          "nb_games": 47544,
+          "pick_rate": 0.2556737792053841,
+          "avg_placement": 4.126165212892451,
+          "top_4_percent": 0.5696677044284897,
+          "top_1_percent": 0.15305020286277038,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/LastWhisper.webp"
+      },
+      "TFT14_Item_ThirstyEmblemItem": {
+        "key": "TFT14_Item_ThirstyEmblemItem",
+        "apiName": "TFT14_Item_ThirstyEmblemItem",
+        "stats": {
+          "tier": 3,
+          "score": 0.349746005944067,
+          "nb_games": 10626,
+          "pick_rate": 0.028526633780734962,
+          "avg_placement": 4.196396976033457,
+          "top_4_percent": 0.5562168248351295,
+          "top_1_percent": 0.13599806980858936,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_ThirstyEmblemItem.webp"
+      },
+      "TFT_Item_JeweledGauntlet": {
+        "key": "TFT_Item_JeweledGauntlet",
+        "apiName": "TFT_Item_JeweledGauntlet",
+        "stats": {
+          "tier": 2,
+          "score": 0.800070236437098,
+          "nb_games": 50288,
+          "pick_rate": 0.3105617376008566,
+          "avg_placement": 4.226786931952443,
+          "top_4_percent": 0.547830431348191,
+          "top_1_percent": 0.14457489687206734,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/JeweledGauntlet.webp"
+      },
+      "TFT_Item_PowerGauntlet": {
+        "key": "TFT_Item_PowerGauntlet",
+        "apiName": "TFT_Item_PowerGauntlet",
+        "stats": {
+          "tier": 1,
+          "score": 0.9921032222823499,
+          "nb_games": 49565,
+          "pick_rate": 0.314488451684448,
+          "avg_placement": 4.01156921798733,
+          "top_4_percent": 0.5912763526845987,
+          "top_1_percent": 0.16442690483608544,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/PowerGauntlet.webp"
+      },
+      "TFT_Item_SpectralGauntlet": {
+        "key": "TFT_Item_SpectralGauntlet",
+        "apiName": "TFT_Item_SpectralGauntlet",
+        "stats": {
+          "tier": 3,
+          "score": 0.7028258863406719,
+          "nb_games": 44340,
+          "pick_rate": 0.21816565332109672,
+          "avg_placement": 3.990911113229733,
+          "top_4_percent": 0.5980233260240887,
+          "top_1_percent": 0.15723350388237411,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/SpectralGauntlet.webp"
+      },
+      "TFT_Item_Deathblade": {
+        "key": "TFT_Item_Deathblade",
+        "apiName": "TFT_Item_Deathblade",
+        "stats": {
+          "tier": 4,
+          "score": 0.5380790916537518,
+          "nb_games": 37899,
+          "pick_rate": 0.14861525371878703,
+          "avg_placement": 4.027468146877868,
+          "top_4_percent": 0.588173353189825,
+          "top_1_percent": 0.16267280412774343,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/Deathblade.webp"
+      },
+      "TFT14_Item_GuardianEmblemItem": {
+        "key": "TFT14_Item_GuardianEmblemItem",
+        "apiName": "TFT14_Item_GuardianEmblemItem",
+        "stats": {
+          "tier": 5,
+          "nb_games": 7534,
+          "pick_rate": 0.01981520783144048,
+          "avg_placement": 4.040304628002343,
+          "top_4_percent": 0.5858230814294083,
+          "top_1_percent": 0.16192149970708847,
+          "item_type": "emblem",
+          "craftable": false
+        },
+        "localImageUrl": "/images/items/TFT14_Item_GuardianEmblemItem.webp"
+      },
+      "TFT_Item_InfinityEdge": {
+        "key": "TFT_Item_InfinityEdge",
+        "apiName": "TFT_Item_InfinityEdge",
+        "stats": {
+          "tier": 1,
+          "score": 0.9270555206991103,
+          "nb_games": 53171,
+          "pick_rate": 0.4869316660930748,
+          "avg_placement": 4.262472104864045,
+          "top_4_percent": 0.5450200411656375,
+          "top_1_percent": 0.14104214061315135,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/InfinityEdge.webp"
+      },
+      "TFT_Item_Leviathan": {
+        "key": "TFT_Item_Leviathan",
+        "apiName": "TFT_Item_Leviathan",
+        "stats": {
+          "tier": 5,
+          "score": 0.3571075947923285,
+          "nb_games": 32999,
+          "pick_rate": 0.1165873197965661,
+          "avg_placement": 4.173736671302735,
+          "top_4_percent": 0.5567145727090095,
+          "top_1_percent": 0.1479292226858291,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/Leviathan.webp"
+      },
+      "TFT14_Item_SwiftEmblemItem": {
+        "key": "TFT14_Item_SwiftEmblemItem",
+        "apiName": "TFT14_Item_SwiftEmblemItem",
+        "stats": {
+          "tier": 4,
+          "score": 0.2739334759909345,
+          "nb_games": 9199,
+          "pick_rate": 0.024234254904210165,
+          "avg_placement": 4.491297541210056,
+          "top_4_percent": 0.5005985818215305,
+          "top_1_percent": 0.14605396445344876,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_SwiftEmblemItem.webp"
+      },
+      "TFT_Item_ArchangelsStaff": {
+        "key": "TFT_Item_ArchangelsStaff",
+        "apiName": "TFT_Item_ArchangelsStaff",
+        "stats": {
+          "tier": 5,
+          "score": 0.4893978842878868,
+          "nb_games": 43290,
+          "pick_rate": 0.19516223088983212,
+          "avg_placement": 4.173223947950667,
+          "top_4_percent": 0.560658502924489,
+          "top_1_percent": 0.1412955376897632,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/ArchangelsStaff.webp"
+      },
+      "TFT14_Item_EdgeRunnerEmblemItem": {
+        "key": "TFT14_Item_EdgeRunnerEmblemItem",
+        "apiName": "TFT14_Item_EdgeRunnerEmblemItem",
+        "stats": {
+          "tier": 2,
+          "score": 0.6352241498367779,
+          "nb_games": 12431,
+          "pick_rate": 0.033746319452410994,
+          "avg_placement": 4.0936984911880305,
+          "top_4_percent": 0.5736655255483707,
+          "top_1_percent": 0.15588943831621657,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_EdgeRunnerEmblemItem.webp"
+      },
+      "TFT_Item_Artifact_LichBane": {
+        "key": "TFT_Item_Artifact_LichBane",
+        "apiName": "TFT_Item_Artifact_LichBane",
+        "stats": {
+          "tier": 3,
+          "score": 0,
+          "nb_games": 2038,
+          "pick_rate": 0.005040438224159688,
+          "avg_placement": 4.421475875118259,
+          "top_4_percent": 0.52081362346263,
+          "top_1_percent": 0.11494796594134342,
+          "item_type": "ornn",
+          "craftable": false
+        },
+        "localImageUrl": "/images/items/Artifact_LichBane.webp"
+      },
+      "TFT_Item_SteraksGage": {
+        "key": "TFT_Item_SteraksGage",
+        "apiName": "TFT_Item_SteraksGage",
+        "stats": {
+          "tier": 2,
+          "score": 0.8130657781480802,
+          "nb_games": 40018,
+          "pick_rate": 0.16158559902106995,
+          "avg_placement": 3.876158792357559,
+          "top_4_percent": 0.612184249628529,
+          "top_1_percent": 0.19108732527712396,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/SteraksGage.webp"
+      },
+      "TFT_Item_Quicksilver": {
+        "key": "TFT_Item_Quicksilver",
+        "apiName": "TFT_Item_Quicksilver",
+        "stats": {
+          "tier": 4,
+          "score": 0.5644558869519,
+          "nb_games": 33476,
+          "pick_rate": 0.11906571450422546,
+          "avg_placement": 3.991623895747076,
+          "top_4_percent": 0.5899906508175765,
+          "top_1_percent": 0.17919902310583657,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/Quicksilver.webp"
+      },
+      "TFT14_Item_MarksmanEmblemItem": {
+        "key": "TFT14_Item_MarksmanEmblemItem",
+        "apiName": "TFT14_Item_MarksmanEmblemItem",
+        "stats": {
+          "tier": 5,
+          "score": 0.024927672311778795,
+          "nb_games": 6797,
+          "pick_rate": 0.017528010401131888,
+          "avg_placement": 4.235593884751078,
+          "top_4_percent": 0.547889716451065,
+          "top_1_percent": 0.13863844244087287,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_MarksmanEmblemItem.webp"
+      },
+      "TFT_Item_RapidFireCannon": {
+        "key": "TFT_Item_RapidFireCannon",
+        "apiName": "TFT_Item_RapidFireCannon",
+        "stats": {
+          "tier": 5,
+          "score": 0.49413073321649265,
+          "nb_games": 38404,
+          "pick_rate": 0.15900682574280142,
+          "avg_placement": 4.055613527138049,
+          "top_4_percent": 0.5843535515351038,
+          "top_1_percent": 0.1554356931849914,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/RapidFireCannon.webp"
+      },
+      "TFT_Item_MadredsBloodrazor": {
+        "key": "TFT_Item_MadredsBloodrazor",
+        "apiName": "TFT_Item_MadredsBloodrazor",
+        "stats": {
+          "tier": 3,
+          "score": 0.6833428436371723,
+          "nb_games": 45432,
+          "pick_rate": 0.22356936637222286,
+          "avg_placement": 4.039280840206492,
+          "top_4_percent": 0.58671057576297,
+          "top_1_percent": 0.15477956446923397,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/MadredsBloodrazor.webp"
+      },
+      "TFT14_Item_BallistekEmblemItem": {
+        "key": "TFT14_Item_BallistekEmblemItem",
+        "apiName": "TFT14_Item_BallistekEmblemItem",
+        "stats": {
+          "tier": 1,
+          "score": 1,
+          "nb_games": 12711,
+          "pick_rate": 0.03465689648579404,
+          "avg_placement": 4.2159274444030315,
+          "top_4_percent": 0.5388246987203379,
+          "top_1_percent": 0.20021120636103865,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_BallistekEmblemItem.webp"
+      },
+      "TFT_Item_GuardianAngel": {
+        "key": "TFT_Item_GuardianAngel",
+        "apiName": "TFT_Item_GuardianAngel",
+        "stats": {
+          "tier": 5,
+          "score": 0.439699911490682,
+          "nb_games": 31729,
+          "pick_rate": 0.10872672173148254,
+          "avg_placement": 3.9882375966337213,
+          "top_4_percent": 0.5952637244348762,
+          "top_1_percent": 0.16796164008219983,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/GuardianAngel.webp"
+      },
+      "TFT9_Item_OrnnHullbreaker": {
+        "key": "TFT9_Item_OrnnHullbreaker",
+        "apiName": "TFT9_Item_OrnnHullbreaker",
+        "stats": {
+          "tier": 1,
+          "score": 1,
+          "nb_games": 4474,
+          "pick_rate": 0.011541145654085885,
+          "avg_placement": 4.318717871182341,
+          "top_4_percent": 0.5347747202902933,
+          "top_1_percent": 0.13395827033565164,
+          "item_type": "ornn",
+          "craftable": false
+        },
+        "localImageUrl": "/images/items/TFT9_Item_OrnnHullbreaker.webp"
+      },
+      "TFT_Item_GargoyleStoneplate": {
+        "key": "TFT_Item_GargoyleStoneplate",
+        "apiName": "TFT_Item_GargoyleStoneplate",
+        "stats": {
+          "tier": 2,
+          "score": 0.8587983843493199,
+          "nb_games": 52947,
+          "pick_rate": 0.44625205537073154,
+          "avg_placement": 4.274342981160292,
+          "top_4_percent": 0.5410762160091919,
+          "top_1_percent": 0.13639638160894385,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/GargoyleStoneplate.webp"
+      },
+      "TFT14_Item_StrongEmblemItem": {
+        "key": "TFT14_Item_StrongEmblemItem",
+        "apiName": "TFT14_Item_StrongEmblemItem",
+        "stats": {
+          "tier": 5,
+          "score": 0,
+          "nb_games": 6868,
+          "pick_rate": 0.01747782111582731,
+          "avg_placement": 4.303497409326424,
+          "top_4_percent": 0.538860103626943,
+          "top_1_percent": 0.13354922279792747,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_StrongEmblemItem.webp"
+      },
+      "TFT_Item_Redemption": {
+        "key": "TFT_Item_Redemption",
+        "apiName": "TFT_Item_Redemption",
+        "stats": {
+          "tier": 2,
+          "score": 0.8132472408952465,
+          "nb_games": 47715,
+          "pick_rate": 0.25513842682880195,
+          "avg_placement": 4.032369461555431,
+          "top_4_percent": 0.5882842064178927,
+          "top_1_percent": 0.15852127136045072,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/Redemption.webp"
+      },
+      "TFT_Item_ForceOfNature": {
+        "key": "TFT_Item_ForceOfNature",
+        "apiName": "TFT_Item_ForceOfNature",
+        "stats": {
+          "tier": 1,
+          "score": 1,
+          "nb_games": 12011,
+          "pick_rate": 0.03918349202707353,
+          "avg_placement": 4.2152158186640944,
+          "top_4_percent": 0.5534723896792862,
+          "top_1_percent": 0.14408005787316133,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/ForceOfNature.webp"
+      },
+      "TFT_Item_TitansResolve": {
+        "key": "TFT_Item_TitansResolve",
+        "apiName": "TFT_Item_TitansResolve",
+        "stats": {
+          "tier": 5,
+          "score": 0.4726806922563358,
+          "nb_games": 33144,
+          "pick_rate": 0.11756959580895568,
+          "avg_placement": 4.010295267528019,
+          "top_4_percent": 0.5872212086234502,
+          "top_1_percent": 0.1685966414714972,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TitansResolve.webp"
+      },
+      "TFT14_Item_StreetDemonEmblemItem": {
+        "key": "TFT14_Item_StreetDemonEmblemItem",
+        "apiName": "TFT14_Item_StreetDemonEmblemItem",
+        "stats": {
+          "tier": 3,
+          "score": 0.3312046513656962,
+          "nb_games": 7388,
+          "pick_rate": 0.018938090321593822,
+          "avg_placement": 4.315126518782744,
+          "top_4_percent": 0.5134321703266079,
+          "top_1_percent": 0.18136216698249916,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_StreetDemonEmblemItem.webp"
+      },
+      "TFT_Item_NightHarvester": {
+        "key": "TFT_Item_NightHarvester",
+        "apiName": "TFT_Item_NightHarvester",
+        "stats": {
+          "tier": 4,
+          "score": 0.6165020743778852,
+          "nb_games": 38416,
+          "pick_rate": 0.15355770333830446,
+          "avg_placement": 3.9009942605368426,
+          "top_4_percent": 0.6136877500144936,
+          "top_1_percent": 0.16892283610644096,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/NightHarvester.webp"
+      },
+      "TFT14_Item_DivinicorpEmblemItem": {
+        "key": "TFT14_Item_DivinicorpEmblemItem",
+        "apiName": "TFT14_Item_DivinicorpEmblemItem",
+        "stats": {
+          "tier": 2,
+          "score": 0.6747662130141422,
+          "nb_games": 12078,
+          "pick_rate": 0.033220526939696376,
+          "avg_placement": 4.175021987686895,
+          "top_4_percent": 0.5520600771260402,
+          "top_1_percent": 0.16094986807387862,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_DivinicorpEmblemItem.webp"
+      },
+      "TFT14_Item_ControllerEmblemItem": {
+        "key": "TFT14_Item_ControllerEmblemItem",
+        "apiName": "TFT14_Item_ControllerEmblemItem",
+        "stats": {
+          "tier": 3,
+          "score": 0.4612038462174404,
+          "nb_games": 8992,
+          "pick_rate": 0.0235602845015487,
+          "avg_placement": 4.161470671846868,
+          "top_4_percent": 0.5600303231308633,
+          "top_1_percent": 0.16687197953188668,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_ControllerEmblemItem.webp"
+      },
+      "TFT14_Item_ImmortalEmblemItem": {
+        "key": "TFT14_Item_ImmortalEmblemItem",
+        "apiName": "TFT14_Item_ImmortalEmblemItem",
+        "stats": {
+          "tier": 1,
+          "score": 0.8450597971368458,
+          "nb_games": 13474,
+          "pick_rate": 0.036755286604718745,
+          "avg_placement": 4.4326341983647355,
+          "top_4_percent": 0.49211991942173244,
+          "top_1_percent": 0.19996445076430858,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_ImmortalEmblemItem.webp"
+      },
+      "TFT_Item_RabadonsDeathcap": {
+        "key": "TFT_Item_RabadonsDeathcap",
+        "apiName": "TFT_Item_RabadonsDeathcap",
+        "stats": {
+          "tier": 5,
+          "score": 0.44137536132352806,
+          "nb_games": 32583,
+          "pick_rate": 0.11367634124890062,
+          "avg_placement": 3.9917400989611056,
+          "top_4_percent": 0.592347270684251,
+          "top_1_percent": 0.16699193723263744,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/RabadonsDeathcap.webp"
+      },
+      "TFT14_Item_TechieEmblemItem": {
+        "key": "TFT14_Item_TechieEmblemItem",
+        "apiName": "TFT14_Item_TechieEmblemItem",
+        "stats": {
+          "tier": 4,
+          "score": 0.1497212509219833,
+          "nb_games": 7329,
+          "pick_rate": 0.018878341172421705,
+          "avg_placement": 4.1926072300360335,
+          "top_4_percent": 0.5516680227827502,
+          "top_1_percent": 0.15424851795885156,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_TechieEmblemItem.webp"
+      },
+      "TFT_Item_Bloodthirster": {
+        "key": "TFT_Item_Bloodthirster",
+        "apiName": "TFT_Item_Bloodthirster",
+        "stats": {
+          "tier": 2,
+          "score": 0.8971099528441284,
+          "nb_games": 47212,
+          "pick_rate": 0.24106391724981835,
+          "avg_placement": 4.111119942068917,
+          "top_4_percent": 0.5665059432346032,
+          "top_1_percent": 0.1709055264133948,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/Bloodthirster.webp"
+      },
+      "TFT_Item_BlueBuff": {
+        "key": "TFT_Item_BlueBuff",
+        "apiName": "TFT_Item_BlueBuff",
+        "stats": {
+          "tier": 2,
+          "score": 0.8067520376433648,
+          "nb_games": 48557,
+          "pick_rate": 0.2654296202822072,
+          "avg_placement": 4.297159945231715,
+          "top_4_percent": 0.5322267675791914,
+          "top_1_percent": 0.15211639100523322,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/BlueBuff.webp"
+      },
+      "TFT_Item_ThiefsGloves": {
+        "key": "TFT_Item_ThiefsGloves",
+        "apiName": "TFT_Item_ThiefsGloves",
+        "stats": {
+          "tier": 1,
+          "score": 0.9896187740868342,
+          "nb_games": 47540,
+          "pick_rate": 0.2571173186493824,
+          "avg_placement": 3.8421876492764913,
+          "top_4_percent": 0.625414299677379,
+          "top_1_percent": 0.17742682236740573,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/ThiefsGloves.webp"
+      },
+      "TFT14_Item_CutterEmblemItem": {
+        "key": "TFT14_Item_CutterEmblemItem",
+        "apiName": "TFT14_Item_CutterEmblemItem",
+        "stats": {
+          "tier": 4,
+          "score": 0.27135900741096897,
+          "nb_games": 7045,
+          "pick_rate": 0.01827845971473366,
+          "avg_placement": 4.234906832298137,
+          "top_4_percent": 0.5386335403726709,
+          "top_1_percent": 0.17403726708074535,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_CutterEmblemItem.webp"
+      },
+      "TFT_Item_StatikkShiv": {
+        "key": "TFT_Item_StatikkShiv",
+        "apiName": "TFT_Item_StatikkShiv",
+        "stats": {
+          "tier": 4,
+          "score": 0.6020025849875569,
+          "nb_games": 37563,
+          "pick_rate": 0.15108647852854576,
+          "avg_placement": 3.9679942990813464,
+          "top_4_percent": 0.5981936763179502,
+          "top_1_percent": 0.16936995553903114,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/StatikkShiv.webp"
+      },
+      "TFT_Item_Crownguard": {
+        "key": "TFT_Item_Crownguard",
+        "apiName": "TFT_Item_Crownguard",
+        "stats": {
+          "tier": 4,
+          "score": 0.559433922808731,
+          "nb_games": 36901,
+          "pick_rate": 0.14498967534702306,
+          "avg_placement": 3.8783890184659726,
+          "top_4_percent": 0.6197762690713532,
+          "top_1_percent": 0.16821416368309242,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/Crownguard.webp"
+      },
+      "TFT_Item_Morellonomicon": {
+        "key": "TFT_Item_Morellonomicon",
+        "apiName": "TFT_Item_Morellonomicon",
+        "stats": {
+          "tier": 4,
+          "score": 0.5804076530802155,
+          "nb_games": 33188,
+          "pick_rate": 0.12100158693740201,
+          "avg_placement": 3.8535812216798586,
+          "top_4_percent": 0.6183465899146263,
+          "top_1_percent": 0.18119056416639118,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/Morellonomicon.webp"
+      },
+      "TFT_Item_RedBuff": {
+        "key": "TFT_Item_RedBuff",
+        "apiName": "TFT_Item_RedBuff",
+        "stats": {
+          "tier": 2,
+          "score": 0.8937999631638062,
+          "nb_games": 52320,
+          "pick_rate": 0.4046092883637337,
+          "avg_placement": 4.186343732438643,
+          "top_4_percent": 0.5588030735504403,
+          "top_1_percent": 0.14316713682418333,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/RedBuff.webp"
+      },
+      "TFT14_Item_DarkWebEmblemItem": {
+        "key": "TFT14_Item_DarkWebEmblemItem",
+        "apiName": "TFT14_Item_DarkWebEmblemItem",
+        "stats": {
+          "tier": 2,
+          "score": 0.6667564289040195,
+          "nb_games": 9243,
+          "pick_rate": 0.024047837558793164,
+          "avg_placement": 4.187112004896389,
+          "top_4_percent": 0.5373786832211245,
+          "top_1_percent": 0.19428171723354026,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_DarkWebEmblemItem.webp"
+      },
+      "TFT_Item_TacticiansRing": {
+        "key": "TFT_Item_TacticiansRing",
+        "apiName": "TFT_Item_TacticiansRing",
+        "stats": {
+          "tier": 5,
+          "score": 0.059611824316481266,
+          "nb_games": 4169,
+          "pick_rate": 0.011839891399946465,
+          "avg_placement": 4.131404460518384,
+          "top_4_percent": 0.5686156319067711,
+          "top_1_percent": 0.16254771950974484,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TacticiansRing.webp"
+      },
+      "TFT_Item_GuinsoosRageblade": {
+        "key": "TFT_Item_GuinsoosRageblade",
+        "apiName": "TFT_Item_GuinsoosRageblade",
+        "stats": {
+          "tier": 2,
+          "score": 0.8160340668343329,
+          "nb_games": 53644,
+          "pick_rate": 0.5341167641772782,
+          "avg_placement": 4.3690533769988225,
+          "top_4_percent": 0.5249605866042452,
+          "top_1_percent": 0.12868150653320878,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/GuinsoosRageblade.webp"
+      },
+      "TFT_Item_TacticiansScepter": {
+        "key": "TFT_Item_TacticiansScepter",
+        "apiName": "TFT_Item_TacticiansScepter",
+        "stats": {
+          "tier": 5,
+          "score": 0,
+          "nb_games": 3169,
+          "pick_rate": 0.008876333601009522,
+          "avg_placement": 4.195733333333333,
+          "top_4_percent": 0.5613333333333334,
+          "top_1_percent": 0.1504,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TacticiansScepter.webp"
+      },
+      "TFT14_Item_ArmorcladEmblemItem": {
+        "key": "TFT14_Item_ArmorcladEmblemItem",
+        "apiName": "TFT14_Item_ArmorcladEmblemItem",
+        "stats": {
+          "tier": 4,
+          "score": 0.250878674209598,
+          "nb_games": 7920,
+          "pick_rate": 0.020556097281174718,
+          "avg_placement": 4.212735485292497,
+          "top_4_percent": 0.5512834636994601,
+          "top_1_percent": 0.1568800264404539,
+          "item_type": "emblem",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/TFT14_Item_ArmorcladEmblemItem.webp"
+      },
+      "TFT_Item_HextechGunblade": {
+        "key": "TFT_Item_HextechGunblade",
+        "apiName": "TFT_Item_HextechGunblade",
+        "stats": {
+          "tier": 3,
+          "score": 0.7605976869018443,
+          "nb_games": 47094,
+          "pick_rate": 0.2634411685977592,
+          "avg_placement": 4.175989085948158,
+          "top_4_percent": 0.5601688589152874,
+          "top_1_percent": 0.1516298145812419,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/HextechGunblade.webp"
+      },
+      "TFT_Item_SpearOfShojin": {
+        "key": "TFT_Item_SpearOfShojin",
+        "apiName": "TFT_Item_SpearOfShojin",
+        "stats": {
+          "tier": 2,
+          "score": 0.8637841827713413,
+          "nb_games": 52654,
+          "pick_rate": 0.418545179916638,
+          "avg_placement": 4.228218135092631,
+          "top_4_percent": 0.5509090560392773,
+          "top_1_percent": 0.13934064669556212,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/SpearOfShojin.webp"
+      },
+      "TFT_Item_UnstableConcoction": {
+        "key": "TFT_Item_UnstableConcoction",
+        "apiName": "TFT_Item_UnstableConcoction",
+        "stats": {
+          "tier": 3,
+          "score": 0.7415502023037637,
+          "nb_games": 43307,
+          "pick_rate": 0.19376171083323773,
+          "avg_placement": 4.029306160991732,
+          "top_4_percent": 0.5868479132124779,
+          "top_1_percent": 0.1678323981860705,
+          "item_type": "other",
+          "craftable": true
+        },
+        "localImageUrl": "/images/items/UnstableConcoction.webp"
+      }
+    },
+    "timestamp": "2025-07-01T14:33:36.360Z",
+    "stats": {
+      "totalItems": 58,
+      "craftableItems": 55,
+      "avgPickRate": 15.94,
+      "avgPlacement": 4.12,
+      "avgTop4Rate": 56.82,
+      "avgTop1Rate": 15.89,
+      "tierDistribution": {
+        "1": 8,
+        "2": 16,
+        "3": 9,
+        "4": 13,
+        "5": 12
+      },
+      "typeDistribution": {
+        "other": 39,
+        "emblem": 17,
+        "ornn": 2
+      },
+      "topItems": [
+        {
+          "key": "TFT_Item_WarmogsArmor",
+          "apiName": "TFT_Item_WarmogsArmor",
+          "stats": {
+            "tier": 1,
+            "score": 1,
+            "nb_games": 53209,
+            "pick_rate": 0.46827559175557343,
+            "avg_placement": 4.170134623684473,
+            "top_4_percent": 0.5611201487334417,
+            "top_1_percent": 0.14851764549649746,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/WarmogsArmor.webp"
+        },
+        {
+          "key": "TFT14_Item_BallistekEmblemItem",
+          "apiName": "TFT14_Item_BallistekEmblemItem",
+          "stats": {
+            "tier": 1,
+            "score": 1,
+            "nb_games": 12711,
+            "pick_rate": 0.03465689648579404,
+            "avg_placement": 4.2159274444030315,
+            "top_4_percent": 0.5388246987203379,
+            "top_1_percent": 0.20021120636103865,
+            "item_type": "emblem",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/TFT14_Item_BallistekEmblemItem.webp"
+        },
+        {
+          "key": "TFT9_Item_OrnnHullbreaker",
+          "apiName": "TFT9_Item_OrnnHullbreaker",
+          "stats": {
+            "tier": 1,
+            "score": 1,
+            "nb_games": 4474,
+            "pick_rate": 0.011541145654085885,
+            "avg_placement": 4.318717871182341,
+            "top_4_percent": 0.5347747202902933,
+            "top_1_percent": 0.13395827033565164,
+            "item_type": "ornn",
+            "craftable": false
+          },
+          "localImageUrl": "/images/items/TFT9_Item_OrnnHullbreaker.webp"
+        },
+        {
+          "key": "TFT_Item_ForceOfNature",
+          "apiName": "TFT_Item_ForceOfNature",
+          "stats": {
+            "tier": 1,
+            "score": 1,
+            "nb_games": 12011,
+            "pick_rate": 0.03918349202707353,
+            "avg_placement": 4.2152158186640944,
+            "top_4_percent": 0.5534723896792862,
+            "top_1_percent": 0.14408005787316133,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/ForceOfNature.webp"
+        },
+        {
+          "key": "TFT_Item_PowerGauntlet",
+          "apiName": "TFT_Item_PowerGauntlet",
+          "stats": {
+            "tier": 1,
+            "score": 0.9921032222823499,
+            "nb_games": 49565,
+            "pick_rate": 0.314488451684448,
+            "avg_placement": 4.01156921798733,
+            "top_4_percent": 0.5912763526845987,
+            "top_1_percent": 0.16442690483608544,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/PowerGauntlet.webp"
+        },
+        {
+          "key": "TFT_Item_ThiefsGloves",
+          "apiName": "TFT_Item_ThiefsGloves",
+          "stats": {
+            "tier": 1,
+            "score": 0.9896187740868342,
+            "nb_games": 47540,
+            "pick_rate": 0.2571173186493824,
+            "avg_placement": 3.8421876492764913,
+            "top_4_percent": 0.625414299677379,
+            "top_1_percent": 0.17742682236740573,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/ThiefsGloves.webp"
+        },
+        {
+          "key": "TFT_Item_InfinityEdge",
+          "apiName": "TFT_Item_InfinityEdge",
+          "stats": {
+            "tier": 1,
+            "score": 0.9270555206991103,
+            "nb_games": 53171,
+            "pick_rate": 0.4869316660930748,
+            "avg_placement": 4.262472104864045,
+            "top_4_percent": 0.5450200411656375,
+            "top_1_percent": 0.14104214061315135,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/InfinityEdge.webp"
+        },
+        {
+          "key": "TFT_Item_Bloodthirster",
+          "apiName": "TFT_Item_Bloodthirster",
+          "stats": {
+            "tier": 2,
+            "score": 0.8971099528441284,
+            "nb_games": 47212,
+            "pick_rate": 0.24106391724981835,
+            "avg_placement": 4.111119942068917,
+            "top_4_percent": 0.5665059432346032,
+            "top_1_percent": 0.1709055264133948,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/Bloodthirster.webp"
+        },
+        {
+          "key": "TFT_Item_RedBuff",
+          "apiName": "TFT_Item_RedBuff",
+          "stats": {
+            "tier": 2,
+            "score": 0.8937999631638062,
+            "nb_games": 52320,
+            "pick_rate": 0.4046092883637337,
+            "avg_placement": 4.186343732438643,
+            "top_4_percent": 0.5588030735504403,
+            "top_1_percent": 0.14316713682418333,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/RedBuff.webp"
+        },
+        {
+          "key": "TFT_Item_FrozenHeart",
+          "apiName": "TFT_Item_FrozenHeart",
+          "stats": {
+            "tier": 2,
+            "score": 0.868899841044965,
+            "nb_games": 46660,
+            "pick_rate": 0.2624517226874689,
+            "avg_placement": 4.01772955808415,
+            "top_4_percent": 0.5912161636287222,
+            "top_1_percent": 0.16039879831265663,
+            "item_type": "other",
+            "craftable": true
+          },
+          "localImageUrl": "/images/items/FrozenHeart.webp"
+        }
+      ]
+    },
+    "downloadedImages": 58
+  }
+]
