@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ArrowUpDown, Grid3X3, List, Heart, Flame, Filter, ChevronDown, ChevronUp } from 'lucide-react';
-import { Champion } from '../types';
+import { Champion, Item } from '../types';
 import { commonSynergies } from '../data/synergies';
 import ChampionCard from '../components/ChampionCard';
 import SearchBar from '../components/SearchBar';
 import FilterHub from '../components/FilterHub';
+import { generatedItemsStats } from '../data/items_stats_generated';
 
 export default function ChampionsDataPage() {
   const [inputValue, setInputValue] = useState('');
@@ -20,6 +21,7 @@ export default function ChampionsDataPage() {
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const [showOnlyMeta, setShowOnlyMeta] = useState(false);
   const [patchInfo, setPatchInfo] = useState({ version: '', set: '', lastUpdate: '' });
+  const [recommendedItemsMap, setRecommendedItemsMap] = useState<Record<string, Item[]>>({});
 
   // Chargement des données
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function ChampionsDataPage() {
           name: champion.champName,
           cost: [1], // Valeur par défaut, à remplacer par les vraies données si disponibles
           imageUrl: champion.localImageUrl || `/images/champions/${champion.champName.replace(/\s+/g, '')}.webp`,
-          traits: [], // À compléter avec les vraies données
+          traits: getChampionTraits(champion.champName), // Assigne des traits basés sur le nom
           isMeta: champion.meta,
           winRate: champion.rawWinrate,
           avgPlacement: champion.avgPlacement,
@@ -60,6 +62,13 @@ export default function ChampionsDataPage() {
           asCore: champion.asCore
         }));
         
+        // Générer des items recommandés pour chaque champion
+        const itemsMap: Record<string, Item[]> = {};
+        championsArray.forEach(champion => {
+          itemsMap[champion.name] = getRecommendedItemsForChampion(champion);
+        });
+        
+        setRecommendedItemsMap(itemsMap);
         setChampions(championsArray);
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
@@ -70,6 +79,124 @@ export default function ChampionsDataPage() {
     
     loadData();
   }, []);
+
+  // Fonction pour attribuer des traits aux champions basés sur leur nom
+  const getChampionTraits = (championName: string): string[] => {
+    // Mapping de champions à leurs traits (basé sur les données réelles du jeu)
+    const traitsMapping: Record<string, string[]> = {
+      'Alistar': ['Armorclad', 'Vanguard'],
+      'Annie': ['Divinicorp', 'Controller'],
+      'Aphelios': ['Divinicorp', 'Marksman'],
+      'Aurora': ['Anima Squad', 'Marksman'],
+      'Brand': ['Divinicorp', 'Controller'],
+      'Braum': ['Ballistek', 'Vanguard'],
+      'Chogath': ['Mob', 'Bruiser'],
+      'Darius': ['Street Demon', 'Bruiser'],
+      'Dr. Mundo': ['Street Demon', 'Bruiser'],
+      'Draven': ['Street Demon', 'Marksman'],
+      'Ekko': ['Anima Squad', 'Swift'],
+      'Elise': ['Mob', 'Controller'],
+      'Fiddlesticks': ['Mob', 'Controller'],
+      'Galio': ['Divinicorp', 'Vanguard'],
+      'Gragas': ['Ballistek', 'Bruiser'],
+      'Graves': ['Ballistek', 'Marksman'],
+      'Illaoi': ['Divinicorp', 'Bruiser'],
+      'Jarvan IV': ['Divinicorp', 'Vanguard'],
+      'Jax': ['Anima Squad', 'Bruiser'],
+      'Jhin': ['Anima Squad', 'Marksman'],
+      'Jinx': ['Anima Squad', 'Marksman'],
+      'Kindred': ['Mob', 'Marksman'],
+      'Kobuko': ['Street Demon', 'Swift'],
+      'Kog\'Maw': ['Ballistek', 'Marksman'],
+      'LeBlanc': ['Anima Squad', 'Controller'],
+      'Leona': ['Anima Squad', 'Vanguard'],
+      'Miss Fortune': ['Ballistek', 'Marksman'],
+      'Mordekaiser': ['Street Demon', 'Vanguard'],
+      'Morgana': ['Divinicorp', 'Controller'],
+      'Naafiri': ['Street Demon', 'Swift'],
+      'Neeko': ['Anima Squad', 'Controller'],
+      'Nidalee': ['Anima Squad', 'Swift'],
+      'Poppy': ['Ballistek', 'Vanguard'],
+      'Renekton': ['Street Demon', 'Bruiser'],
+      'Rengar': ['Mob', 'Swift'],
+      'Rhaast': ['Mob', 'Bruiser'],
+      'Samira': ['Street Demon', 'Marksman'],
+      'Sejuani': ['Ballistek', 'Vanguard'],
+      'Senna': ['Divinicorp', 'Marksman'],
+      'Seraphine': ['Divinicorp', 'Controller'],
+      'Shaco': ['Mob', 'Swift'],
+      'Shyvana': ['Street Demon', 'Bruiser'],
+      'Skarner': ['Ballistek', 'Bruiser'],
+      'Sylas': ['Anima Squad', 'Bruiser'],
+      'Twisted Fate': ['Ballistek', 'Controller'],
+      'Urgot': ['Ballistek', 'Bruiser'],
+      'Varus': ['Divinicorp', 'Marksman'],
+      'Vayne': ['Anima Squad', 'Marksman'],
+      'Veigar': ['Mob', 'Controller'],
+      'Vex': ['Mob', 'Controller'],
+      'Vi': ['Anima Squad', 'Bruiser'],
+      'Viego': ['Mob', 'Swift'],
+      'Xayah': ['Anima Squad', 'Marksman'],
+      'Yuumi': ['Divinicorp', 'Controller'],
+      'Zac': ['Street Demon', 'Vanguard'],
+      'Zed': ['Anima Squad', 'Swift'],
+      'Zeri': ['Ballistek', 'Marksman'],
+      'Ziggs': ['Ballistek', 'Controller'],
+      'Zyra': ['Divinicorp', 'Controller']
+    };
+    
+    return traitsMapping[championName] || [];
+  };
+
+  // Fonction pour générer des items recommandés pour chaque champion
+  const getRecommendedItemsForChampion = (champion: Champion): Item[] => {
+    // Mapping de classes à des items recommandés
+    const itemsByClass: Record<string, string[]> = {
+      'Marksman': ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade', 'RunaansHurricane', 'RapidFireCannon'],
+      'Controller': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
+      'Bruiser': ['WarmogsArmor', 'TitansResolve', 'SteraksGage', 'RedBuff', 'Bloodthirster'],
+      'Vanguard': ['BrambleVest', 'DragonsClaw', 'GargoyleStoneplate', 'WarmogsArmor', 'Redemption'],
+      'Swift': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper']
+    };
+    
+    // Sélectionne des items basés sur les traits du champion
+    let recommendedItemKeys: string[] = [];
+    
+    if (champion.traits) {
+      // Priorise la classe principale pour les items
+      const classTraits = champion.traits.filter(trait => 
+        ['Marksman', 'Controller', 'Bruiser', 'Vanguard', 'Swift'].includes(trait)
+      );
+      
+      if (classTraits.length > 0) {
+        const mainClass = classTraits[0];
+        recommendedItemKeys = itemsByClass[mainClass] || [];
+      }
+      
+      // Si c'est un carry, priorise les items offensifs
+      if (champion.asCarry > 0) {
+        if (champion.traits.includes('Marksman')) {
+          recommendedItemKeys = ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade'];
+        } else if (champion.traits.includes('Controller')) {
+          recommendedItemKeys = ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet'];
+        } else {
+          recommendedItemKeys = ['Bloodthirster', 'InfinityEdge', 'GuinsoosRageblade'];
+        }
+      }
+    }
+    
+    // Trouve les objets correspondants dans generatedItemsStats
+    const items = recommendedItemKeys
+      .map(key => generatedItemsStats.find(item => item.key.includes(key)))
+      .filter(Boolean) as Item[];
+    
+    // Si aucun item n'est trouvé, retourne des items par défaut
+    if (items.length === 0) {
+      return generatedItemsStats.slice(0, 3);
+    }
+    
+    return items.slice(0, 3);
+  };
 
   // Gestion de la recherche
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
@@ -109,11 +236,14 @@ export default function ChampionsDataPage() {
     const matchesTags =
       selectedTags.length === 0 ||
       selectedTags.some((tag) =>
-        champion.name.toLowerCase().includes(tag.toLowerCase())
+        champion.name.toLowerCase().includes(tag.toLowerCase()) ||
+        (champion.tier === tag) ||
+        (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(tag.toLowerCase())))
       );
     const matchesInput =
       inputValue === '' ||
-      champion.name.toLowerCase().includes(inputValue.toLowerCase());
+      champion.name.toLowerCase().includes(inputValue.toLowerCase()) ||
+      (champion.traits && champion.traits.some(trait => trait.toLowerCase().includes(inputValue.toLowerCase())));
     const matchesCost =
       activeTab === 'all' || champion.cost[0] === activeTab;
     const matchesFavorites =
@@ -336,14 +466,22 @@ export default function ChampionsDataPage() {
                   <button
                     key={synergy.name}
                     onClick={() => toggleSynergy(synergy.name)}
-                    className={`p-2 rounded-lg text-xs transition-all ${
+                    className={`p-2 rounded-lg text-xs transition-all flex items-center space-x-1 ${
                       selectedSynergies.includes(synergy.name)
                         ? `bg-gradient-to-r ${synergy.color} text-white shadow-lg`
                         : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50'
                     }`}
                   >
-                    <span className="mr-1">{synergy.icon}</span>
-                    {synergy.name}
+                    {synergy.imageUrl ? (
+                      <img 
+                        src={synergy.imageUrl} 
+                        alt={synergy.name}
+                        className="w-4 h-4 object-cover rounded"
+                      />
+                    ) : (
+                      <span className="text-xs">{synergy.icon}</span>
+                    )}
+                    <span>{synergy.name}</span>
                   </button>
                 ))}
               </div>
@@ -479,7 +617,7 @@ export default function ChampionsDataPage() {
                   isFavorite={favorites.includes(champion.name)}
                   onToggleFavorite={toggleFavorite}
                   onAddAsTag={addChampionAsTag}
-                  recommendedItems={[]}
+                  recommendedItems={recommendedItemsMap[champion.name] || []}
                 />
               ))}
             </div>
@@ -493,7 +631,7 @@ export default function ChampionsDataPage() {
                   isFavorite={favorites.includes(champion.name)}
                   onToggleFavorite={toggleFavorite}
                   onAddAsTag={addChampionAsTag}
-                  recommendedItems={[]}
+                  recommendedItems={recommendedItemsMap[champion.name] || []}
                 />
               ))}
             </div>

@@ -37,6 +37,7 @@ export default function EnhancedChampionsPage() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [activeTab, setActiveTab] = useState<'champions' | 'items' | 'synergies' | 'optimizations'>('champions');
+  const [recommendedItemsMap, setRecommendedItemsMap] = useState<Record<string, Item[]>>({});
 
   // États d'analyse
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -153,7 +154,14 @@ export default function EnhancedChampionsPage() {
             tips: ['Vérifiez les assassins', 'Adaptez contre les AoE', 'Repositionnez entre les rounds']
           }
         ];
-  
+
+        // Générer des items recommandés pour chaque champion
+        const itemsMap: Record<string, Item[]> = {};
+        championsWithStats.forEach(champion => {
+          itemsMap[champion.name] = getRecommendedItemsForChampion(champion);
+        });
+        
+        setRecommendedItemsMap(itemsMap);
         setChampions(championsWithStats);
         setItems(itemsData);
         setOptimizations(mockOptimizations);
@@ -165,6 +173,56 @@ export default function EnhancedChampionsPage() {
     }
     fetchData();
   }, []);
+
+  // Fonction pour générer des items recommandés pour chaque champion
+  const getRecommendedItemsForChampion = (champion: Champion): Item[] => {
+    // Mapping de classes à des items recommandés
+    const itemsByClass: Record<string, string[]> = {
+      'Marksman': ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade', 'RunaansHurricane', 'RapidFireCannon'],
+      'Controller': ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet', 'Morellonomicon', 'ArchangelsStaff'],
+      'Bruiser': ['WarmogsArmor', 'TitansResolve', 'SteraksGage', 'RedBuff', 'Bloodthirster'],
+      'Vanguard': ['BrambleVest', 'DragonsClaw', 'GargoyleStoneplate', 'WarmogsArmor', 'Redemption'],
+      'Swift': ['GuinsoosRageblade', 'RapidFireCannon', 'Quicksilver', 'RunaansHurricane', 'LastWhisper']
+    };
+    
+    // Sélectionne des items basés sur les traits du champion
+    let recommendedItemKeys: string[] = [];
+    
+    if (champion.traits) {
+      // Priorise la classe principale pour les items
+      const classTraits = champion.traits.filter(trait => 
+        ['Marksman', 'Controller', 'Bruiser', 'Vanguard', 'Swift'].includes(trait)
+      );
+      
+      if (classTraits.length > 0) {
+        const mainClass = classTraits[0];
+        recommendedItemKeys = itemsByClass[mainClass] || [];
+      }
+      
+      // Si c'est un carry, priorise les items offensifs
+      if (champion.asCarry > 0) {
+        if (champion.traits.includes('Marksman')) {
+          recommendedItemKeys = ['InfinityEdge', 'LastWhisper', 'GuinsoosRageblade'];
+        } else if (champion.traits.includes('Controller')) {
+          recommendedItemKeys = ['BlueBuff', 'RabadonsDeathcap', 'JeweledGauntlet'];
+        } else {
+          recommendedItemKeys = ['Bloodthirster', 'InfinityEdge', 'GuinsoosRageblade'];
+        }
+      }
+    }
+    
+    // Trouve les objets correspondants dans generatedItemsStats
+    const items = recommendedItemKeys
+      .map(key => generatedItemsStats.find(item => item.key.includes(key)))
+      .filter(Boolean) as Item[];
+    
+    // Si aucun item n'est trouvé, retourne des items par défaut
+    if (items.length === 0) {
+      return generatedItemsStats.slice(0, 3);
+    }
+    
+    return items.slice(0, 3);
+  };
 
   // Gestion de la recherche SANS changement automatique d'onglet
   const handleInputKeyDown = (e: React.KeyboardEvent) => {
@@ -373,13 +431,6 @@ export default function EnhancedChampionsPage() {
         ? prev.filter((n) => n !== name)
         : [...prev, name]
     );
-  };
-
-  // Obtenir les items recommandés pour un champion
-  const getRecommendedItems = (champion: Champion) => {
-    return (champion.recommendItems || [])
-      .map((itemKey) => items.find((item) => item.key === itemKey))
-      .filter(Boolean) as Item[];
   };
 
   // Compter les champions par synergie
@@ -680,7 +731,7 @@ export default function EnhancedChampionsPage() {
                           isFavorite={favorites.includes(item.name)}
                           onToggleFavorite={toggleFavorite}
                           onAddAsTag={(name) => addToSelection(name, 'champion')}
-                          recommendedItems={getRecommendedItems(item)}
+                          recommendedItems={recommendedItemsMap[item.name] || []}
                         />
                       );
                     } else if (activeTab === 'items') {
@@ -733,7 +784,7 @@ export default function EnhancedChampionsPage() {
                           isFavorite={favorites.includes(item.name)}
                           onToggleFavorite={toggleFavorite}
                           onAddAsTag={(name) => addToSelection(name, 'champion')}
-                          recommendedItems={getRecommendedItems(item)}
+                          recommendedItems={recommendedItemsMap[item.name] || []}
                         />
                       );
                     } else if (activeTab === 'items') {

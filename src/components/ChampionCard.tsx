@@ -36,6 +36,12 @@ export default function ChampionCard({
     return synergy || { name: synergyName, color: 'from-gray-500 to-gray-600', imageUrl: '' };
   };
 
+  // Récupérer les 3 meilleurs items recommandés
+  const topItems = recommendedItems.slice(0, 3);
+  
+  // Récupérer les traits du champion
+  const championTraits = champion.traits || [];
+
   const currentCost = champion.cost[0];
 
   if (viewMode === 'grid') {
@@ -52,11 +58,10 @@ export default function ChampionCard({
           </div>
         )}
 
-{/* Badge avgPlacement */}
-<div className="absolute top-2 right-2 z-20 px-2 py-0.5 rounded-full bg-slate-800/80 border border-slate-600 text-[10px] font-bold text-white shadow-sm">
-  {champion.avgPlacement?.toFixed(1)}
-</div>
-
+        {/* Badge avgPlacement */}
+        <div className="absolute top-2 right-2 z-20 px-2 py-0.5 rounded-full bg-slate-800/80 border border-slate-600 text-[10px] font-bold text-white shadow-sm">
+          {champion.avgPlacement?.toFixed(1)}
+        </div>
 
         {/* Image floutée en fond au hover */}
         <div
@@ -91,22 +96,23 @@ export default function ChampionCard({
 
             {/* Synergies avec images */}
             <div className="flex flex-wrap justify-center gap-1">
-              {champion.traits?.slice(0, 3).map((trait, index) => {
+              {championTraits.map((trait, index) => {
                 const synergyData = getSynergyData(trait);
                 return (
                   <div
                     key={index}
-                    className={`px-0 py-1 rounded-full text-xs font-medium text-white shadow-sm flex items-center space-x-1`}
+                    className="px-1 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1"
                   >
                     {synergyData.imageUrl ? (
                       <img 
                         src={synergyData.imageUrl} 
                         alt={trait}
-                        className="w-6 h-6 object-cover rounded"
+                        className="w-4 h-4 object-cover rounded"
                       />
                     ) : (
-                      <span className="text-xs"></span>
+                      <span className="text-xs">{synergyData.icon}</span>
                     )}
+                    <span className="text-[10px]">{trait}</span>
                   </div>
                 );
               })}
@@ -122,16 +128,20 @@ export default function ChampionCard({
             </div>
 
             {/* Items recommandés */}
-            {recommendedItems.length > 0 && (
-              <div className="flex justify-center space-x-1">
-                {recommendedItems.slice(0, 3).map((item, index) => (
-                  <img
-                    key={index}
-                    src={item.imageUrl}
-                    alt={item.name}
-                    className="w-6 h-6 rounded border border-slate-600/50"
-                    title={item.name}
-                  />
+            {topItems.length > 0 && (
+              <div className="flex justify-center space-x-1 mt-2">
+                {topItems.map((item, index) => (
+                  <div key={index} className="relative group/item">
+                    <img
+                      src={item.imageUrl}
+                      alt={item.name}
+                      className="w-6 h-6 rounded border border-slate-600/50 transition-all duration-200 hover:scale-110 hover:border-yellow-400/60"
+                      title={item.name}
+                    />
+                    <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity bg-slate-900/90 px-2 py-1 rounded text-xs text-white whitespace-nowrap z-20">
+                      {item.name}
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
@@ -173,55 +183,54 @@ export default function ChampionCard({
       </div>
 
       <div className="flex-1 relative z-10 grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-  {/* Nom et badges */}
-  <div className="space-y-2">
-    <div className="flex items-center space-x-2">
-      <h4 className="text-white font-semibold text-base group-hover:text-blue-300 transition-colors drop-shadow-sm">
-        {champion.name}
-      </h4>
+        {/* Nom et badges */}
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2">
+            <h4 className="text-white font-semibold text-base group-hover:text-blue-300 transition-colors drop-shadow-sm">
+              {champion.name}
+            </h4>
 
-      {/* Spacer */}
-      <span className="w-2"></span>
+            {/* Spacer */}
+            <span className="w-2"></span>
 
-      {champion.isMeta && (
-        <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg flex items-center space-x-1">
-          <Flame className="w-2.5 h-2.5" />
-          <span>META</span>
+            {champion.isMeta && (
+              <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg flex items-center space-x-1">
+                <Flame className="w-2.5 h-2.5" />
+                <span>META</span>
+              </div>
+            )}
+
+            {/* Spacer supplémentaire */}
+            <span className="w-2"></span>
+
+            {/* Badge avgPlacement */}
+            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800/90 border border-slate-600 text-[11px] font-semibold text-white shadow">
+              {champion.avgPlacement?.toFixed(1)}
+            </div>
+          </div>
         </div>
-      )}
-
-      {/* Spacer supplémentaire */}
-      <span className="w-2"></span>
-
-      {/* Badge avgPlacement */}
-      <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800/90 border border-slate-600 text-[11px] font-semibold text-white shadow">
-        {champion.avgPlacement?.toFixed(1)}
-      </div>
-    </div>
-  </div>
-
-
 
         {/* Synergies avec images */}
         <div className="space-y-0">
-          <div className="text-xs text-slate-400 font-medium"></div>
+          <div className="text-xs text-slate-400 font-medium mb-1">Traits</div>
           <div className="flex flex-wrap gap-1">
-            {champion.traits?.slice(0, 3).map((trait, index) => {
+            {championTraits.map((trait, index) => {
               const synergyData = getSynergyData(trait);
               return (
                 <div
                   key={index}
-                  className={`px-0 py-1 rounded-full text-xs font-medium text-white shadow-sm flex items-center space-x-1`}
+                  className="px-2 py-0.5 rounded-md bg-gradient-to-r from-slate-800/80 to-slate-700/80 border border-slate-600/50 text-xs font-medium text-white shadow-sm flex items-center space-x-1"
                 >
                   {synergyData.imageUrl ? (
                     <img 
                       src={synergyData.imageUrl} 
                       alt={trait}
-                      className="w-6 h-6 object-cover rounded"
+                      className="w-4 h-4 object-cover rounded"
                     />
                   ) : (
-                    <span></span>
+                    <span className="text-xs">{synergyData.icon}</span>
                   )}
+                  <span>{trait}</span>
                 </div>
               );
             })}
@@ -230,43 +239,80 @@ export default function ChampionCard({
 
         {/* Items recommandés */}
         <div className="text-center">
-          <div className="text-xs text-slate-400 mb-1"></div>
+          <div className="text-xs text-slate-400 mb-1">Items recommandés</div>
           <div className="flex justify-center space-x-1">
-            {recommendedItems.slice(0, 3).map((item, index) => (
-              <img
-                key={index}
-                src={item.imageUrl}
-                alt={item.name}
-                className="w-6 h-6 rounded border border-slate-600/50"
-                title={item.name}
-              />
+            {topItems.map((item, index) => (
+              <div key={index} className="relative group/item">
+                <img
+                  src={item.imageUrl}
+                  alt={item.name}
+                  className="w-8 h-8 rounded border-2 border-slate-600/50 bg-slate-800/50 transition-all duration-200 hover:scale-110 hover:border-yellow-400/60"
+                  title={item.name}
+                />
+                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover/item:opacity-100 transition-opacity bg-slate-900/90 px-2 py-1 rounded text-xs text-white whitespace-nowrap z-20">
+                  {item.name}
+                </div>
+              </div>
             ))}
+            {topItems.length === 0 && (
+              <span className="text-xs text-slate-500">Aucun item recommandé</span>
+            )}
           </div>
         </div>
-{/* Winrate amélioré */}
-<div className="text-center space-y-3">
-  {/* Badge du pourcentage */}
-  <div className="inline-block px-2 py-0.5 rounded-full text-xs font-bold text-white bg-slate-700/80 border border-slate-600 shadow-sm">
-    {(champion.winRate || 0).toFixed(1)}%
-  </div>
 
-  {/* Barre de progression */}
-  <div className="w-full bg-slate-700/50 rounded-full h-2 overflow-hidden">
-    <div
-      className={`h-2 rounded-full transition-all ${
-        (champion.winRate || 0) >= 60
-          ? 'bg-gradient-to-r from-green-500 to-green-400'
-          : (champion.winRate || 0) >= 50
-          ? 'bg-gradient-to-r from-yellow-500 to-yellow-400'
-          : 'bg-gradient-to-r from-red-500 to-red-400'
-      }`}
-      style={{ width: `${champion.winRate}%` }}
-    ></div>
-  </div>
-</div>
+        {/* Winrate amélioré */}
+        <div className="text-center space-y-3">
+          {/* Badge du pourcentage */}
+          <div className="inline-block px-2 py-0.5 rounded-full text-xs font-bold text-white bg-slate-700/80 border border-slate-600 shadow-sm">
+            {(champion.winRate || 0).toFixed(1)}%
+          </div>
 
+          {/* Barre de progression */}
+          <div className="w-full bg-slate-700/50 rounded-full h-2 overflow-hidden">
+            <div
+              className={`h-2 rounded-full transition-all ${
+                (champion.winRate || 0) >= 60
+                  ? 'bg-gradient-to-r from-green-500 to-green-400'
+                  : (champion.winRate || 0) >= 50
+                  ? 'bg-gradient-to-r from-yellow-500 to-yellow-400'
+                  : 'bg-gradient-to-r from-red-500 to-red-400'
+              }`}
+              style={{ width: `${Math.min((champion.winRate || 0), 100)}%` }}
+            ></div>
+          </div>
+        </div>
 
-
+        {/* Tier et Rôle */}
+        <div className="text-center">
+          <div className="flex flex-col items-center gap-2">
+            {/* Tier badge */}
+            <div className={`px-3 py-1 rounded-md text-sm font-bold ${
+              champion.tier === 'S' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
+              champion.tier === 'A' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' :
+              champion.tier === 'B' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+              'bg-gray-500/20 text-gray-400 border border-gray-500/30'
+            }`}>
+              Tier {champion.tier}
+            </div>
+            
+            {/* Rôle (Carry/Core) */}
+            {(champion.asCarry > 0 || champion.asCore > 0) && (
+              <div className="flex items-center gap-2">
+                {champion.asCarry > 0 && (
+                  <div className="px-2 py-0.5 rounded-md bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 text-xs font-medium flex items-center gap-1">
+                    <Star className="w-3 h-3" />
+                    <span>Carry</span>
+                  </div>
+                )}
+                {champion.asCore > 0 && (
+                  <div className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-medium">
+                    Core
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
