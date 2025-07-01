@@ -1,0 +1,7 @@
+[
+  {
+    "success": false,
+    "error": "ENOENT: no such file or directory, open './src/data/champions_14.json'",
+    "timestamp": "2025-07-01T14:33:27.514Z"
+  }
+]
