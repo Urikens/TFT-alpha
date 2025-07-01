@@ -1,5 +1,5 @@
 import React from 'react';
-import { Crown, DollarSign } from 'lucide-react';
+import { Crown } from 'lucide-react';
 
 interface ChampionTabsProps {
   activeTab: number | 'all';
@@ -40,34 +40,39 @@ export default function ChampionTabs({
 
   return (
     <div className="mb-8">
-      {/* Version moderne avec design amélioré */}
-      <div className="bg-slate-800/20 backdrop-blur rounded-2xl border border-slate-700/30 p-3">
-        <div className="flex items-center space-x-3 overflow-x-auto pb-2">
+      {/* Version fine et élégante */}
+      <div className="bg-slate-800/20 backdrop-blur rounded-xl border border-slate-700/30 p-2">
+        <div className="flex items-center space-x-1 overflow-x-auto">
           {/* Onglet "Tous" */}
           <button
             onClick={() => onTabChange('all')}
-            className={`group relative flex items-center space-x-3 px-6 py-4 rounded-xl border-2 transition-all duration-300 whitespace-nowrap font-semibold ${
+            className={`group relative flex items-center space-x-2 px-4 py-3 rounded-lg transition-all duration-300 whitespace-nowrap font-medium ${
               activeTab === 'all'
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 shadow-xl shadow-blue-500/30 scale-105'
-                : 'bg-slate-800/40 text-slate-300 border-slate-600/30 hover:bg-slate-700/50 hover:scale-105 hover:border-slate-500/50'
+                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 scale-105'
+                : 'text-slate-300 hover:bg-slate-700/40 hover:text-white hover:scale-105'
             }`}
           >
             {/* Effet de brillance */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 rounded-lg"></div>
             
-            <div className="relative flex items-center space-x-3">
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
-                activeTab === 'all' ? 'bg-white/20' : 'bg-slate-700/50 group-hover:bg-slate-600/50'
+            <div className="relative flex items-center space-x-2">
+              <div className={`w-6 h-6 rounded flex items-center justify-center transition-all ${
+                activeTab === 'all' ? 'bg-white/15' : 'bg-slate-700/30 group-hover:bg-slate-600/40'
               }`}>
-                <Crown className="w-4 h-4" />
+                <Crown className="w-3.5 h-3.5" />
               </div>
-              <span>Tous</span>
-              <div className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                activeTab === 'all' ? 'bg-white/20 text-white' : 'bg-slate-600/50 text-slate-400 group-hover:bg-slate-500/50'
+              <span className="text-sm font-semibold">Tous</span>
+              <div className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all ${
+                activeTab === 'all' ? 'bg-white/20 text-white' : 'bg-slate-600/40 text-slate-400 group-hover:bg-slate-500/50'
               }`}>
                 {totalChampions}
               </div>
             </div>
+
+            {/* Indicateur actif */}
+            {activeTab === 'all' && (
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-white rounded-full"></div>
+            )}
           </button>
 
           {/* Onglets par coût */}
@@ -75,66 +80,34 @@ export default function ChampionTabs({
             <button
               key={cost}
               onClick={() => onTabChange(cost)}
-              className={`group relative flex items-center space-x-3 px-6 py-4 rounded-xl border-2 transition-all duration-300 whitespace-nowrap font-semibold ${
+              className={`group relative flex items-center space-x-2 px-4 py-3 rounded-lg transition-all duration-300 whitespace-nowrap font-medium ${
                 activeTab === cost
-                  ? `bg-gradient-to-r ${getCostColor(cost)} text-white border-transparent shadow-xl scale-105`
-                  : 'bg-slate-800/40 text-slate-300 border-slate-600/30 hover:bg-slate-700/50 hover:scale-105 hover:border-slate-500/50'
+                  ? `bg-gradient-to-r ${getCostColor(cost)} text-white shadow-lg scale-105`
+                  : 'text-slate-300 hover:bg-slate-700/40 hover:text-white hover:scale-105'
               }`}
             >
               {/* Effet de brillance */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500 rounded-lg"></div>
               
-              <div className="relative flex items-center space-x-3">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
-                  activeTab === cost ? 'bg-white/20' : 'bg-slate-700/50 group-hover:bg-slate-600/50'
+              <div className="relative flex items-center space-x-2">
+                <div className={`w-6 h-6 rounded flex items-center justify-center transition-all ${
+                  activeTab === cost ? 'bg-white/15' : 'bg-slate-700/30 group-hover:bg-slate-600/40'
                 }`}>
-                  <img src={goldIcon} alt="Gold" className="w-4 h-4" />
+                  <img src={goldIcon} alt="Gold" className="w-3.5 h-3.5" />
                 </div>
-                <span className="hidden sm:inline">{getCostLabel(cost)}</span>
-                <span className="sm:hidden">{cost}</span>
-                <div className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  activeTab === cost ? 'bg-white/20 text-white' : 'bg-slate-600/50 text-slate-400 group-hover:bg-slate-500/50'
+                <span className="text-sm font-semibold hidden sm:inline">{getCostLabel(cost)}</span>
+                <span className="text-sm font-semibold sm:hidden">{cost}</span>
+                <div className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all ${
+                  activeTab === cost ? 'bg-white/20 text-white' : 'bg-slate-600/40 text-slate-400 group-hover:bg-slate-500/50'
                 }`}>
                   {championCounts[cost] || 0}
                 </div>
               </div>
-            </button>
-          ))}
-        </div>
-      </div>
 
-      {/* Version alternative: Pills modernes */}
-      <div className="hidden">
-        <div className="flex items-center space-x-2 overflow-x-auto pb-2">
-          <button
-            onClick={() => onTabChange('all')}
-            className={`flex items-center space-x-2 px-4 py-3 rounded-full border-2 transition-all whitespace-nowrap ${
-              activeTab === 'all'
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white border-blue-500 shadow-lg scale-105'
-                : 'bg-slate-800/60 text-slate-300 border-slate-600/50 hover:bg-slate-700/60 hover:scale-105'
-            }`}
-          >
-            <Crown className="w-4 h-4" />
-            <span className="font-semibold">Tous</span>
-            <span className="bg-white/20 rounded-full px-2 py-0.5 text-xs">
-              {totalChampions}
-            </span>
-          </button>
-          {[1, 2, 3, 4, 5].map((cost) => (
-            <button
-              key={cost}
-              onClick={() => onTabChange(cost)}
-              className={`flex items-center space-x-2 px-4 py-3 rounded-full border-2 transition-all whitespace-nowrap ${
-                activeTab === cost
-                  ? `bg-gradient-to-r ${getCostColor(cost)} text-white border-transparent shadow-lg scale-105`
-                  : 'bg-slate-800/60 text-slate-300 border-slate-600/50 hover:bg-slate-700/60 hover:scale-105'
-              }`}
-            >
-              <img src={goldIcon} alt="Gold" className="w-4 h-4" />
-              <span className="font-semibold">{cost}</span>
-              <span className="bg-white/20 rounded-full px-2 py-0.5 text-xs">
-                {championCounts[cost] || 0}
-              </span>
+              {/* Indicateur actif */}
+              {activeTab === cost && (
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-white rounded-full"></div>
+              )}
             </button>
           ))}
         </div>
